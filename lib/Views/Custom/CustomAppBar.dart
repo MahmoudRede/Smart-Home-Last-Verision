@@ -34,7 +34,11 @@ class _state extends State<CustomAppBar>{
               color: Colors.white
           ),
           alignment: Alignment.center,
-          child: Text(this.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width*.02,
+            right: MediaQuery.of(context).size.width*.02,
+          ),
+          child: Text(this.title,textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
         ),
         Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
       ],

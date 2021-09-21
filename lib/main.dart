@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Home.dart';
+import 'package:fssmarthome/Views/Login.dart';
 
 import 'Views/Splash.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget{
       routes: <String,WidgetBuilder>{
         '/mainPage':(BuildContext context)=>new Home(index: 0),
       },
-      home:Splash(),
+      home:Login(),
 
     );
   }

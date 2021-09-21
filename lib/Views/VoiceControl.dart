@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/Views/AddVoice.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+
+import 'Custom/GlobalFunction.dart';
 
 class VoiceControl extends StatefulWidget{
   @override
@@ -61,12 +64,18 @@ class _state extends State<VoiceControl>{
               child: Text("Open The Door "),
             ),
             Expanded(child: SizedBox()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Do You Want Create List Of Voice?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-                Text("Create",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),)
-              ],
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context, GlobalFunction.route(AddVoice()));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Do You Want Create List Of Voice?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+                  Text("Create",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),)
+                ],
+              ),
             ),
             SizedBox(height: 15,),
           ],

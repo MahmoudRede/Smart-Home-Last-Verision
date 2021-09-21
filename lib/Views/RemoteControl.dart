@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/Views/CreateSignal.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+
+import 'Custom/GlobalFunction.dart';
 
 class RemoteControl extends StatefulWidget{
   @override
@@ -84,16 +87,22 @@ class _state extends State<RemoteControl>{
                           ],
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height*.06,
-                        width: MediaQuery.of(context).size.height*.06,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black26,width: 1),
-                            borderRadius: BorderRadius.circular(20),
-                          color: Color(AppTheme.yellowColor)
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                              context, GlobalFunction.route(CreateSignal()));
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height*.06,
+                          width: MediaQuery.of(context).size.height*.06,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black26,width: 1),
+                              borderRadius: BorderRadius.circular(20),
+                            color: Color(AppTheme.yellowColor)
+                          ),
+                          alignment: Alignment.center,
+                          child: Text("OK",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
                         ),
-                        alignment: Alignment.center,
-                        child: Text("OK",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height*.15,
