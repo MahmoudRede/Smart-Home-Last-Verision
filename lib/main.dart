@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       routes: <String,WidgetBuilder>{
         '/mainPage':(BuildContext context)=>new Home(index: 0),
+        '/profile':(BuildContext context)=>new Home(index: 4),
+        '/login':(BuildContext context)=>new Login(),
       },
       home:Splash(),
 

@@ -25,7 +25,7 @@ class _state extends State<MyDrawer>{
           SizedBox(height: MediaQuery.of(context).size.height*.12,),
           GestureDetector(
             onTap: (){
-              Navigator.push(context, GlobalFunction.route(Home(index: 4)));
+              Navigator.pushNamedAndRemoveUntil(context,"/profile", (route) => false);
             },
             child: Container(
               width: MediaQuery.of(context).size.width*.5,

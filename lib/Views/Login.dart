@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/Register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -129,8 +131,10 @@ class _state extends State<Login>{
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*.05,),
                         GestureDetector(
-                          onTap: (){
+                          onTap: ()async{
                             if(formKey.currentState!.validate()){
+                             SharedPreferenceManager.addData("UserId", "1");
+                             Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
 
                             }
                           },

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 
 class Register extends StatefulWidget{
@@ -185,7 +186,8 @@ class _state extends State<Register>{
                         GestureDetector(
                           onTap: (){
                             if(formKey.currentState!.validate()){
-
+                              SharedPreferenceManager.addData("UserId", "1");
+                              Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
                             }
                           },
                           child: Container(
@@ -212,12 +214,17 @@ class _state extends State<Register>{
                           ],
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*.03,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("You don’t have an account ?",style: TextStyle(fontSize: 12,color: Colors.white),),
-                            Text("Sign Up",style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
-                          ],
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("You have an account ?",style: TextStyle(fontSize: 12,color: Colors.white),),
+                              Text("Sign In",style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
+                            ],
+                          ),
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*.07,),
 

@@ -19,9 +19,14 @@ class _state extends State<CustomAppBar>{
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding:  EdgeInsets.only(top: 8),
-          child: Icon(Icons.arrow_back_ios),
+        GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding:  EdgeInsets.only(top: 8),
+            child: Icon(Icons.arrow_back_ios),
+          ),
         ),
         Container(
           height: MediaQuery.of(context).size.height*.13,
