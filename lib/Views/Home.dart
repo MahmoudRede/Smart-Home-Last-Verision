@@ -4,6 +4,7 @@ import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/AllRooms.dart';
 import 'package:fssmarthome/Views/MainPage.dart';
 import 'package:fssmarthome/Views/More.dart';
+import 'package:fssmarthome/Views/MyDrawer.dart';
 import 'package:fssmarthome/Views/RemoteControl.dart';
 import 'package:fssmarthome/Views/VoiceControl.dart';
 class Home extends StatefulWidget {
@@ -37,6 +38,7 @@ class _State extends State<Home> {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
+        drawer: MyDrawer(),
         key: _scaffoldKey,
         body:itemsUi[_currentIndex] ,
         bottomNavigationBar: BottomNavigationBar(

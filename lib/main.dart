@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget{
       routes: <String,WidgetBuilder>{
         '/mainPage':(BuildContext context)=>new Home(index: 0),
       },
-      home:Login(),
+      home:Splash(),
 
     );
   }
