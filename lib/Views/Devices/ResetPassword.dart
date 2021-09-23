@@ -1,22 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
-import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
-import 'package:fssmarthome/Views/ForgetPassword.dart';
-import 'package:fssmarthome/Views/Register.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatefulWidget{
+class ResetPassword extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return _state();
+   return _state();
   }
 }
-class _state extends State<Login>{
-  TextEditingController name =new TextEditingController();
+class _state extends State<ResetPassword>{
+  TextEditingController password2 =new TextEditingController();
   TextEditingController password =new TextEditingController();
   bool ishidden=true;
+  bool ishidden2=true;
   final formKey=GlobalKey<FormState>();
   FocusNode passwordNode =new FocusNode();
   @override
@@ -34,20 +30,20 @@ class _state extends State<Login>{
                   height: MediaQuery.of(context).size.height*.23,
                   fit: BoxFit.cover,
                 ),
-                Text("Welcome Back",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
+                Text("Reset Password",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
                 SizedBox(height: MediaQuery.of(context).size.height*.05,),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height*.67,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      topLeft: Radius.circular(50)
-                    ),
-                    color: Color(AppTheme.primaryColor)
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(50),
+                          topLeft: Radius.circular(50)
+                      ),
+                      color: Color(AppTheme.primaryColor)
                   ),
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height*.07
+                      top: MediaQuery.of(context).size.height*.07
                   ),
                   child: Form(
                     key: formKey,
@@ -56,39 +52,8 @@ class _state extends State<Login>{
                         Container(
                           width: MediaQuery.of(context).size.width*.8,
                           child: TextFormField(
-                            style: TextStyle(color: Colors.white),
-                            controller: name,
                             onFieldSubmitted: (value){
                               FocusScope.of(context).requestFocus(passwordNode);
-                            },
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return 'Enter Username';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                errorStyle: TextStyle(fontSize: 12),
-                              enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1.0),
-                             ),
-                              prefixIcon: Icon(Icons.person,color: Colors.white,),
-                              contentPadding: EdgeInsets.only(
-                                left: 10,right: 10,top: 10,bottom: 10
-                              ),
-                              hintText: "User Name",
-                              hintStyle: TextStyle(color: Colors.white,fontSize: 14),
-                              fillColor: Colors.white
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15,),
-                        Container(
-                          width: MediaQuery.of(context).size.width*.8,
-                          child: TextFormField(
-                            focusNode: passwordNode,
-                            onFieldSubmitted: (value){
-                              FocusScope.of(context).requestFocus(FocusNode());
                             },
                             validator: (value){
                               if(value!.isEmpty){
@@ -120,24 +85,41 @@ class _state extends State<Login>{
                             ),
                           ),
                         ),
+                        SizedBox(height: 15,),
                         Container(
                           width: MediaQuery.of(context).size.width*.8,
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(
-                                  context, GlobalFunction.route(ForgetPassword()));
+                          child: TextFormField(
+                            focusNode: passwordNode,
+                            onFieldSubmitted: (value){
+                              FocusScope.of(context).requestFocus(FocusNode());
                             },
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height*.01,
-                                bottom: MediaQuery.of(context).size.height*.01
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text("Forget Password",style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
-                                ],
-                              ),
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return 'Enter Confirm Password';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: Colors.white),
+                            controller: password2,
+                            obscureText: ishidden2,
+                            decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                ),
+                                prefixIcon: GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        ishidden2=!ishidden2;
+                                      });
+                                    },
+                                    child: Icon(ishidden2?Icons.lock:Icons.lock_open,color: Colors.white,)),
+                                contentPadding: EdgeInsets.only(
+                                    left: 10,right: 10,top: 10,bottom: 10
+                                ),
+                                hintText: "Confirm Password",
+                                errorStyle: TextStyle(fontSize: 12),
+                                hintStyle: TextStyle(color: Colors.white,fontSize: 14),
+                                fillColor: Colors.white
                             ),
                           ),
                         ),
@@ -145,8 +127,7 @@ class _state extends State<Login>{
                         GestureDetector(
                           onTap: ()async{
                             if(formKey.currentState!.validate()){
-                             SharedPreferenceManager.addData("UserId", "1");
-                             Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(context,"/login", (route) => false);
 
                             }
                           },
@@ -154,24 +135,11 @@ class _state extends State<Login>{
                             height: MediaQuery.of(context).size.height*.065,
                             width: MediaQuery.of(context).size.width*.8,
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.white),
-                          alignment: Alignment.center,
-                          child: Text("Login",style: TextStyle(fontWeight: FontWeight.bold),),
+                            alignment: Alignment.center,
+                            child: Text("Confirm",style: TextStyle(fontWeight: FontWeight.bold),),
                           ),
                         ),
-                        Expanded(child: SizedBox(),),
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(
-                                  context, GlobalFunction.route(Register()));
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                              Text("You don’t have an account ?",style: TextStyle(fontSize: 12,color: Colors.white),),
-                             Text("Sign Up",style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
-                               ],
-                   ),
-                          ),
+
                         SizedBox(height: MediaQuery.of(context).size.height*.07,),
 
                       ],
