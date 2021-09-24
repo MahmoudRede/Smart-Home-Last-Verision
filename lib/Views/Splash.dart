@@ -13,10 +13,14 @@ class Splash extends StatefulWidget{
 }
 class _state extends State<Splash>{
    String? user_id;
+   String? lang;
   loadData()async{
    user_id=await SharedPreferenceManager.getData("UserId");
+   lang=await SharedPreferenceManager.getData("lang");
    setState(() {
    });
+   print(user_id);
+   print("ssssssssssssssssssssssssssssssssssssssssssssssssssss");
   }
   @override
   void initState() {
@@ -40,9 +44,10 @@ class _state extends State<Splash>{
           right: MediaQuery.of(context).size.width*.2,
         ),
         child: Center(
-          child:Image.asset("assets/images/logo/logo1.png",
-            width: MediaQuery.of(context).size.width*.6,
-            fit: BoxFit.contain,
+          child:Image.asset("assets/images/logo/logo2.png",
+            width: MediaQuery.of(context).size.width*.7,
+            fit: BoxFit.cover,
+            color: Colors.white,
           ),
         ),
       ),

@@ -22,7 +22,7 @@ class _state extends State<About>{
              ),
           child: Column(
             children: [
-              CustomAppBar(title: "About"),
+              CustomAppBar(title:"About"),
               SizedBox(height: MediaQuery.of(context).size.height*.01,),
               Image.asset("assets/images/logo/logo2.png",
                 height: MediaQuery.of(context).size.height*.23,

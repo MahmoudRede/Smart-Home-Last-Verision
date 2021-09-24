@@ -227,10 +227,10 @@ class _state extends State<MainPage>{
                               color: Colors.white,
                             ),
                             padding: EdgeInsets.all(8),
-                            child: Image.asset(StaticList.DevicesImages[index]),
+                            child: Image.asset(StaticList.DevicesImages[index+1]),
 
                           ),
-                          Text(StaticList.DevicesNames[index],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,height: 1.4),),
+                          Text(StaticList.DevicesNames[index+1],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,height: 1.4),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

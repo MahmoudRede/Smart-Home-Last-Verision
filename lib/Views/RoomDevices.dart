@@ -23,8 +23,7 @@ class _state extends State<RoomDivices>{
   @override
   Widget build(BuildContext context) {
     List content=[
-      SwitchDevice(),
-      // AddDevice(),
+      AddDevice(),
       Temperature(),
       Door(),
       Alarm(),
@@ -70,7 +69,7 @@ class _state extends State<RoomDivices>{
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width*.22,
+                          width: MediaQuery.of(context).size.width*.2,
                           child: Column(
                             children: [
                               Container(
@@ -106,7 +105,7 @@ class _state extends State<RoomDivices>{
                           ),
                         ),
                       ),
-                      SizedBox(width: 7,),
+                      SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
                           setState(() {
@@ -114,7 +113,7 @@ class _state extends State<RoomDivices>{
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width*.22,
+                          width: MediaQuery.of(context).size.width*.2,
                           child: Column(
                             children: [
                               Container(
@@ -152,7 +151,7 @@ class _state extends State<RoomDivices>{
                           ),
                         ),
                       ),
-                      SizedBox(width: 7,),
+                      SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
                           setState(() {
@@ -160,7 +159,7 @@ class _state extends State<RoomDivices>{
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width*.22,
+                          width: MediaQuery.of(context).size.width*.2,
                           child: Column(
                             children: [
                               Container(
@@ -198,7 +197,7 @@ class _state extends State<RoomDivices>{
                           ),
                         ),
                       ),
-                      SizedBox(width: 7,),
+                      SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
                           setState(() {
@@ -206,7 +205,7 @@ class _state extends State<RoomDivices>{
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width*.22,
+                          width: MediaQuery.of(context).size.width*.2,
                           child: Column(
                             children: [
                               Container(
@@ -244,7 +243,7 @@ class _state extends State<RoomDivices>{
                           ),
                         ),
                       ),
-                      SizedBox(width: 7,),
+                      SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
                           setState(() {
@@ -252,7 +251,7 @@ class _state extends State<RoomDivices>{
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width*.22,
+                          width: MediaQuery.of(context).size.width*.2,
                           child: Column(
                             children: [
                               Container(

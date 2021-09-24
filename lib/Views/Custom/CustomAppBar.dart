@@ -40,8 +40,8 @@ class _state extends State<CustomAppBar>{
           ),
           alignment: Alignment.center,
           padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width*.02,
-            right: MediaQuery.of(context).size.width*.02,
+            left: MediaQuery.of(context).size.width*.03,
+            right: MediaQuery.of(context).size.width*.03,
           ),
           child: Text(this.title,textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
         ),

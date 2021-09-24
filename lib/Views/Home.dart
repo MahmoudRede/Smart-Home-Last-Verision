@@ -14,7 +14,6 @@ class Home extends StatefulWidget {
   _State createState() => _State(index: this.index);
 }
 class _State extends State<Home> {
-  static GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int index;
   _State({required this.index});
   int _currentIndex=0;
@@ -39,7 +38,6 @@ class _State extends State<Home> {
     return  SafeArea(
       child: Scaffold(
         drawer: MyDrawer(),
-        key: _scaffoldKey,
         body:itemsUi[_currentIndex] ,
         bottomNavigationBar: BottomNavigationBar(
             elevation: 0.0,

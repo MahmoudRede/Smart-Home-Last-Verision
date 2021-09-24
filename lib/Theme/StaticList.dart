@@ -27,6 +27,7 @@ class StaticList {
     "Study",
   ];
   static List <String> DevicesImages=[
+    "",
     "assets/images/devices/AC.png",
     "assets/images/devices/alarm-clock 1.png",
     "assets/images/devices/door mag.png",
@@ -41,6 +42,7 @@ class StaticList {
     "assets/images/devices/water leak.png",
   ];
   static List <String> DevicesNames=[
+    "Switch 1-2-3 channels",
     "AC",
     "alarm-clock",
     "door mag",

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/About.dart';
 import 'package:fssmarthome/Views/Home.dart';
+import 'package:fssmarthome/Views/Setting.dart';
 import 'package:fssmarthome/Views/Timing.dart';
 
 import 'Custom/GlobalFunction.dart';
@@ -117,26 +119,53 @@ class _state extends State<MyDrawer>{
               ),
             ),
           ),
-          Expanded(child: SizedBox()),
-          Container(
-            width: MediaQuery.of(context).size.width*.5,
-            height: MediaQuery.of(context).size.height*.065,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Color(AppTheme.yellowColor)
+          SizedBox(height: MediaQuery.of(context).size.height*.05,),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, GlobalFunction.route(Setting()));
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width*.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.settings,color: Colors.white,),
+                  SizedBox(width: 10,),
+                  Padding(
+                    padding:  EdgeInsets.only(top: 7),
+                    child: Text("Setting",style: TextStyle(color: Colors.white),),
+                  )
+                ],
+              ),
             ),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(AssetImage("assets/images/barIcons/logout.png"),color: Colors.white,size: 22,),
-                SizedBox(width: 15,),
-                Padding(
-                  padding:  EdgeInsets.only(top: 7),
-                  child: Text("Logout",style: TextStyle(color: Colors.white),),
-                )
-              ],
+          ),
+          Expanded(child: SizedBox()),
+          GestureDetector(
+            onTap: (){
+              SharedPreferenceManager.logout();
+              Navigator.pushNamedAndRemoveUntil(context,"/login", (route) => false);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width*.5,
+              height: MediaQuery.of(context).size.height*.065,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Color(AppTheme.yellowColor)
+              ),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageIcon(AssetImage("assets/images/barIcons/logout.png"),color: Colors.white,size: 22,),
+                  SizedBox(width: 15,),
+                  Padding(
+                    padding:  EdgeInsets.only(top: 7),
+                    child: Text("Logout",style: TextStyle(color: Colors.white),),
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height*.07,),
