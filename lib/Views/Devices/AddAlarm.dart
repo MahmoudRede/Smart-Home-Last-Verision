@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
-
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 class AddAlarm extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -9,6 +9,7 @@ class AddAlarm extends StatefulWidget{
   }
 }
 class _state extends State<AddAlarm>{
+  var _dateTime;
   @override
   Widget build(BuildContext context) {
      return Scaffold(
@@ -31,26 +32,43 @@ class _state extends State<AddAlarm>{
              right: MediaQuery.of(context).size.width*.05
          ),
          child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
            children: [
-             Row(
-               children: [
-                 Container(
-                   width: MediaQuery.of(context).size.width*.2,
-                   child: Column(
-                     children: [
-                       Divider(color: Color(AppTheme.yellowColor),thickness: 2,),
-                       Container(
-                         height: MediaQuery.of(context).size.height*.06,
-                       ),
-                       Divider(color: Color(AppTheme.yellowColor),thickness: 2,),
-                     ],
-                   ),
+             TimePickerSpinner(
+               is24HourMode: false,
+               normalTextStyle: TextStyle(
+                   fontSize: 24,
+                   color: Colors.black
+               ),
+               highlightedTextStyle: TextStyle(
+                   fontSize: 24,
+                   color: Color(AppTheme.yellowColor)
+               ),
+               spacing: 50,
+               itemHeight: 80,
+               isForce2Digits: true,
+               onTimeChange: (time) {
+                 setState(() {
+                   _dateTime = time;
+                 });
+               },
+             ),
+             GestureDetector(
+               onTap: (){
+                 print(_dateTime);
+                 print("ssssssssssssssssssssssssssssssssss");
+                 Navigator.pop(context);
+               },
+               child: Container(
+                 height: MediaQuery.of(context).size.height*.06,
+                 width:MediaQuery.of(context).size.width*.5,
+                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(20),
+                   color: Color(AppTheme.yellowColor)
                  ),
-                 Container(
-                  height: MediaQuery.of(context).size.height*.4,
-                 )
-               ],
+                 alignment: Alignment.center,
+                 child: Text("Add",style: TextStyle(color: Colors.white),),
+               ),
              )
            ],
          ),

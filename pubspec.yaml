@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_offline:
   flutter_switch:
+  flutter_time_picker_spinner:
   flutter_rounded_date_picker:
   flutter_cupertino_localizations:
   percent_indicator:

@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Theme/StaticList.dart';
+import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
+import 'package:fssmarthome/Views/RoomDevices.dart';
 
 class MainPage extends StatefulWidget{
   @override
@@ -42,7 +44,7 @@ class _state extends State<MainPage>{
                       Text("Sharaf",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                       SizedBox(height: MediaQuery.of(context).size.height*.005,),
                       Container(
-                        height: MediaQuery.of(context).size.height*.15,
+                        height: MediaQuery.of(context).size.height*.14,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -52,13 +54,13 @@ class _state extends State<MainPage>{
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Image.asset("assets/images/weather.png",
-                              width: MediaQuery.of(context).size.width*.25,
+                              width: MediaQuery.of(context).size.width*.23,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width*.3,
                               padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height*.015,
-                                bottom: MediaQuery.of(context).size.height*.015,
+                                top: MediaQuery.of(context).size.height*.012,
+                                bottom: MediaQuery.of(context).size.height*.012,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +104,7 @@ class _state extends State<MainPage>{
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Rooms",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                            Text("Rooms",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Text("Edit",style: TextStyle(fontSize: 10),),
@@ -127,29 +129,34 @@ class _state extends State<MainPage>{
                     return Row(
                       children: [
                         SizedBox(width: MediaQuery.of(context).size.width*.05,),
-                        Container(
-                          width: MediaQuery.of(context).size.width*.25,
-                          height: MediaQuery.of(context).size.height*.15,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Colors.white
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: MediaQuery.of(context).size.height*.01,),
-                              Image.asset(StaticList.RoomImages[index],
-                                width: MediaQuery.of(context).size.width*.25,
-                                height: MediaQuery.of(context).size.height*.07,
-                              ),
-                              SizedBox(height: MediaQuery.of(context).size.height*.01,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(StaticList.RoomNames[index],style: TextStyle(height: 1.4,fontSize: 12),),
-                                  Text("2 device",style: TextStyle(fontSize: 9),),
-                                ],
-                              )
-                            ],
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                                context, GlobalFunction.route(RoomDivices()));
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*.25,
+                            height: MediaQuery.of(context).size.height*.15,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                color: Colors.white
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(height: MediaQuery.of(context).size.height*.02,),
+                                Image.asset(StaticList.RoomImages[index],
+                                  height: MediaQuery.of(context).size.height*.055,
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(StaticList.RoomNames[index],style: TextStyle(height: 1.4,fontSize: 12),),
+                                    Text("2 device",style: TextStyle(fontSize: 9),),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
 
@@ -167,7 +174,7 @@ class _state extends State<MainPage>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Lasted Worked Devices",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      Text("Lasted Worked Devices",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     ],
                   ),
                 ),
@@ -189,7 +196,7 @@ class _state extends State<MainPage>{
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: Colors.black12.withOpacity(.1),width: 1),
-                        color: Color(AppTheme.backGround2).withOpacity(.18),
+                        color: StaticList.switchList[index]?Color(AppTheme.primaryColor).withOpacity(.9):Colors.white,
                       ),
                       padding: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width*.02,
@@ -224,27 +231,27 @@ class _state extends State<MainPage>{
                                     offset: Offset(-3, -3), // changes position of shadow
                                   ),
                                 ],
-                              color: Colors.white,
+                              color:StaticList.switchList[index]?Colors.white: Color(AppTheme.backGround2).withOpacity(.18),
                             ),
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(12),
                             child: Image.asset(StaticList.DevicesImages[index+1]),
 
                           ),
-                          Text(StaticList.DevicesNames[index+1],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,height: 1.4),),
+                          Text(StaticList.DevicesNames[index+1],style: TextStyle(color:StaticList.switchList[index]?Colors.white:Colors.black,fontSize: 10,fontWeight: FontWeight.bold,height: 1.4),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("On",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold,height: 1.5),),
+                              Text("On",style: TextStyle(color:StaticList.switchList[index]?Colors.white:Colors.black,fontSize: 12,height: 1.5),),
                               FlutterSwitch(
                                 height: 15.0,
                                 width: 35.0,
                                 padding: 4.0,
                                 toggleSize: 9.0,
                                 borderRadius: 10.0,
-                                inactiveColor: Colors.white,
+                                inactiveColor: Color(AppTheme.backGround2).withOpacity(.18),
                                 inactiveToggleColor: Colors.black26,
                                 activeColor: Color(AppTheme.primaryColor),
-                                value:true,
+                                value: StaticList.switchList[index],
                                 onToggle: (value) {
                                   setState(() {
 

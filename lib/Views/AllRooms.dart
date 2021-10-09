@@ -100,16 +100,16 @@ class _state extends State<AllRooms>{
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    border: Border.all(color: Colors.black12,width: 1),
+                                    border: Border.all(color: Colors.black12.withOpacity(.1),width: 1),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey.withOpacity(0.05),
                                         spreadRadius: 2,
                                         blurRadius: 2,
                                         offset: Offset(3, 3), // changes position of shadow
                                       ),
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey.withOpacity(0.05),
                                         spreadRadius: 2,
                                         blurRadius: 2,
                                         offset: Offset(-3, -3), // changes position of shadow
@@ -117,7 +117,7 @@ class _state extends State<AllRooms>{
                                     ],
                                     color: Colors.white,
                                   ),
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(12),
                                   child: Image.asset("assets/images/rooms/livingroom.png"),
 
                                 ),
@@ -132,8 +132,8 @@ class _state extends State<AllRooms>{
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Living Room",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                      Text("2 devices",style: TextStyle(fontSize: 12,))
+                                      Text("Living Room",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                      Text("2 devices",style: TextStyle(fontSize: 11,))
                                     ],
                                   ),
                                 )
@@ -146,7 +146,7 @@ class _state extends State<AllRooms>{
                               child: Row(
                                 children: [
                                   Icon(Icons.edit,size: 18,color: Colors.green,),
-                                  SizedBox(width: 7,),
+                                  SizedBox(width: 10,),
                                   Icon(Icons.delete,size: 18,color: Colors.red,)
                                 ],
                               ),
@@ -161,8 +161,8 @@ class _state extends State<AllRooms>{
                         child: Container(
                           child: Row(
                             children: [
-                              Icon(Icons.add,color: Color(AppTheme.yellowColor),size: 30,),
-                              Text("Add New Room",style: TextStyle(color: Color(AppTheme.yellowColor),fontSize: 16),)
+                              Icon(Icons.add,color: Color(AppTheme.yellowColor),size: 27,),
+                              Text("Add New Room",style: TextStyle(color: Color(AppTheme.yellowColor),fontSize: 15),)
                             ],
                           ),
                         ),

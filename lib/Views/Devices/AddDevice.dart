@@ -14,7 +14,7 @@ class AddDevice extends StatefulWidget{
 class _state extends State<AddDevice>{
   int select =-1;
   int select2=-1;
-  List <String>SwitchDeviceTypes=["1","2","3","4"];
+  List <String>SwitchDeviceTypes=["1","2","3"];
   String SelectDevice="1";
   @override
   Widget build(BuildContext context) {
@@ -135,7 +135,7 @@ class _state extends State<AddDevice>{
                                                    border: Border.all(color: Colors.black26,width: 1),
                                                  color: Colors.black12.withOpacity(.05)
                                                ),
-                                               padding: EdgeInsets.all(2),
+                                               padding: EdgeInsets.all(3),
                                                child: ClipRRect(
                                                  borderRadius: BorderRadius.circular(10),
                                                  child: Image.asset("assets/images/TV.png",
@@ -177,12 +177,12 @@ class _state extends State<AddDevice>{
                                    border: Border.all(color: Colors.black26,width: 1),
                                  color: Colors.black12
                                ),
-                               padding: EdgeInsets.all(4),
+                               padding: EdgeInsets.all(5),
                                child: ClipRRect(
                                  borderRadius: BorderRadius.circular(10),
                                  child: Image.asset(StaticList.DevicesImages[index],
-                                   width: MediaQuery.of(context).size.width*.15-8,
-                                   height: MediaQuery.of(context).size.height*.05-8,
+                                   width: MediaQuery.of(context).size.width*.12-8,
+                                   height: MediaQuery.of(context).size.height*.045-10,
                                  ),
                                ),
                              ),

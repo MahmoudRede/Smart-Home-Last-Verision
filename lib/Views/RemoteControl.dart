@@ -138,7 +138,7 @@ class _state extends State<RemoteControl>{
                               color: Color(AppTheme.yellowColor)
                             ),
                             alignment: Alignment.center,
-                            child: Text("OK",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+                            child: Text("OK",style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
                           ),
                         ),
                         Container(

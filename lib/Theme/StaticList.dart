@@ -1,3 +1,15 @@
+import 'package:flutter/cupertino.dart';
+import 'package:fssmarthome/Views/Devices/AddDevice.dart';
+import 'package:fssmarthome/Views/Devices/Alarm.dart';
+import 'package:fssmarthome/Views/Devices/Door.dart';
+import 'package:fssmarthome/Views/Devices/FireDetector.dart';
+import 'package:fssmarthome/Views/Devices/Motion.dart';
+import 'package:fssmarthome/Views/Devices/SmokeDetector.dart';
+import 'package:fssmarthome/Views/Devices/Soil.dart';
+import 'package:fssmarthome/Views/Devices/Switch.dart';
+import 'package:fssmarthome/Views/Devices/Temperature.dart';
+import 'package:fssmarthome/Views/Devices/WaterLeak.dart';
+
 class StaticList {
 
 
@@ -27,33 +39,52 @@ class StaticList {
     "Study",
   ];
   static List <String> DevicesImages=[
-    "",
-    "assets/images/devices/AC.png",
-    "assets/images/devices/alarm-clock 1.png",
-    "assets/images/devices/door mag.png",
-    "assets/images/devices/fire.png",
-    "assets/images/devices/fire-degree.png",
-    "assets/images/devices/Humidity degree.png",
     "assets/images/devices/knife-switch 1-dark.png",
     "assets/images/devices/motion.png",
+    "assets/images/devices/alarm-clock 1.png",
+    "assets/images/devices/fire.png",
     "assets/images/devices/smoke.png",
     "assets/images/devices/soil.png",
+    "assets/images/devices/door mag.png",
     "assets/images/devices/tempreture.png",
     "assets/images/devices/water leak.png",
   ];
+  static List <Widget> DevicesWidget=[
+    SwitchDevice(),
+    Motion(),
+    Alarm(),
+    FireDetector(),
+    SmokeDetector(),
+    Soil(),
+    Door(),
+    Temperature(),
+    WaterLeak(),
+    AddDevice(),
+  ];
   static List <String> DevicesNames=[
     "Switch 1-2-3 channels",
-    "AC",
-    "alarm-clock",
-    "door mag",
-    "fire",
-    "fire-degree",
-    "Humidity degree",
-    "knife-switch",
-    "motion-yes",
-    "smoke",
-    "soil",
-    "tempreture",
+    "Motion",
+    "Alarm-Clock",
+    "Fire Detector",
+    "Smoke Detector",
+    "Soil Moisture",
+    "Door& Window Mognetic",
+    "Temperature and humidity",
     "water leak",
+  ];
+  static List <bool> switchList=[
+    true,
+    false,
+    true,
+    true,
+    false,
+    true,
+     false,
+    true,
+    false,
+    true,
+    false,
+    true,
+    false,
   ];
 }
