@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fssmarthome/Views/Devices/Ac%20Control.dart';
 import 'package:fssmarthome/Views/Devices/AddDevice.dart';
 import 'package:fssmarthome/Views/Devices/Alarm.dart';
 import 'package:fssmarthome/Views/Devices/Door.dart';
@@ -58,6 +59,7 @@ class StaticList {
     Soil(),
     Door(),
     Temperature(),
+    AcControl(),
     WaterLeak(),
     AddDevice(),
   ];

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/main.dart';
 
 class Splash extends StatefulWidget{
   @override
@@ -15,12 +16,12 @@ class _state extends State<Splash>{
    String? user_id;
    String? lang;
   loadData()async{
-   user_id=await SharedPreferenceManager.getData("UserId");
+   user_id=await SharedPreferenceManager.getData("id");
    lang=await SharedPreferenceManager.getData("lang");
+   MyApp.user_name=(await SharedPreferenceManager.getData("name"))!;
    setState(() {
+     MyApp.user_id=int.parse(user_id!);
    });
-   print(user_id);
-   print("ssssssssssssssssssssssssssssssssssssssssssssssssssss");
   }
   @override
   void initState() {

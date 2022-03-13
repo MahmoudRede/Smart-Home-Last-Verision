@@ -7,6 +7,7 @@ import 'package:fssmarthome/Views/More.dart';
 import 'package:fssmarthome/Views/MyDrawer.dart';
 import 'package:fssmarthome/Views/RemoteControl.dart';
 import 'package:fssmarthome/Views/VoiceControl.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 class Home extends StatefulWidget {
   int index;
   Home({required this.index});
@@ -38,7 +39,8 @@ class _State extends State<Home> {
     return  SafeArea(
       child: Scaffold(
         drawer: MyDrawer(),
-        body:itemsUi[_currentIndex] ,
+        body: Directionality(
+            textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,child: itemsUi[_currentIndex]) ,
         bottomNavigationBar: BottomNavigationBar(
             elevation: 0.0,
             backgroundColor: Colors.white,
@@ -56,16 +58,24 @@ class _State extends State<Home> {
             items: [
               BottomNavigationBarItem(
                   icon:ImageIcon(AssetImage("assets/images/barIcons/home.png"),size: 20,),
-                  title:  Text('Home',style: TextStyle(height: 1.8,fontSize: 11),)),
+                  label:translator.translate("Home") ,
+                  //title:  Text(translator.translate("Home"),style: TextStyle(height: 1.8,fontSize: 11),)
+              ),
               BottomNavigationBarItem(
                   icon: ImageIcon(AssetImage("assets/images/barIcons/voice-control 1.png"),size: 20,),
-                  title: Text('Voive',style: TextStyle(height: 1.8,fontSize: 11),)),
+                  label: translator.translate("Voive"),
+                //  title: Text(translator.translate("Voive"),style: TextStyle(height: 1.8,fontSize: 11),)
+              ),
               BottomNavigationBarItem(
                   icon:  ImageIcon(AssetImage("assets/images/barIcons/remote-control 1.png"),size: 20,),
-                  title: Text('Romote',style: TextStyle(height: 1.8,fontSize: 11),)),
+                  label: translator.translate("Romote"),
+                 // title: Text(translator.translate("Romote"),style: TextStyle(height: 1.8,fontSize: 11),)
+              ),
               BottomNavigationBarItem(
                   icon:  ImageIcon(AssetImage("assets/images/rooms/livingroom.png"),size: 20,),
-                  title: Text('Rooms',style: TextStyle(height: 1.8,fontSize: 11),)),
+                  label: translator.translate("Rooms"),
+                 // title: Text(translator.translate("Rooms"),style: TextStyle(height: 1.8,fontSize: 11),)
+              ),
               BottomNavigationBarItem(
                   icon:  Container(
                     height: 22,
@@ -102,7 +112,9 @@ class _State extends State<Home> {
                       ],
                     ),
                   ),
-                  title: Text('More',style: TextStyle(height: 1.8,fontSize: 11),)),
+                 label: translator.translate("More")
+                 // title: Text(translator.translate("More"),style: TextStyle(height: 1.8,fontSize: 11),)
+              ),
 
             ]),),
     );

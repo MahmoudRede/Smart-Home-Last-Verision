@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "508795029764",
+    "firebase_url": "https://fscroll-75b5d-default-rtdb.firebaseio.com",
+    "project_id": "fscroll-75b5d",
+    "storage_bucket": "fscroll-75b5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508795029764:android:6557b1a0d38e40a139e851",
+        "android_client_info": {
+          "package_name": "com.Smart.smarthome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508795029764-q0ujmlcuvie9e6abl8j8mve02to0q1qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4up7MBO6hGwEaTd4ZqT8pCFCL8HZSniI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508795029764-q0ujmlcuvie9e6abl8j8mve02to0q1qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

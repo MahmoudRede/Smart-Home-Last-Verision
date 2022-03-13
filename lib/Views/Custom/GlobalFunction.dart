@@ -124,7 +124,54 @@ class GlobalFunction{
           ),
         ));
   }
+  static getBody(
+      int limit,
+      int offset,
+      String field,
+      String sort,
+      String resource,
+      String deleted,
+      String paginate,
+      List columns,
+      List operand,
+      List columnValues) {
+    String body;
+    if(columns==null||operand==null || columnValues==null){
+      body="?limit=$limit&offset=$offset&field=$field&sort=$sort&resource=$resource&deleted=$deleted&paginate=$paginate";
+    }
 
+    else{
+      String columnsString='',operandString='',columnValuesString='';
+      for(int i=0;i<columns.length;i++){
+
+        if(i==columns.length-1)
+          columnsString+="columns[$i]=${columns[i]}";
+        else
+          columnsString+="columns[$i]=${columns[i]}&";
+      }
+      for(int i=0;i<operand.length;i++){
+
+        if(i==operand.length-1)
+          operandString+="operand[$i]=${operand[i]}";
+        else
+          operandString+="operand[$i]=${operand[i]}&";
+      }
+      for(int i=0;i<columnValues.length;i++){
+
+        if(i==columnValues.length-1)
+          columnValuesString+="column_values[$i]=${columnValues[i]}";
+        else
+          columnValuesString+="column_values[$i]=${columnValues[i]}&";
+      }
+      print('operand $operandString');
+      print('columnValues $columnValuesString');
+
+
+      body = "?limit=$limit&offset=$offset&field=$field&sort=$sort&resource=$resource&deleted=$deleted&paginate=$paginate&$columnsString&$operandString&$columnValuesString";
+
+    }
+    return body;
+  }
   static   logout(BuildContext context) async{
     SharedPreferences prefs=await SharedPreferences.getInstance();
     prefs.clear();

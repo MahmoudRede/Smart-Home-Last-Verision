@@ -1,4 +1,4 @@
-package com.example.fssmarthome
+package com.Smart.smarthome
 
 import io.flutter.embedding.android.FlutterActivity
 
