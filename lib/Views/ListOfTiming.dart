@@ -17,10 +17,11 @@ class _state extends  State<ListOfTiming>{
   bool loading =true;
   loadData()async{
     var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
-   await  deviceProvider.getTiming();
     setState(() {
       loading=false;
     });
+    print(deviceProvider.times.length);
+    print("*******************************************");
   }
   @override
   void initState() {
@@ -43,7 +44,7 @@ class _state extends  State<ListOfTiming>{
           ),
           child: Column(
             children: [
-              CustomAppBar(title:translator.translate("ListOfSignals")),
+              CustomAppBar(title:translator.translate('Timing')),
               SizedBox(height: MediaQuery.of(context).size.height*.035,),
               Expanded(child:deviceProvider.times.length==0? Center(
                 child: Text(translator.translate("NoTimingAddedBefore"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red),),

@@ -24,11 +24,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await translator.init(
+  /*await translator.init(
     assetsDirectory: 'assets/Langs/', valuesAsMap: {},
     localeType: LocalizationDefaultType.device,
     languagesList: <String>['ar', 'en'],
-  );
+  );*/
   runApp(MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }
@@ -98,10 +98,9 @@ class _MyAppState extends State<MyApp>{
           '/profile':(BuildContext context)=>new Home(index: 4),
           '/rooms':(BuildContext context)=>new Home(index: 3),
           '/login':(BuildContext context)=>new Login(),
-
-        },
-          home: Splash(),
-          localeResolutionCallback: (locale,supportedLocales){
+           },
+           home: Splash(),
+           localeResolutionCallback: (locale,supportedLocales){
             for( var supportedLocale in supportedLocales){
               if(supportedLocale.languageCode==locale!.languageCode && supportedLocale.countryCode == locale.countryCode){
                 return supportedLocale;

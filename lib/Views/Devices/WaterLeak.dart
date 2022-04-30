@@ -182,7 +182,37 @@ class _state extends State<WaterLeak>{
                   ),
                   child: Column(
                     children: [
-                      SizedBox(height:MediaQuery.of(context).size.height*.055,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(translator.translate('Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                          SizedBox(width: 10,),
+                          FlutterSwitch(
+                            height: 15.0,
+                            width: 30.0,
+                            padding: 4.0,
+                            toggleSize: 9.0,
+                            borderRadius: 10.0,
+                            inactiveColor: Colors.black12,
+                            inactiveToggleColor: Colors.black26,
+                            activeColor: Color(AppTheme.primaryColor),
+                            value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"?true:false,
+                            onToggle: (value) {
+                              if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"){
+                                deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="0";
+                                setState(() {
+                                });
+                              }
+                              else{
+                                deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="1";
+                                setState(() {
+                                });
+                              }
+                              deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                            },
+                          )
+                        ],),
+                      SizedBox(height:MediaQuery.of(context).size.height*.03,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -192,7 +222,7 @@ class _state extends State<WaterLeak>{
                                 setState(() {
                                   deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue)-1).toString();
                                 });
-                                deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                // deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                               }
                             },
                             child: Container(
@@ -213,7 +243,7 @@ class _state extends State<WaterLeak>{
                               setState(() {
                                 deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue)+1).toString();
                               });
-                              deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+
                             },
                             child: Container(
                               height: 23,width:26,
@@ -230,34 +260,22 @@ class _state extends State<WaterLeak>{
                         ],
                       ),
                       Expanded(child: SizedBox()),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          FlutterSwitch(
-                            height: 15.0,
-                            width: 30.0,
-                            padding: 4.0,
-                            toggleSize: 9.0,
-                            borderRadius: 10.0,
-                            inactiveColor: Colors.black12,
-                            inactiveToggleColor: Colors.black26,
-                            activeColor: Color(AppTheme.primaryColor),
-                            value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
-                            onToggle: (value) {
-                              if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){
-                                deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay="0";
-                                setState(() {
-                                });
-                              }
-                              else{
-                                deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay="1";
-                                setState(() {
-                                });
-                              }
-                              deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
-                            },
-                          )
-                        ],),
+                      GestureDetector(
+                        onTap: (){
+                          deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                        },
+                        child: Container(
+                          width: 45,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(AppTheme.primaryColor)
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(translator.translate('Ok'),style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),),
+                        ),
+                      ),
+                      SizedBox(height:MediaQuery.of(context).size.height*.01,),
                     ],
                   ),
                 )

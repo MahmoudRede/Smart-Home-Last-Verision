@@ -28,24 +28,23 @@ class _state extends State<VoiceControl>{
           child: Container(
             child:Column(
               children: [
+
                 Container(
                     padding: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width*.05,
                         right: MediaQuery.of(context).size.width*.05
                     ),
-                    child:  Row(
+                    child:Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
-                          },
-                          child: Padding(
-                            padding:  EdgeInsets.only(top: 8),
-                            child: Icon(Icons.arrow_back_ios),
-                          ),
-                        ),
+                            onTap: () => Scaffold.of(context).openDrawer(),
+                            child: Padding(
+                              padding:  EdgeInsets.only(top: 10),
+                              child: Icon(Icons.menu,size: 25,),
+                            )),
+
                         Container(
                           height: MediaQuery.of(context).size.height*.13,
                           width: MediaQuery.of(context).size.width*.55,
@@ -63,9 +62,18 @@ class _state extends State<VoiceControl>{
                           ),
                           child: Text(translator.translate('VoiceControl'),textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
                         ),
-                        Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                          },
+                          child: Padding(
+                            padding:  EdgeInsets.only(top: 8),
+                            child: Icon(Icons.arrow_forward_ios),
+                          ),
+                        ),
+
                       ],
-                    )),
+                    ),),
                 SizedBox(height: MediaQuery.of(context).size.height*.25,),
                 Row(
                   children: [

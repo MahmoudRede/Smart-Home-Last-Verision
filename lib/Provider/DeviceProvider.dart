@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Models/AlarmModel.dart';
 import 'package:fssmarthome/Models/DeviceModel.dart';
 import 'package:fssmarthome/Models/DeviceRealModel.dart';
 import 'package:fssmarthome/Models/HomeDevicesModel.dart';
+import 'package:fssmarthome/Models/RemoteModel.dart';
 import 'package:fssmarthome/Models/RoomDevicesModel.dart';
 import 'package:fssmarthome/Models/TimingModel.dart';
 import 'package:fssmarthome/Models/UserRoomModel.dart';
@@ -32,6 +34,7 @@ class DeviceProvider extends ChangeNotifier{
   late DeviceRealModel deviceRealModel;
   List<DeviceRealModel>devicesReal=[];
   List<AlarmModel>alarms=[];
+  List<RemoteModel>remotes=[];
   setReal(List<DeviceRealModel>_devicesReal){
     this.devicesReal=_devicesReal;
     notifyListeners();
@@ -45,14 +48,40 @@ class DeviceProvider extends ChangeNotifier{
   RoomDevicesModel roomDevicesModel=new RoomDevicesModel(id: 0, active: 0, readingType: "", reading: "", relay: "0", eventValue: "", eventAction: "0", userRoom: "", device: "", createDates: "", updateDates: "",doorType: "",eventValue2: "",relay2: "",
   relay3: "",relay4: "",switch1: "",switch2: "",switch3: "",switch4: "");
   int room_id=0;
+  var room_name;
   int connection=0;
-  setRoom(int id){
+  setRoom(int id,String name){
     room_id=id;
+    room_name=name;
     notifyListeners();
   }
   setRoomDevice(RoomDevicesModel roomDevices){
     roomDevicesModel=roomDevices;
     notifyListeners();
+  }
+  Future<void> getKey(int id) async{
+    String url=ServicesConfig.base_url+"/auth/get_key";
+    print(url);
+    var body={
+      "id" : id.toString(),
+    };
+    print(body);
+    var header=await ServicesConfig.getHeaderWithToken();
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers: header);
+      print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        info=json.decode(responce.body)["data"];
+        print(connection);
+        print("getKeygetKeygetKeygetKeygetKeygetKeygetKeygetKeygetKeygetKey");
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
   }
   UpdateRealDevice(int index,DeviceRealModel deviceRealModel){
     this.roomDevices[index].relay=deviceRealModel.relay.toString();
@@ -165,6 +194,8 @@ class DeviceProvider extends ChangeNotifier{
     var url=ServicesConfig.base_url+"/userroomdevices/last_devices/$body";
     print(url);
     var header=await ServicesConfig.getHeaderWithToken();
+    print(header);
+    print("-------------------------------------------------------------------------------------------------------");
     try
     {
       final response = await http.get(Uri.parse(url),headers: header);
@@ -231,7 +262,7 @@ class DeviceProvider extends ChangeNotifier{
       "relay_2":roomDevicesModel.relay2.toString(),
       "relay_3":roomDevicesModel.relay3.toString(),
       "relay_4":roomDevicesModel.relay4.toString(),
-      "eventValue2":roomDevicesModel.eventValue2.toString(),
+      "event_value_2":roomDevicesModel.eventValue2.toString(),
     };
     print(body);
     var header=await ServicesConfig.getHeaderWithToken();
@@ -420,8 +451,7 @@ class DeviceProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
-  Future<void>getTiming()async {
-    var body=GlobalFunction.getBody(5000, 0, "id", "ASC", "all", "false", "true", [], [], []);
+  Future<void>getTiming(var body)async {
     var url=ServicesConfig.base_url+"/time/$body";
     var header=await ServicesConfig.getHeaderWithToken();
     try
@@ -451,6 +481,24 @@ class DeviceProvider extends ChangeNotifier{
     try{
       final responce=await http.delete(Uri.parse(url),headers: header);
       print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void> deleteAlarm(var id) async{
+    String url=ServicesConfig.base_url+"/alarm/bulkDelete?ids[]=$id";
+    print(url);
+    var header=await ServicesConfig.getHeader();
+    try{
+      final responce=await http.delete(Uri.parse(url),headers: header);
+      print(responce.body);
+      print("delete alarmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
       if(responce.body.isNotEmpty)
       {
         connection=responce.statusCode;
@@ -512,8 +560,7 @@ class DeviceProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
-  Future<void>getVoices()async {
-    var body=GlobalFunction.getBody(5000, 0, "id", "ASC", "all", "false", "true", ["user_id"], ["="], [MyApp.user_id]);
+  Future<void>getVoices(var body)async {
     var url=ServicesConfig.base_url+"/voice/$body";
     var header=await ServicesConfig.getHeaderWithToken();
     try
@@ -560,6 +607,7 @@ class DeviceProvider extends ChangeNotifier{
       "time" : time,
       "notify":notify,
       "userRoomDevice_id":userRoomDevice_id.toString(),
+      "bother":"1"
     };
     print(body);
     var header=await ServicesConfig.getHeaderWithToken();
@@ -612,7 +660,8 @@ class DeviceProvider extends ChangeNotifier{
       "notify":alarmModel.notify.toString(),
       "_method":"PUT",
       "time":alarmModel.time,
-      "userRoomDevice_id":alarmModel.userRoomDeviceId.toString()
+      "userRoomDevice_id":alarmModel.userRoomDeviceId.toString(),
+      "bother":alarmModel.bother
     };
     print(body);
     var header=await ServicesConfig.getHeaderWithToken();
@@ -623,6 +672,153 @@ class DeviceProvider extends ChangeNotifier{
       if(responce.body.isNotEmpty)
       {
         connection=responce.statusCode;
+        print(connection);
+        print("updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealarmalarmalarmalarm");
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void> addRemote(var name,var plusbtn,var minusbtn,var upbtn,var downbtn,var powerbtn,var okbtn) async{
+    String url=ServicesConfig.base_url+"/remote";
+    print(url);
+    var body={
+      "name":name,
+      "user_id" :MyApp.user_id.toString(),
+      "plusbtn":plusbtn,
+      "minusbtn":minusbtn,
+     "upbtn":upbtn,
+     "downbtn":downbtn,
+     "powerbtn":powerbtn,
+      "okbtn":okbtn
+    };
+    print(body);
+    var header=await ServicesConfig.getHeaderWithToken();
+    print(header);
+    print("---------------------------------------------------------------");
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers: header);
+      print(responce.body);
+      print("resproneee alarmalarmalarmalarm");
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        this.info=json.decode(responce.body);
+        print(connection);
+        print("updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealarmalarmalarmalarm");
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void>getRemotes()async {
+    var body=GlobalFunction.getBody(300, 0, "id", "ASC", "all", "false", "true", ["user_id"], ["="], [MyApp.user_id]);
+    var url=ServicesConfig.base_url+"/remote/$body";
+    var header=await ServicesConfig.getHeaderWithToken();
+    try
+    {
+      final response = await http.get(Uri.parse(url),headers: header);
+      if(response.statusCode==200 && response.body!=null)
+      {
+        print("enter ");
+        print(json.decode(utf8.decode(response.bodyBytes))["data"]);
+
+        List slideritems = json.decode(utf8.decode(response.bodyBytes))["data"]["data"];
+        remotes = slideritems.map((e) => RemoteModel.fromJson(e)).toList();
+        print(remotes.length);
+        print("remotes remotes remotes remotes remotes  remotes remotes remotes");
+        notifyListeners();
+      }
+    }
+    catch(e)
+    {
+      print(e);
+    }
+  }
+  Future<void> deleteRemote(var id) async{
+    String url=ServicesConfig.base_url+"/remote/bulkDelete?ids[]=$id";
+    print(url);
+    var header=await ServicesConfig.getHeader();
+    try{
+      final responce=await http.delete(Uri.parse(url),headers: header);
+      print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void> updateRemote(var id,var name,var plusbtn,var minusbtn,var upbtn,var downbtn,var powerbtn,var okbtn) async{
+    String url=ServicesConfig.base_url+"/remote/$id";
+    print(url);
+    var body={
+      "name":name,
+      "user_id" :MyApp.user_id.toString(),
+      "plusbtn":plusbtn,
+      "minusbtn":minusbtn,
+      "upbtn":upbtn,
+      "downbtn":downbtn,
+      "powerbtn":powerbtn,
+      "okbtn":okbtn,
+      "_method":"PUT"
+    };
+    print(body);
+    var header=await ServicesConfig.getHeaderWithToken();
+    print(header);
+    print("---------------------------------------------------------------");
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers: header);
+      print(responce.body);
+      print("resproneee alarmalarmalarmalarm");
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        this.info=json.decode(responce.body);
+        print(connection);
+        print("updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealarmalarmalarmalarm");
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void> updateRemote2(var id,var seqment,var name,var plusbtn,var minusbtn,var upbtn,var downbtn,var powerbtn,var okbtn) async{
+    String url=ServicesConfig.base_url+"/remote/$id";
+    print(url);
+    var body={
+      "segmant":seqment,
+       "flag":"1",
+      "name":name,
+      "user_id" :MyApp.user_id.toString(),
+      "plusbtn":plusbtn,
+      "minusbtn":minusbtn,
+      "upbtn":upbtn,
+      "downbtn":downbtn,
+      "powerbtn":powerbtn,
+      "okbtn":okbtn,
+      "_method":"PUT"
+    };
+    print(body);
+    var header=await ServicesConfig.getHeaderWithToken();
+    print(header);
+    print("---------------------------------------------------------------");
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers: header);
+      print(responce.body);
+      print("updateeeeeeeeeeeeee resproneee alarmalarmalarmalarm");
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        this.info=json.decode(responce.body);
         print(connection);
         print("updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealarmalarmalarmalarm");
         notifyListeners();

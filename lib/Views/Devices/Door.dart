@@ -72,9 +72,43 @@ class _state extends State<Door>{
                  SizedBox(height: MediaQuery.of(context).size.height*.01,),
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                   crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
                      Column(
                        children: [
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.start,
+                           children: [
+                             Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                             SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
+                             FlutterSwitch(
+                                 height: 15.0,
+                                 width: 30.0,
+                                 padding: 4.0,
+                                 toggleSize: 9.0,
+                                 borderRadius: 10.0,
+                                 inactiveColor: Colors.black12,
+                                 inactiveToggleColor: Colors.black26,
+                                 activeColor: Color(AppTheme.primaryColor),
+                                 value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
+                                 onToggle: (value) {
+                                   if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"){
+                                     deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="0";
+                                     setState(() {
+                                     });
+                                   }
+                                   else{
+                                     deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="1";
+                                     setState(() {
+                                     });
+                                   }
+                                   deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                 }
+                             ),
+
+                           ],
+                         ),
+                         SizedBox(height: 20,),
                          GestureDetector(
                            onTap: (){
                              deviceProvider.roomDevices[deviceProvider.SelectedIndex].reading="1";
@@ -124,9 +158,10 @@ class _state extends State<Door>{
                    ),
                    width: MediaQuery.of(context).size.width,
                    child:  Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     mainAxisAlignment: MainAxisAlignment.end,
                      children: [
-                       Text(translator.translate('Safemodeisactive')),
+                       Text(translator.translate('Safemodeisactive'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                       SizedBox(width: 10,),
                        FlutterSwitch(
                          height: 15.0,
                          width: 35.0,
@@ -189,9 +224,43 @@ class _state extends State<Door>{
                   SizedBox(height: MediaQuery.of(context).size.height*.01,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                              SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
+                              FlutterSwitch(
+                                  height: 15.0,
+                                  width: 30.0,
+                                  padding: 4.0,
+                                  toggleSize: 9.0,
+                                  borderRadius: 10.0,
+                                  inactiveColor: Colors.black12,
+                                  inactiveToggleColor: Colors.black26,
+                                  activeColor: Color(AppTheme.primaryColor),
+                                  value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
+                                  onToggle: (value) {
+                                    if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"){
+                                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="0";
+                                      setState(() {
+                                      });
+                                    }
+                                    else{
+                                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="1";
+                                      setState(() {
+                                      });
+                                    }
+                                    deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                  }
+                              ),
+
+                            ],
+                          ),
+                          SizedBox(height: 20,),
                           GestureDetector(
                             onTap: (){
                               deviceProvider.roomDevices[deviceProvider.SelectedIndex].reading="1";
@@ -241,9 +310,10 @@ class _state extends State<Door>{
                     ),
                     width: MediaQuery.of(context).size.width,
                     child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(translator.translate('Safemodeisactive')),
+                        Text(translator.translate('Safemodeisactive'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                       SizedBox(width: 10,),
                         FlutterSwitch(
                           height: 15.0,
                           width: 35.0,

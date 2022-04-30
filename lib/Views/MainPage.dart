@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import  'package:intl/intl.dart';
+
+import '../Models/DeviceRealModel.dart';
+import '../Models/RoomDevicesModel.dart';
 class MainPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -31,6 +35,34 @@ class _state extends State<MainPage>{
   var day;
   var hour;
   double temp=0.0;
+  DatabaseReference ref = FirebaseDatabase.instance.ref("userRoomDevices");
+  List<DeviceRealModel>data=[];
+  listenRoomDevices(BuildContext context) async{
+    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
+    ref.onValue.listen((event) {
+      //loadData2();
+      print(event.snapshot.value);
+      Map<Object?,Object?> map =event.snapshot.value as Map<Object?,Object?>;
+      print(map);
+      data=[];
+      map.forEach((key, value) {
+        data.add(DeviceRealModel.fromJson(json.decode(json.encode(value))));
+      });
+      loadData2(context);
+    });
+
+  }
+  loadData2(BuildContext context)async{
+    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
+    for(int i=0;i<deviceProvider.roomDevices.length;i++){
+      RoomDevicesModel _roomdevice=  deviceProvider.roomDevices[i];
+      print(data[i].id);
+      print(_roomdevice.id);
+      print("=======================================================");
+      DeviceRealModel deviceRealModel    =data.firstWhere((element) => element.id==_roomdevice.id);
+      deviceProvider.UpdateRealDevice(i, deviceRealModel);
+    }
+  }
   loadData()async{
     var roomProvider= Provider.of<RoomProvider>(context, listen: false);
     var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
@@ -53,6 +85,7 @@ class _state extends State<MainPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    listenRoomDevices(context);
     loadData();
     getCurrentLocation();
   }
@@ -66,6 +99,7 @@ class _state extends State<MainPage>{
         return true;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Color(AppTheme.backGround),
         body: loading?Center(child: CircularProgressIndicator.adaptive(),)
             : SingleChildScrollView(child: Container(
@@ -83,10 +117,24 @@ class _state extends State<MainPage>{
                     child:Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: MediaQuery.of(context).size.height*.05,),
-                        Text(translator.translate("WelcomeHome"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.black87),),
-                        Text(MyApp.user_name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                        SizedBox(height: MediaQuery.of(context).size.height*.005,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                                Text(translator.translate("WelcomeHome"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.black87),),
+                                Text(MyApp.user_name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                                SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                              ],
+                            ),
+                            GestureDetector(
+                                onTap: () => Scaffold.of(context).openDrawer(),
+                                child: Icon(Icons.menu,size: 30,)),
+                          ],
+                        ),
                         Container(
                           height: MediaQuery.of(context).size.height*.14,
                           width: MediaQuery.of(context).size.width,
@@ -214,7 +262,7 @@ class _state extends State<MainPage>{
                           SizedBox(width: MediaQuery.of(context).size.width*.05,),
                           GestureDetector(
                             onTap: (){
-                              Navigator.push(context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name)));
+                              Navigator.push(context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name,route: 1,)));
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width*.25,
@@ -233,7 +281,7 @@ class _state extends State<MainPage>{
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(roomProvider.rooms[index].room.name,style: TextStyle(height: 1.4,fontSize: 12),),
+                                      Text(roomProvider.rooms[index].room.name,maxLines: 1,style: TextStyle(height: 1.4,fontSize: 12),),
                                       Text("  ${translator.translate("devices")} ${roomProvider.rooms[index].devices.toString()} ",style: TextStyle(fontSize: 9),),
                                     ],
                                   )
@@ -301,7 +349,7 @@ class _state extends State<MainPage>{
                         right: MediaQuery.of(context).size.width * .03),
                     primary: false,
                     shrinkWrap: true,
-                    itemCount: deviceProvider.roomDevices.length,
+                    itemCount: deviceProvider.roomDevices.length>6?6:deviceProvider.roomDevices.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 10,
@@ -321,14 +369,14 @@ class _state extends State<MainPage>{
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width*.15,
                               height: MediaQuery.of(context).size.height*.08,
                               margin: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height*.01,
-                                bottom: MediaQuery.of(context).size.height*.01
+                                bottom: MediaQuery.of(context).size.height*.0
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -353,11 +401,12 @@ class _state extends State<MainPage>{
                               child: Image.network(deviceProvider.roomDevices[index].device==""?"https://3.bp.blogspot.com/-oNPnxNGgBN8/U0bMAOL-PWI/AAAAAAAAAYM/ZctpMD6CjD0/s1600/sensor.jpg":deviceProvider.roomDevices[index].device.logo??"https://3.bp.blogspot.com/-oNPnxNGgBN8/U0bMAOL-PWI/AAAAAAAAAYM/ZctpMD6CjD0/s1600/sensor.jpg",color: deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,),
 
                             ),
-                            Text(deviceProvider.roomDevices[index].device==""?"Device Name":deviceProvider.roomDevices[index].device.name??"Device Name",style: TextStyle(color:deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,fontSize: 10,fontWeight: FontWeight.bold,height: 1.4),),
+                            Text(deviceProvider.roomDevices[index].userRoom==""?"Room Name":deviceProvider.roomDevices[index].userRoom["room"]["name"]??"Room Name",style: TextStyle(color:deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,fontSize: 9.5,fontWeight: FontWeight.bold,height: 1.4),),
+                            Text(deviceProvider.roomDevices[index].device==""?"Device Name":deviceProvider.roomDevices[index].device.name??"Device Name",style: TextStyle(color:deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,fontSize: 9.5,fontWeight: FontWeight.bold,height: 1.4),),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(translator.translate("On"),style: TextStyle(color:deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,fontSize: 12,height: 1.5),),
+                                Text(deviceProvider.roomDevices[index].relay=="1"?translator.translate("On"):translator.translate("off"),style: TextStyle(color:deviceProvider.roomDevices[index].relay=="1"?Colors.white:Colors.black,fontSize: 12,height: 1.5),),
                                 FlutterSwitch(
                                   height: 15.0,
                                   width: 35.0,
@@ -369,9 +418,16 @@ class _state extends State<MainPage>{
                                   activeColor: Color(AppTheme.primaryColor),
                                   value: deviceProvider.roomDevices[index].relay=="1"?true:false,
                                   onToggle: (value) {
+                                   if(deviceProvider.roomDevices[index].relay=="1"){
                                     setState(() {
-
+                                      deviceProvider.roomDevices[index].relay="0";
                                     });
+                                   }else{
+                                      setState(() {
+                                        deviceProvider.roomDevices[index].relay="1";
+                                      });
+                                   }
+                                   deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[index]);
                                   },
                                 )
                               ],
@@ -572,6 +628,7 @@ class _state extends State<MainPage>{
                             await roomProvider.addRoomToUser(MyApp.user_id, select);
                             if(roomProvider.connection==200){
                               FlutterToastr.show(translator.translate('RoomAddedSuccessfully'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
+                              loadData();
                               Navigator.pop(context);
                             }
                             else{
@@ -638,6 +695,7 @@ class _state extends State<MainPage>{
         context: context,
         builder: (BuildContext context) =>StatefulBuilder(
           builder: (BuildContext context, StateSetter setState)=> Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.black87.withOpacity(.75),
             body: Container(
               width: MediaQuery.of(context).size.width,
@@ -755,7 +813,7 @@ class _state extends State<MainPage>{
                       children: [
                         GestureDetector(
                           onTap: ()async{
-                            if(formKey.currentState!.validate()&&selectedImage!=null){
+                            if(formKey.currentState!.validate()&&image!=0){
                               setState((){
                                 loading=true;
                               });
@@ -782,6 +840,7 @@ class _state extends State<MainPage>{
 
                             }
                             else{
+                              print("fffffffffffffffffffffffffffff");
                               FlutterToastr.show(translator.translate('PleaseEnterTheNameAndSelectImageOfRoom'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
                             }
                           },
@@ -822,7 +881,7 @@ class _state extends State<MainPage>{
           ),
         ));
   }
-  Future<void> getMyLocationWeatherBy( latitude, longitude) async {
+  Future<void> getMyLocationWeatherBy( latitude, longitude) async{
     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     try {
       var url = 'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=6bcb24935e1347781776a47ff9f8ea2b';

@@ -7,12 +7,16 @@ import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Theme/StaticList.dart';
 import 'package:fssmarthome/Views/ConnectDevice.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
+import 'package:fssmarthome/Views/Devices/ConfigDevice.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../main.dart';
+import '../RoomDevices.dart';
 
 class AddDevice extends StatefulWidget{
+  int route;
+  AddDevice({required this.route});
   @override
   State<StatefulWidget> createState() {
     return _state();
@@ -22,7 +26,7 @@ class _state extends State<AddDevice>{
   int select =-1;
   int select2=-1;
   bool loading =false;
-  List <String>SwitchDeviceTypes=["1","2","3","4"];
+  List <String>SwitchDeviceTypes=["1","2","4"];
   String SelectDevice="1";
   int door=0;
   @override
@@ -68,7 +72,7 @@ class _state extends State<AddDevice>{
                          children: [
                            Row(
                              children: [
-                               select==index? Icon(Icons.check_circle_outline,size:20,color: Color(AppTheme.yellowColor),):Icon(Icons.circle_outlined,size: 20,color: Color(AppTheme.primaryColor),)
+                               select==5? Icon(Icons.check_circle_outline,size:20,color: Color(AppTheme.yellowColor),):Icon(Icons.circle_outlined,size: 20,color: Color(AppTheme.primaryColor),)
                                , SizedBox(width: 15,),
                                Text(StaticList.DevicesNames[index],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),)
 
@@ -295,11 +299,14 @@ class _state extends State<AddDevice>{
                      });
                      if(deviceProvider.connection==200){
                        FlutterToastr.show(translator.translate('DeviceHasBeenAdded'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
+                    //   Navigator.push(context, GlobalFunction.route(ConfigDevice(room_id:deviceProvider.room_id ,room_name:deviceProvider.room_name,route: widget.route,)));
+                       Navigator.push(
+                           context, GlobalFunction.route(RoomDivices(room_id:deviceProvider.room_id,name:deviceProvider.room_name,route: widget.route,)));
                        deviceProvider.getRoomDevices(deviceProvider.room_id);
                        var roomProvider= Provider.of<RoomProvider>(context, listen: false);
                        var body=GlobalFunction.getBody(27, 0, "id", "ASC", "all", "false", "true", ["user_id"], ["="], ["${MyApp.user_id}"]);
                        roomProvider.getUserRooms(body);
-                       Navigator.pop(context);
+                     //  Navigator.pop(context);
                        if(select==11){
                          deviceProvider.UpdateDoor(deviceProvider.info["data"]["id"], door);
                        }

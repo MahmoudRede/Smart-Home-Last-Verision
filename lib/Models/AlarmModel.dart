@@ -10,18 +10,20 @@ String alarmModelToJson(List<AlarmModel> data) => json.encode(List<dynamic>.from
 
 class AlarmModel {
   AlarmModel({
-    required  this.id,
+    required this.id,
     required  this.time,
+    required  this.bother,
     required  this.userRoomDeviceId,
     required  this.userRoomDevice,
-    required this.notify,
-    required this.active,
-    required this.createDates,
-    required this.updateDates,
+    required  this.notify,
+    required  this.active,
+    required   this.createDates,
+    required  this.updateDates,
   });
 
   int id;
   String time;
+  String bother;
   int userRoomDeviceId;
   UserRoomDevice userRoomDevice;
   String notify;
@@ -32,6 +34,7 @@ class AlarmModel {
   factory AlarmModel.fromJson(Map<String, dynamic> json) => AlarmModel(
     id: json["id"],
     time: json["time"],
+    bother: json["bother"],
     userRoomDeviceId: json["userRoomDevice_id"],
     userRoomDevice: UserRoomDevice.fromJson(json["userRoomDevice"]),
     notify: json["notify"],
@@ -43,6 +46,7 @@ class AlarmModel {
   Map<String, dynamic> toJson() => {
     "id": id,
     "time": time,
+    "bother": bother,
     "userRoomDevice_id": userRoomDeviceId,
     "userRoomDevice": userRoomDevice.toJson(),
     "notify": notify,
@@ -54,11 +58,11 @@ class AlarmModel {
 
 class CreateDates {
   CreateDates({
-    required  this.createdAtHuman,
-    required  this.createdAt,
+    this.createdAtHuman,
+    required this.createdAt,
   });
 
-  String createdAtHuman;
+  dynamic createdAtHuman;
   DateTime createdAt;
 
   factory CreateDates.fromJson(Map<String, dynamic> json) => CreateDates(
@@ -72,17 +76,20 @@ class CreateDates {
   };
 }
 
+
+
+
 class UpdateDates {
   UpdateDates({
-    required  this.updatedAtHuman,
+    required this.updatedAtHuman,
     required  this.updatedAt,
   });
 
-  String updatedAtHuman;
+  dynamic updatedAtHuman;
   DateTime updatedAt;
 
   factory UpdateDates.fromJson(Map<String, dynamic> json) => UpdateDates(
-    updatedAtHuman: json["updated_at_human"],
+    updatedAtHuman:json[json["updated_at_human"]],
     updatedAt: DateTime.parse(json["updated_at"]),
   );
 
@@ -94,32 +101,34 @@ class UpdateDates {
 
 class UserRoomDevice {
   UserRoomDevice({
-    required this.id,
-    required this.active,
+    required  this.id,
+    required  this.active,
     required this.readingType,
     required  this.reading,
-    required this.relay,
-    required this.relay2,
+    required this.bother,
+    required  this.relay,
+    required  this.relay2,
     required  this.relay3,
-    required  this.relay4,
+    required this.relay4,
     required this.doorType,
     required  this.switch1,
-    required this.switch2,
-    required this.switch3,
+    required  this.switch2,
+    required   this.switch3,
     required  this.switch4,
-    required this.eventValue,
-    required this.eventValue2,
-    required this.eventAction,
+    required  this.eventValue,
+    required  this.eventValue2,
+    required  this.eventAction,
     required  this.userRoom,
-    required  this.device,
-    required  this.createDates,
-    required this.updateDates,
+    required this.device,
+    required this.createDates,
+    required  this.updateDates,
   });
 
   int id;
   int active;
   String readingType;
   String reading;
+  String bother;
   String relay;
   String relay2;
   String relay3;
@@ -142,6 +151,7 @@ class UserRoomDevice {
     active: json["active"],
     readingType: json["reading_type"],
     reading: json["reading"],
+    bother: json["bother"],
     relay: json["relay"],
     relay2: json["relay_2"],
     relay3: json["relay_3"],
@@ -165,6 +175,7 @@ class UserRoomDevice {
     "active": active,
     "reading_type": readingType,
     "reading": reading,
+    "bother": bother,
     "relay": relay,
     "relay_2": relay2,
     "relay_3": relay3,
@@ -187,10 +198,10 @@ class UserRoomDevice {
 class Device {
   Device({
     required this.id,
-    required  this.name,
-    required  this.nameAr,
-    required  this.nameEn,
-    required  this.logo,
+    required this.name,
+    required this.nameAr,
+    required this.nameEn,
+    required this.logo,
     this.userId,
     required  this.createDates,
     required this.updateDates,
@@ -232,11 +243,11 @@ class UserRoom {
   UserRoom({
     required this.id,
     required this.active,
-    required  this.user,
-    required  this.room,
-    required  this.devices,
+    required this.user,
+    required this.room,
+    required this.devices,
     required this.createDates,
-    required  this.updateDates,
+    required this.updateDates,
   });
 
   int id;
@@ -271,21 +282,22 @@ class UserRoom {
 class User {
   User({
     required this.id,
-    required  this.name,
-    required  this.email,
+    required this.name,
+    required this.email,
     this.phone,
-    required  this.type,
+    this.parentId,
+    required this.type,
     this.latitude,
     this.longitude,
-    required this.rate,
-    required this.status,
-    required this.active,
+    required  this.rate,
+    required  this.status,
+    required  this.active,
     this.enableNotification,
     this.logo,
     this.country,
     this.state,
     this.region,
-    required this.createDates,
+    required  this.createDates,
     required this.updateDates,
   });
 
@@ -293,6 +305,7 @@ class User {
   String name;
   String email;
   dynamic phone;
+  dynamic parentId;
   String type;
   dynamic latitude;
   dynamic longitude;
@@ -312,6 +325,7 @@ class User {
     name: json["name"],
     email: json["email"],
     phone: json["phone"],
+    parentId: json["parent_id"],
     type: json["type"],
     latitude: json["latitude"],
     longitude: json["longitude"],
@@ -332,6 +346,7 @@ class User {
     "name": name,
     "email": email,
     "phone": phone,
+    "parent_id": parentId,
     "type": type,
     "latitude": latitude,
     "longitude": longitude,
@@ -347,3 +362,4 @@ class User {
     "update_dates": updateDates.toJson(),
   };
 }
+

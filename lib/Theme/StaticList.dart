@@ -61,7 +61,7 @@ class StaticList {
     Temperature(),
     AcControl(),
     WaterLeak(),
-    AddDevice(),
+    AddDevice(route: 1,),
   ];
   static List <String> DevicesNames=[
     "Switch 1-2-3 channels",

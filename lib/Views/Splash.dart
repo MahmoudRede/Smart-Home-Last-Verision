@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/main.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget{
   @override
@@ -18,7 +20,7 @@ class _state extends State<Splash>{
   loadData()async{
    user_id=await SharedPreferenceManager.getData("id");
    lang=await SharedPreferenceManager.getData("lang");
-   MyApp.user_name=(await SharedPreferenceManager.getData("name"))!;
+   MyApp.user_name=(await SharedPreferenceManager.getData("name"))??"";
    setState(() {
      MyApp.user_id=int.parse(user_id!);
    });
@@ -27,8 +29,24 @@ class _state extends State<Splash>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    changeLang("en");
     loadData();
   }
+   void changeLang(String lang) async {
+     SharedPreferences pref =await SharedPreferences.getInstance();
+     setState(() {
+       translator.setNewLanguage(
+         context,
+         newLanguage: '${lang}',
+         remember: true,
+         restart: false,
+       );
+       //StaticData.language = lang == 'ar' ? 'العربية' : 'English';
+     });
+     pref.setString("lang", lang);
+     MyApp.setLocale(context, Locale('${lang}'));
+
+   }
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 3), (){

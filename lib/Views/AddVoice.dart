@@ -6,6 +6,7 @@ import 'package:fssmarthome/Provider/RoomProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
+import 'package:fssmarthome/Views/FilterVoice.dart';
 import 'package:fssmarthome/Views/ListOfVoice.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -19,10 +20,11 @@ class AddVoice extends StatefulWidget{
 }
 class _state extends State<AddVoice>{
   TextEditingController device_number=new TextEditingController();
+  TextEditingController room_id=new TextEditingController();
   TextEditingController phrase=new TextEditingController();
   TextEditingController phrase_open=new TextEditingController();
   TextEditingController phrase_close=new TextEditingController();
-  TextEditingController room_id=new TextEditingController();
+
   final formKey=GlobalKey<FormState>();
   FocusNode phraseNode=new FocusNode();
   FocusNode openNode=new FocusNode();
@@ -283,7 +285,7 @@ class _state extends State<AddVoice>{
                          {
                            FlutterToastr.show(translator.translate('DataHasBeenAddedSucceffully'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
 
-                           Navigator.push(context, GlobalFunction.route(ListOfVoice()));
+                           Navigator.push(context, GlobalFunction.route(FilterVoice()));
                          }
                          else
                          {
@@ -305,7 +307,7 @@ class _state extends State<AddVoice>{
                      SizedBox(height:MediaQuery.of(context).size.height*.02),
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, GlobalFunction.route(ListOfVoice()));
+                        Navigator.push(context, GlobalFunction.route(FilterVoice()));
                       },
                        child: Container(
                          width: MediaQuery.of(context).size.width*.35,

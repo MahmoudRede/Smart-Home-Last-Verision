@@ -22,19 +22,21 @@ class _state extends State<AddAlarm>{
        body: Directionality(
          textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
          child: Container(
-           height: MediaQuery.of(context).size.height*.6,
-           width: MediaQuery.of(context).size.width*.9,
+           height: MediaQuery.of(context).size.height*.45,
+           width: MediaQuery.of(context).size.width*.8,
            decoration: BoxDecoration(
              borderRadius: BorderRadius.circular(10),
              color: Colors.white,
            ),
            margin: EdgeInsets.only(
-             top: MediaQuery.of(context).size.height*.2,
+             top: MediaQuery.of(context).size.height*.25,
              bottom: MediaQuery.of(context).size.height*.02,
-             left: MediaQuery.of(context).size.width*.05,
-             right: MediaQuery.of(context).size.width*.05
+             left: MediaQuery.of(context).size.width*.1,
+             right: MediaQuery.of(context).size.width*.1
            ),
            padding: EdgeInsets.only(
+               top: MediaQuery.of(context).size.height*.04,
+               bottom: MediaQuery.of(context).size.height*.04,
                left: MediaQuery.of(context).size.width*.05,
                right: MediaQuery.of(context).size.width*.05
            ),
@@ -44,15 +46,15 @@ class _state extends State<AddAlarm>{
                TimePickerSpinner(
                  is24HourMode: false,
                  normalTextStyle: TextStyle(
-                     fontSize: 24,
+                     fontSize: 20,
                      color: Colors.black
                  ),
                  highlightedTextStyle: TextStyle(
-                     fontSize: 24,
+                     fontSize: 20,
                      color: Color(AppTheme.yellowColor)
                  ),
                  spacing: 50,
-                 itemHeight: 80,
+                 itemHeight: 60,
                  isForce2Digits: true,
                  onTimeChange: (time) {
                    setState(() {

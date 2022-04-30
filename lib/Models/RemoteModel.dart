@@ -1,48 +1,80 @@
 // To parse this JSON data, do
 //
-//     final userRoomModel = userRoomModelFromJson(jsonString);
+//     final remoteModel = remoteModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<UserRoomModel> userRoomModelFromJson(String str) => List<UserRoomModel>.from(json.decode(str).map((x) => UserRoomModel.fromJson(x)));
+List<RemoteModel> remoteModelFromJson(String str) => List<RemoteModel>.from(json.decode(str).map((x) => RemoteModel.fromJson(x)));
 
-String userRoomModelToJson(List<UserRoomModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String remoteModelToJson(List<RemoteModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class UserRoomModel {
-  UserRoomModel({
-    required this.id,
-    required  this.active,
+class RemoteModel {
+  RemoteModel({
+    required  this.id,
+    required  this.name,
+    required  this.plusbtn,
+    required  this.minusbtn,
+    required  this.upbtn,
+    required  this.downbtn,
+    required  this.okbtn,
+    required  this.powerbtn,
+    required  this.segmant,
+    required  this.flag,
+    required  this.userId,
     required  this.user,
-    required   this.room,
-    required  this.devices,
+    required  this.active,
     required  this.createDates,
-    required  this.updateDates,
+    required this.updateDates,
   });
 
   int id;
-  int active;
+  String name;
+  String plusbtn;
+  String minusbtn;
+  String upbtn;
+  String downbtn;
+  String okbtn;
+  String powerbtn;
+  String segmant;
+  String flag;
+  int userId;
   User user;
-  Room room;
-  int devices;
+  int active;
   CreateDates createDates;
   UpdateDates updateDates;
 
-  factory UserRoomModel.fromJson(Map<String, dynamic> json) => UserRoomModel(
+  factory RemoteModel.fromJson(Map<String, dynamic> json) => RemoteModel(
     id: json["id"],
-    active: json["active"],
+    name: json["name"],
+    plusbtn: json["plusbtn"],
+    minusbtn: json["minusbtn"],
+    upbtn: json["upbtn"],
+    downbtn: json["downbtn"],
+    okbtn: json["okbtn"],
+    powerbtn: json["powerbtn"],
+    segmant: json["segmant"],
+    flag: json["flag"],
+    userId: json["user_id"],
     user: User.fromJson(json["user"]),
-    room: Room.fromJson(json["room"]),
-    devices: json["devices"],
+    active: json["active"],
     createDates: CreateDates.fromJson(json["create_dates"]),
     updateDates: UpdateDates.fromJson(json["update_dates"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "active": active,
+    "name": name,
+    "plusbtn": plusbtn,
+    "minusbtn": minusbtn,
+    "upbtn": upbtn,
+    "downbtn": downbtn,
+    "okbtn": okbtn,
+    "powerbtn": powerbtn,
+    "segmant": segmant,
+    "flag": flag,
+    "user_id": userId,
     "user": user.toJson(),
-    "room": room.toJson(),
-    "devices": devices,
+    "active": active,
     "create_dates": createDates.toJson(),
     "update_dates": updateDates.toJson(),
   };
@@ -50,7 +82,7 @@ class UserRoomModel {
 
 class CreateDates {
   CreateDates({
-    required this.createdAtHuman,
+    required  this.createdAtHuman,
     required this.createdAt,
   });
 
@@ -68,54 +100,10 @@ class CreateDates {
   };
 }
 
-class Room {
-  Room({
-    required  this.id,
-    required  this.name,
-    required  this.nameAr,
-    required this.nameEn,
-    required this.userId,
-    required this.logo,
-    required this.createDates,
-    required this.updateDates,
-  });
-
-  int id;
-  String name;
-  String nameAr;
-  String nameEn;
-  dynamic userId;
-  String logo;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  factory Room.fromJson(Map<String, dynamic> json) => Room(
-    id: json["id"],
-    name: json["name"],
-    nameAr: json["name_ar"],
-    nameEn: json["name_en"],
-    userId: json["user_id"] == null ? null : json["user_id"],
-    logo: json["logo"],
-    createDates: CreateDates.fromJson(json["create_dates"]),
-    updateDates: UpdateDates.fromJson(json["update_dates"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "name_ar": nameAr,
-    "name_en": nameEn,
-    "user_id": userId == null ? null : userId,
-    "logo": logo,
-    "create_dates": createDates.toJson(),
-    "update_dates": updateDates.toJson(),
-  };
-}
-
 class UpdateDates {
   UpdateDates({
-    required this.updatedAtHuman,
-    required this.updatedAt,
+    required  this.updatedAtHuman,
+    required   this.updatedAt,
   });
 
   String updatedAtHuman;
@@ -135,28 +123,30 @@ class UpdateDates {
 class User {
   User({
     required this.id,
-    required this.name,
-    required  this.email,
+    required   this.name,
+    required this.email,
     this.phone,
+    this.parentId,
     required this.type,
     this.latitude,
     this.longitude,
     required  this.rate,
     required  this.status,
-    required this.active,
+    required  this.active,
     this.enableNotification,
     this.logo,
     this.country,
     this.state,
     this.region,
-    required this.createDates,
-    required this.updateDates,
+    required  this.createDates,
+    required  this.updateDates,
   });
 
   int id;
   String name;
   String email;
   dynamic phone;
+  dynamic parentId;
   String type;
   dynamic latitude;
   dynamic longitude;
@@ -176,6 +166,7 @@ class User {
     name: json["name"],
     email: json["email"],
     phone: json["phone"],
+    parentId: json["parent_id"],
     type: json["type"],
     latitude: json["latitude"],
     longitude: json["longitude"],
@@ -196,6 +187,7 @@ class User {
     "name": name,
     "email": email,
     "phone": phone,
+    "parent_id": parentId,
     "type": type,
     "latitude": latitude,
     "longitude": longitude,

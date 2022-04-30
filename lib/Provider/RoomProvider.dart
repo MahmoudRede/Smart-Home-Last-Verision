@@ -141,7 +141,7 @@ class RoomProvider extends ChangeNotifier{
     else {
       FlutterToastr.show("Please Send Correct Image", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
     }}
-  Future<void>updateRoom(var id,File fileImage,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
+  Future<void>updateUserRoom(var id,File fileImage,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
   {
     if (fileImage != null) {
       try {
@@ -194,7 +194,7 @@ class RoomProvider extends ChangeNotifier{
     else {
       FlutterToastr.show("Please Send Correct Image", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
     }}
-  Future<void>updateRoom2(var id,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
+  Future<void>updateUserRoom2(var id,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
   {
     try {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -238,8 +238,116 @@ class RoomProvider extends ChangeNotifier{
       print('${e}imageuploaderror');
     }
   }
-  Future<void> deleteRoom(var id) async{
+  Future<void>updateRoom(var id,File fileImage,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
+  {
+    if (fileImage != null) {
+      try {
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        Dio dio = Dio();
+        dio.options.headers['Content-Type'] = 'application/json';
+        dio.options.headers['Authorization'] = "Bearer "+sharedPreferences.getString("token")!;
+        ///we used uri.encode to enable upload  image with arabic name
+        // var url =Uri.encodeFull(createPath('user/editProfileImage'));
+        var url = "${ServicesConfig.base_url}/rooms/$id";
+        print(url);
+        String fileName = basename(fileImage.path);
+        // print('${fileName},,,,fileName');
+        //print('${pathImage.path},,,,imagePath.path');
+
+        FormData formData = FormData.fromMap({
+          "photo": await MultipartFile.fromFile(
+              fileImage.path, filename: fileName
+              , contentType: MediaType('image', fileName
+              .split('.')
+              .last)),
+          "name_ar":name_ar,
+          "name_en":name_en,
+          "_method":"PUT"
+        });
+        print(formData.fields);
+        print("ssssssssssssssssss");
+        Response response = await dio.post(url, data: formData);
+        print('${response.data},,,,,,,,fields');
+        connection=response.statusCode!;
+        notifyListeners();
+        if (response.statusCode == 200) {
+          Map<String, dynamic>map = response.data;
+          responceInfo=response.data;
+          notifyListeners();
+          FlutterToastr.show("Room Has Been Added", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
+          notifyListeners();
+        }
+        else {
+          return null;
+        }
+      }
+      catch (e) {
+        print('${e}imageuploaderror');
+      }
+    }
+    else {
+      FlutterToastr.show("Please Send Correct Image", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
+    }}
+  Future<void>updateRoom2(var id,BuildContext context,String name_en,String name_ar,var room_id,var user_id)async
+  {
+    try {
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      Dio dio = Dio();
+      dio.options.headers['Content-Type'] = 'application/json';
+      dio.options.headers['Authorization'] = "Bearer "+sharedPreferences.getString("token")!;
+      ///we used uri.encode to enable upload  image with arabic name
+      // var url =Uri.encodeFull(createPath('user/editProfileImage'));
+      var url = "${ServicesConfig.base_url}/rooms/$id";
+      print(url);
+
+      // print('${fileName},,,,fileName');
+      //print('${pathImage.path},,,,imagePath.path');
+
+      FormData formData = FormData.fromMap({
+        "name_ar":name_ar,
+        "name_en":name_en,
+        "_method":"PUT",
+      });
+      print(formData.fields);
+      print("ssssssssssssssssss");
+      Response response = await dio.post(url, data: formData);
+      print('${response.data},,,,,,,,fields');
+      connection=response.statusCode!;
+      notifyListeners();
+      if (response.statusCode == 200) {
+        Map<String, dynamic>map = response.data;
+        responceInfo=response.data;
+        notifyListeners();
+        FlutterToastr.show("Room Has Been Added", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
+        notifyListeners();
+      }
+      else {
+        return null;
+      }
+    }
+    catch (e) {
+      print('${e}imageuploaderror');
+    }
+  }
+  Future<void> deleteUserRoom(var id) async{
     String url=ServicesConfig.base_url+"/userrooms/bulkDelete?ids[]=$id";
+    print(url);
+    var header=await ServicesConfig.getHeader();
+    try{
+      final responce=await http.delete(Uri.parse(url),headers: header);
+      print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        connection=responce.statusCode;
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void> deleteRoom(var id) async{
+    String url=ServicesConfig.base_url+"/rooms/bulkDelete?ids[]=$id";
     print(url);
     var header=await ServicesConfig.getHeader();
     try{

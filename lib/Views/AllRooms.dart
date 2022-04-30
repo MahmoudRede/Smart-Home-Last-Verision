@@ -68,14 +68,12 @@ class _state extends State<AllRooms>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
-                      },
-                      child: Padding(
-                        padding:  EdgeInsets.only(top: 8),
-                        child: Icon(Icons.arrow_back_ios),
-                      ),
-                    ),
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: Padding(
+                          padding:  EdgeInsets.only(top: 10),
+                          child: Icon(Icons.menu,size: 25,),
+                        )),
+
                     Container(
                       height: MediaQuery.of(context).size.height*.13,
                       width: MediaQuery.of(context).size.width*.55,
@@ -93,7 +91,16 @@ class _state extends State<AllRooms>{
                       ),
                       child: Text(translator.translate('All_Rooms'),textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
                     ),
-                    Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                      },
+                      child: Padding(
+                        padding:  EdgeInsets.only(top: 8),
+                        child: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
+
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*.03,),
@@ -104,7 +111,7 @@ class _state extends State<AllRooms>{
                         GestureDetector(
                           onTap: (){
                             Navigator.push(
-                                context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name ,)));
+                                context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name ,route: 2,)));
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height*.13,
@@ -190,7 +197,7 @@ class _state extends State<AllRooms>{
                                     ),
                                     GestureDetector(
                                       onTap: (){
-                                        confirmDelete(context,roomProvider.rooms[index].id);
+                                        confirmDelete(context,roomProvider.rooms[index].id,roomProvider.rooms[index].room.userId,roomProvider.rooms[index].room.id);
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
@@ -400,6 +407,7 @@ class _state extends State<AllRooms>{
         context: context,
         builder: (BuildContext context) =>StatefulBuilder(
           builder: (BuildContext context, StateSetter setState)=> Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.black87.withOpacity(.75),
             body: Container(
               width: MediaQuery.of(context).size.width,
@@ -517,7 +525,7 @@ class _state extends State<AllRooms>{
                       children: [
                         GestureDetector(
                           onTap: ()async{
-                            if(formKey.currentState!.validate()&&selectedImage!=null){
+                            if(formKey.currentState!.validate()&&image!=0){
                               setState((){
                                 loading=true;
                               });
@@ -544,6 +552,7 @@ class _state extends State<AllRooms>{
 
                             }
                             else{
+                              print("fffffffffffffffffffffffffffff");
                               FlutterToastr.show(translator.translate('PleaseEnterTheNameAndSelectImageOfRoom'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
                             }
                           },
@@ -584,7 +593,7 @@ class _state extends State<AllRooms>{
           ),
         ));
   }
-  confirmDelete(BuildContext context,var  id) {
+  confirmDelete(BuildContext context,var  id,var user_id,var room_id) {
     var roomProvider= Provider.of<RoomProvider>(context, listen: false);
     showDialog(
         context: context,
@@ -647,7 +656,10 @@ class _state extends State<AllRooms>{
                             child:   Text(translator.translate('Confirm'),style: TextStyle(color:Colors.white,fontSize: 13),),
                           ),
                           onTap: () async {
-                            await roomProvider.deleteRoom(id);
+                            await roomProvider.deleteUserRoom(id);
+                            if(MyApp.user_id==user_id){
+                               roomProvider.deleteRoom(room_id);
+                            }
                             loadData();
                             Navigator.pop(context);
                           },

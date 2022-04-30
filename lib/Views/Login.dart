@@ -176,7 +176,7 @@ class _state extends State<Login>{
                                     SharedPreferenceManager.addData("id",authProvider.LoginInfo["data"]["id"].toString());
                                     SharedPreferenceManager.addData("name",authProvider.LoginInfo["data"]["name"]);
                                     Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
-                                    setState(() {
+                                    setState((){
                                       MyApp.user_id=authProvider.LoginInfo["data"]["id"];
                                       MyApp.user_name=authProvider.LoginInfo["data"]["name"];
                                     });

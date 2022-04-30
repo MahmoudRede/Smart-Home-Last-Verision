@@ -103,7 +103,7 @@ class _EditRoomState extends State<EditRoom> {
                         Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
                       ],
                     ),
-                   this.userRoomModel.user.id==MyApp.user_id?  Column(
+                    this.userRoomModel.room.userId!=null&&this.userRoomModel.room.userId==MyApp.user_id?  Column(
                        children: [
                          Padding(
                            padding:  EdgeInsets.only(
@@ -198,10 +198,12 @@ class _EditRoomState extends State<EditRoom> {
                                  loading=true;
                                });
                           if(image==0){
-                            await roomProvider.updateRoom2(this.userRoomModel.id, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
+                            await roomProvider.updateUserRoom2(this.userRoomModel.id, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
+                            await roomProvider.updateRoom2(this.userRoomModel.room.id, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
                           }
                           else{
-                            await roomProvider.updateRoom(this.userRoomModel.id, selectedImage, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
+                            await roomProvider.updateUserRoom(this.userRoomModel.id, selectedImage, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
+                            await roomProvider.updateRoom(this.userRoomModel.room.id, selectedImage, context, name_en.text, name_ar.text,this.userRoomModel.room.id,MyApp.user_id);
                           }
 
                                if(roomProvider.connection==200){

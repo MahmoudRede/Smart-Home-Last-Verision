@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
+import 'package:fssmarthome/Models/UserModel.dart';
 import 'package:fssmarthome/Provider/ServicesConfig.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:http_parser/http_parser.dart';
@@ -10,6 +11,8 @@ import 'package:path/path.dart';
 import 'package:http/http.dart'as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Views/Custom/GlobalFunction.dart';
 class AuthProvider extends ChangeNotifier{
   bool loadingImage=false;
   late int statusCodeConnection;
@@ -17,6 +20,7 @@ class AuthProvider extends ChangeNotifier{
   late Map<String,dynamic>RegisterInfo;
   late Map<String,dynamic>updateInfo;
    Map<String,dynamic>updateInfoTechnical={};
+   List<UsersModel>users=[];
   Map<String,dynamic>userInfo={};
   Map<String,dynamic>forgetPassword={};
   Future<void> LoginServices(String email,String password) async{
@@ -286,4 +290,56 @@ class AuthProvider extends ChangeNotifier{
     else {
       FlutterToastr.show("Please Send Correct Image", context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
     }}
+  Future<void> AddUser(String name,String phone,String email,String password,String password_confirmation) async{
+    String url=ServicesConfig.base_url+"/add_user";
+    print(url);
+    var body={
+      "name":name,
+      "phone":phone,
+      "email" : email,
+      "password" : password,
+      "password_confirmation":password_confirmation,
+    };
+    print(body);
+    var header=await ServicesConfig.getHeaderWithToken();
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers: header);
+      print(responce.body);
+      print("-----------------------------------------------------------------");
+      if(responce.body.isNotEmpty)
+      {
+        statusCodeConnection=responce.statusCode;
+        RegisterInfo=json.decode(responce.body);
+        print(RegisterInfo);
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  Future<void>getUsers()async{
+    var body=GlobalFunction.getBody(300, 0, "id", "ASC", "all", "false", "true", ["parent_id"], ["="], [MyApp.user_id]);
+    var url=ServicesConfig.base_url+"/users/$body";
+    var header=await ServicesConfig.getHeaderWithToken();
+    try
+    {
+      final response = await http.get(Uri.parse(url),headers: header);
+      if(response.statusCode==200 && response.body!=null)
+      {
+        print("enter ");
+        print(json.decode(utf8.decode(response.bodyBytes))["data"]);
+
+        List slideritems = json.decode(utf8.decode(response.bodyBytes))["data"]["data"];
+        users = slideritems.map((e) => UsersModel.fromJson(e)).toList();
+        print(users.length);
+        print("devicesdevicesdevicesdevicesdevicesdevicesdevices");
+        notifyListeners();
+      }
+    }
+    catch(e)
+    {
+      print(e);
+    }
+  }
 }

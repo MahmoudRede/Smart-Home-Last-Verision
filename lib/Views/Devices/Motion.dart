@@ -47,22 +47,33 @@ class _state extends State<Motion>{
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Color(AppTheme.yellowColor)),),
+                Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
-                Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
-                     onChanged: (val){
-                  if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"){
-                    deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="0";
-                    setState(() {
-                    });
+                FlutterSwitch(
+                  height: 15.0,
+                  width: 30.0,
+                  padding: 4.0,
+                  toggleSize: 9.0,
+                  borderRadius: 10.0,
+                  inactiveColor: Colors.black12,
+                  inactiveToggleColor: Colors.black26,
+                  activeColor: Color(AppTheme.primaryColor),
+                  value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
+                  onToggle: (value) {
+                    if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"){
+                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="0";
+                      setState(() {
+                      });
+                    }
+                    else{
+                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="1";
+                      setState(() {
+                      });
+                    }
+                    deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                   }
-                  else{
-                    deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="1";
-                    setState(() {
-                    });
-                  }
-                  deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
-                })
+                ),
+
               ],
             ),
             SizedBox( height: MediaQuery.of(context).size.height*.035),
@@ -165,13 +176,16 @@ class _state extends State<Motion>{
               children: [
                 Text(translator.translate('DeviceAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
+
                 FlutterSwitch(
-                  height: 16.0,
-                  width: 35.0,
+                  height: 15.0,
+                  width: 30.0,
                   padding: 4.0,
                   toggleSize: 9.0,
                   borderRadius: 10.0,
-                  activeColor: Color(AppTheme.yellowColor),
+                  inactiveColor: Colors.black12,
+                  inactiveToggleColor: Colors.black26,
+                  activeColor: Color(AppTheme.primaryColor),
                   value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
                   onToggle: (value) {
                     if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){

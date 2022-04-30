@@ -97,6 +97,7 @@ class _state extends State<Register>{
                             width: MediaQuery.of(context).size.width*.8,
                             child: TextFormField(
                               focusNode: emailNode,
+                              keyboardType: TextInputType.emailAddress,
                               style: TextStyle(color: Colors.white),
                               controller: email,
                               onFieldSubmitted: (value){
@@ -127,6 +128,7 @@ class _state extends State<Register>{
                           Container(
                             width: MediaQuery.of(context).size.width*.8,
                             child: TextFormField(
+                              keyboardType: TextInputType.phone,
                               focusNode: phoneNode,
                               style: TextStyle(color: Colors.white),
                               controller: phone,

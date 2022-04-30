@@ -14,19 +14,12 @@ class ListOfVoice extends StatefulWidget{
   }
 }
 class _state extends  State<ListOfVoice>{
-  bool loading =true;
-  loadData()async{
-    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
-    await  deviceProvider.getVoices();
-    setState(() {
-      loading=false;
-    });
-  }
+  bool loading =false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
+    //loadData();
   }
   @override
   Widget build(BuildContext context) {
@@ -204,7 +197,6 @@ class _state extends  State<ListOfVoice>{
                           ),
                           onTap: () async {
                             await deviceProvider.deleteVoice(id);
-                            loadData();
                             Navigator.pop(context);
                           },
                         ),

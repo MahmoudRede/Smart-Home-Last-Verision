@@ -32,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_offline:
   flutter_switch:
-  localize_and_translate: ^4.1.0
+  localize_and_translate:
   firebase_messaging: ^10.0.4
   flutter_local_notifications:
   provider:
@@ -42,6 +42,7 @@ dependencies:
   google_sign_in:
   flutter_facebook_auth: ^4.0.1
   intl:
+  webview_flutter:
   image_picker:
   flutter_toastr:
   firebase_core: ^1.9.0

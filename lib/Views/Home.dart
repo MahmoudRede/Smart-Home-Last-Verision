@@ -6,6 +6,7 @@ import 'package:fssmarthome/Views/MainPage.dart';
 import 'package:fssmarthome/Views/More.dart';
 import 'package:fssmarthome/Views/MyDrawer.dart';
 import 'package:fssmarthome/Views/RemoteControl.dart';
+import 'package:fssmarthome/Views/Timing.dart';
 import 'package:fssmarthome/Views/VoiceControl.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 class Home extends StatefulWidget {
@@ -21,7 +22,7 @@ class _State extends State<Home> {
   List<Widget>itemsUi=[
   MainPage(),
   VoiceControl(),
-  RemoteControl(),
+  Timing(),
   AllRooms(),
   More()
   ];
@@ -67,8 +68,8 @@ class _State extends State<Home> {
                 //  title: Text(translator.translate("Voive"),style: TextStyle(height: 1.8,fontSize: 11),)
               ),
               BottomNavigationBarItem(
-                  icon:  ImageIcon(AssetImage("assets/images/barIcons/remote-control 1.png"),size: 20,),
-                  label: translator.translate("Romote"),
+                  icon:  ImageIcon(AssetImage("assets/images/barIcons/timing.png"),size: 20,),
+                  label: translator.translate('Timing'),
                  // title: Text(translator.translate("Romote"),style: TextStyle(height: 1.8,fontSize: 11),)
               ),
               BottomNavigationBarItem(

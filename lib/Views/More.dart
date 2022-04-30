@@ -6,10 +6,13 @@ import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Provider/AuthProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+import 'package:fssmarthome/Views/Users.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
+
+import 'Custom/GlobalFunction.dart';
 
 class More extends StatefulWidget{
   @override
@@ -33,9 +36,9 @@ class _state extends State<More>{
     var userProvider=Provider.of<AuthProvider>(context, listen: false);
       await  userProvider.getUserInfo();
     setState(() {
-      name.text=userProvider.userInfo["name"];
+      name.text=userProvider.userInfo["name"]??"";
       phone.text=userProvider.userInfo["phone"]??"";
-      email.text=userProvider.userInfo["email"];
+      email.text=userProvider.userInfo["email"]??"";
       loading=false;
     });
   }
@@ -66,14 +69,12 @@ class _state extends State<More>{
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
-                        },
-                        child: Padding(
-                          padding:  EdgeInsets.only(top: 8),
-                          child: Icon(Icons.arrow_back_ios),
-                        ),
-                      ),
+                          onTap: () => Scaffold.of(context).openDrawer(),
+                          child: Padding(
+                            padding:  EdgeInsets.only(top: 10),
+                            child: Icon(Icons.menu,size: 25,),
+                          )),
+
                       Container(
                         height: MediaQuery.of(context).size.height*.13,
                         width: MediaQuery.of(context).size.width*.55,
@@ -91,10 +92,19 @@ class _state extends State<More>{
                         ),
                         child: Text(translator.translate("Profile"),textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
                       ),
-                      Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                        },
+                        child: Padding(
+                          padding:  EdgeInsets.only(top: 8),
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
+                      ),
+
                     ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height*.05,),
+                  SizedBox(height: MediaQuery.of(context).size.height*.035,),
                   Container(
                     width: MediaQuery.of(context).size.width,
                    // height: MediaQuery.of(context).size.height*.65,
@@ -111,7 +121,7 @@ class _state extends State<More>{
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: MediaQuery.of(context).size.height*.04,),
+                        SizedBox(height: MediaQuery.of(context).size.height*.015,),
                         Text("${translator.translate("Name")} :",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                         SizedBox(height: 3,),
                         Container(
@@ -180,6 +190,27 @@ class _state extends State<More>{
                                 ),
                                 alignment: Alignment.center,
                                 child:Text(translator.translate("Edit"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height*.02,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: ()async{
+                                Navigator.push(context, GlobalFunction.route(Users()));
+                              },
+                              child: Container(
+                                  height: MediaQuery.of(context).size.height*.065,
+                                  width: MediaQuery.of(context).size.width*.8,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color:loadingBtn? Colors.black12:Color(AppTheme.primaryColor)
+                                  ),
+                                  alignment: Alignment.center,
+                                  child:Text(translator.translate("users"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
                               ),
                             )
                           ],

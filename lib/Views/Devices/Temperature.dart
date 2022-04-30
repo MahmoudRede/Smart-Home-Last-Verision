@@ -38,7 +38,7 @@ class _state extends State<Temperature>{
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   Text(translator.translate('Temperature&Humiditydegrees'),style: TextStyle(fontSize: 12),),
+                   Text(translator.translate('Temperature&Humiditydegrees'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                    Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
                         onChanged: (value) {
                           if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){
@@ -193,7 +193,7 @@ class _state extends State<Temperature>{
          ),
           SizedBox(height: MediaQuery.of(context).size.height*.02,),
           Container(
-            height: MediaQuery.of(context).size.height*.28,
+            height: MediaQuery.of(context).size.height*.32,
             width: MediaQuery.of(context).size.width*.9,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -209,16 +209,17 @@ class _state extends State<Temperature>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(translator.translate('Temperature&HumidityEvent'),style: TextStyle(fontSize: 12),),
-                    Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=="1"?true:false,
-                      onChanged: (value) {
-                        if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=="1"){
-                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue="0";
+                    Text(translator.translate('Temperature&HumidityEvent'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                    Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
+                      onChanged: (value)
+                      {
+                        if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"){
+                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="0";
                           setState(() {
                           });
                         }
                         else{
-                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue="1";
+                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction="1";
                           setState(() {
                           });
                         }
@@ -230,7 +231,7 @@ class _state extends State<Temperature>{
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height*.19,
+                      height: MediaQuery.of(context).size.height*.24,
                       width: MediaQuery.of(context).size.width*.38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -258,8 +259,43 @@ class _state extends State<Temperature>{
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*.02,top: MediaQuery.of(context).size.height*.02 ),
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*.00,top: MediaQuery.of(context).size.height*.02 ),
                               child: Text(translator.translate('Temperatur'),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
+                          Container(
+                            height: MediaQuery.of(context).size.height*.06,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(translator.translate('Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                                SizedBox(width: 10,),
+                                Container(
+                                  height: MediaQuery.of(context).size.height*.06,
+                                  child:  FlutterSwitch(
+                                      height: 15.0,
+                                      width: 35.0,
+                                      padding: 4.0,
+                                      toggleSize: 9.0,
+                                      borderRadius: 10.0,
+                                      activeColor: Color(AppTheme.yellowColor),
+                                      value: deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"?true:false,
+                                      onToggle: (value) {
+                                        if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"){
+                                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="0";
+                                          setState(() {
+                                          });
+                                        }
+                                        else{
+                                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="1";
+                                          setState(() {
+                                          });
+                                        }
+                                        deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                      }
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -269,7 +305,7 @@ class _state extends State<Temperature>{
                                     setState(() {
                                       deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue)-1).toString();
                                     });
-                                    deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                  //  deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                                   }
                                 },
                                 child: Container(
@@ -291,7 +327,7 @@ class _state extends State<Temperature>{
                                     setState(() {
                                       deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue)+1).toString();
                                     });
-                                    deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                    //deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                                   },
                                 child: Container(
                                   height: 23,width:26,
@@ -307,41 +343,29 @@ class _state extends State<Temperature>{
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                  height: MediaQuery.of(context).size.height*.07,
-                                  child:  FlutterSwitch(
-                                    height: 15.0,
-                                    width: 35.0,
-                                    padding: 4.0,
-                                    toggleSize: 9.0,
-                                    borderRadius: 10.0,
-                                    activeColor: Color(AppTheme.yellowColor),
-                                    value: deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"?true:false,
-                                    onToggle: (value) {
-                                      if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"){
-                                        deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="0";
-                                        setState(() {
-                                        });
-                                      }
-                                      else{
-                                        deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2="1";
-                                        setState(() {
-                                        });
-                                      }
-                                      deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
-                                    }
-                                  ),
-                              )
-                            ],
-                          )
+                          SizedBox(height: 10,),
+                          GestureDetector(
+                            onTap: (){
+                              deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                            },
+                            child: Container(
+                              width: 45,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(AppTheme.yellowColor)
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(translator.translate('Ok'),style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+
                         ],
                       ),
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height*.19,
+                      height: MediaQuery.of(context).size.height*.24,
                       width: MediaQuery.of(context).size.width*.38,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -369,8 +393,43 @@ class _state extends State<Temperature>{
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*.02,top: MediaQuery.of(context).size.height*.02 ),
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*.00,top: MediaQuery.of(context).size.height*.02 ),
                               child: Text(translator.translate('Humidity'),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
+                          Container(
+                            height: MediaQuery.of(context).size.height*.06,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(translator.translate('Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                                SizedBox(width: 10,),
+                                Container(
+                                  height: MediaQuery.of(context).size.height*.06,
+                                  child:  FlutterSwitch(
+                                      height: 15.0,
+                                      width: 35.0,
+                                      padding: 4.0,
+                                      toggleSize: 9.0,
+                                      borderRadius: 10.0,
+                                      activeColor: Color(AppTheme.primaryColor),
+                                      value: deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3=="1"?true:false,
+                                      onToggle: (value) {
+                                        if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3=="1"){
+                                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3="0";
+                                          setState(() {
+                                          });
+                                        }
+                                        else{
+                                          deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3="1";
+                                          setState(() {
+                                          });
+                                        }
+                                        deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                      }
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -378,9 +437,10 @@ class _state extends State<Temperature>{
                                 onTap: (){
                                   if(int.parse(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2)>0){
                                     setState(() {
-                                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2)-1).toString();
+                                      deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2=(int.parse(deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2)-1).toString();
                                     });
-                                    deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+
+                                   // deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                                   }
                                 },
                                 child: Container(
@@ -402,7 +462,7 @@ class _state extends State<Temperature>{
                                   setState(() {
                                     deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2=(int.parse( deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventValue2??"0")+1).toString();
                                   });
-                                  deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                                  //deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
                                 },
                                 child: Container(
                                   height: 23,width:26,
@@ -418,36 +478,24 @@ class _state extends State<Temperature>{
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                height: MediaQuery.of(context).size.height*.07,
-                                child:  FlutterSwitch(
-                                  height: 15.0,
-                                  width: 35.0,
-                                  padding: 4.0,
-                                  toggleSize: 9.0,
-                                  borderRadius: 10.0,
-                                  activeColor: Color(AppTheme.primaryColor),
-                                    value: deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3=="1"?true:false,
-                                    onToggle: (value) {
-                                      if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3=="1"){
-                                        deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3="0";
-                                        setState(() {
-                                        });
-                                      }
-                                      else{
-                                        deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay3="1";
-                                        setState(() {
-                                        });
-                                      }
-                                      deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
-                                    }
-                                ),
-                              )
-                            ],
-                          )
+                          SizedBox(height: 10,),
+                          GestureDetector(
+                            onTap: (){
+                              deviceProvider.UpdateDeviceData(deviceProvider.roomDevices[deviceProvider.SelectedIndex]);
+                            },
+                            child: Container(
+                              width: 45,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(AppTheme.yellowColor)
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(translator.translate('Ok'),style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+
                         ],
                       ),
                     )

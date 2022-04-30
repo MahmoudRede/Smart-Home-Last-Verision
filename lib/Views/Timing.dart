@@ -7,6 +7,7 @@ import 'package:fssmarthome/Provider/DeviceProvider.dart';
 import 'package:fssmarthome/Provider/RoomProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+import 'package:fssmarthome/Views/FilterTiming.dart';
 import 'package:fssmarthome/Views/ListOfTiming.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +73,46 @@ class _state extends State<Timing>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(title:translator.translate('Timing')),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: Padding(
+                          padding:  EdgeInsets.only(top: 10),
+                          child: Icon(Icons.menu,size: 25,),
+                        )),
+
+                    Container(
+                      height: MediaQuery.of(context).size.height*.13,
+                      width: MediaQuery.of(context).size.width*.55,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(1000),
+                              bottomRight: Radius.circular(1000)
+                          ),
+                          color: Colors.white
+                      ),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width*.02,
+                        right: MediaQuery.of(context).size.width*.02,
+                      ),
+                      child: Text(translator.translate('Timing'),textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                      },
+                      child: Padding(
+                        padding:  EdgeInsets.only(top: 8),
+                        child: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
+
+                  ],
+                ),
                 SizedBox(height:MediaQuery.of(context).size.height*.03),
                 Text(translator.translate('CreateTiming'),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                 SizedBox(height:MediaQuery.of(context).size.height*.02),
@@ -348,7 +388,7 @@ class _state extends State<Timing>{
                           if(deviceProvider.connection==200)
                             {
                               FlutterToastr.show(translator.translate('dataAdded'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
-                              Navigator.push(context, GlobalFunction.route(ListOfTiming()));
+                              Navigator.push(context, GlobalFunction.route(FilterTiming()));
                             }
                           else
                           {
@@ -369,7 +409,7 @@ class _state extends State<Timing>{
                       SizedBox(height:MediaQuery.of(context).size.height*.02),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, GlobalFunction.route(ListOfTiming()));
+                          Navigator.push(context, GlobalFunction.route(FilterTiming()));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width*.35,

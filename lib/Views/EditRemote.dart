@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Models/RemoteModel.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
@@ -12,13 +13,15 @@ import '../Provider/DeviceProvider.dart';
 import '../Provider/RoomProvider.dart';
 import '../main.dart';
 
-class CreateSignal extends StatefulWidget{
+class EditRemote extends StatefulWidget{
+  RemoteModel remoteModel;
+  EditRemote({required this.remoteModel});
   @override
   State<StatefulWidget> createState() {
     return _state();
   }
 }
-class _state extends State<CreateSignal>{
+class _state extends State<EditRemote>{
   TextEditingController plusbtn=new TextEditingController();
   TextEditingController minusbtn=new TextEditingController();
   TextEditingController upbtn=new TextEditingController();
@@ -37,13 +40,19 @@ class _state extends State<CreateSignal>{
   bool loading2 =false;
   String message="";
   loadData()async{
-    var roomProvider= Provider.of<RoomProvider>(context, listen: false);
-    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
-    var body=GlobalFunction.getBody(27, 0, "id", "ASC", "all", "false", "true", ["user_id"], ["="], ["${MyApp.user_id}"]);
-    await roomProvider.getUserRooms(body);
     setState(() {
       loading=false;
+      plusbtn.text=widget.remoteModel.powerbtn;
+      minusbtn.text=widget.remoteModel.minusbtn;
+      upbtn.text=widget.remoteModel.upbtn;
+      downbtn.text=widget.remoteModel.downbtn;
+      powerbtn.text=widget.remoteModel.powerbtn;
+      okbtn.text=widget.remoteModel.okbtn;
+      name.text=widget.remoteModel.name;
+
     });
+    var roomProvider= Provider.of<RoomProvider>(context, listen: false);
+    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
 
     print("-----------------------------------------------------------------------");
   }
@@ -86,7 +95,6 @@ class _state extends State<CreateSignal>{
                     key: formKey,
                     child:Column(
                       children: [
-                        SizedBox(height:MediaQuery.of(context).size.height*.02),
                         Container(
                           height: MediaQuery.of(context).size.height*.06,
                           child: TextFormField(
@@ -371,15 +379,15 @@ class _state extends State<CreateSignal>{
                     GestureDetector(
                       onTap: ()async{
                         if(formKey.currentState!.validate()){
-                         await  deviceProvider.addRemote(name.text, plusbtn.text, minusbtn.text, upbtn.text, downbtn.text, powerbtn.text, okbtn.text);
-                         if(deviceProvider.connection==200){
-                           Navigator.push(
-                               context, GlobalFunction.route(ListOfSignals()));
-                         }else{
-                           setState(() {
-                             message=deviceProvider.info["errors"].toString();
-                           });
-                         }
+                          await  deviceProvider.updateRemote(widget.remoteModel.id,name.text, plusbtn.text, minusbtn.text, upbtn.text, downbtn.text, powerbtn.text, okbtn.text);
+                          if(deviceProvider.connection==200){
+                            Navigator.pop(context);
+                            deviceProvider.getRemotes();
+                          }else{
+                            setState(() {
+                              message=deviceProvider.info["errors"].toString();
+                            });
+                          }
                         }
                       },
                       child: Container(
@@ -390,28 +398,27 @@ class _state extends State<CreateSignal>{
                             color: Color(AppTheme.primaryColor)
                         ),
                         alignment: Alignment.center,
-                        child: Text(translator.translate('Save'),style: TextStyle(color: Colors.white),),
+                        child: Text(translator.translate('Edit'),style: TextStyle(color: Colors.white),),
                       ),
                     ),
-                    SizedBox(height:MediaQuery.of(context).size.height*.02),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                            context, GlobalFunction.route(ListOfSignals()));
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*.35,
-                        height: MediaQuery.of(context).size.height*.06,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color:  Color(AppTheme.primaryColor),width: 1),
-                            color: Colors.white
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(translator.translate('ViewList'),style: TextStyle(color: Color(AppTheme.primaryColor)),),
-                      ),
-                    ),
-                    SizedBox(height:MediaQuery.of(context).size.height*.02),
+                     SizedBox(height:MediaQuery.of(context).size.height*.02),
+                    // GestureDetector(
+                    //   onTap: (){
+                    //     Navigator.push(
+                    //         context, GlobalFunction.route(ListOfSignals()));
+                    //   },
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width*.35,
+                    //     height: MediaQuery.of(context).size.height*.06,
+                    //     decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(20),
+                    //         border: Border.all(color:  Color(AppTheme.primaryColor),width: 1),
+                    //         color: Colors.white
+                    //     ),
+                    //     alignment: Alignment.center,
+                    //     child: Text(translator.translate('ViewList'),style: TextStyle(color: Color(AppTheme.primaryColor)),),
+                    //   ),
+                    // ),
                   ],
                 )
               ],
