@@ -1,13 +1,10 @@
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fssmarthome/Local/AppLanguage.dart';
 import 'package:fssmarthome/Provider/DeviceProvider.dart';
 import 'package:fssmarthome/Provider/RoomProvider.dart';
-
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Home.dart';
 import 'package:fssmarthome/Views/Language.dart';

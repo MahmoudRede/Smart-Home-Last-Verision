@@ -5,6 +5,7 @@ import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Provider/AuthProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/Views/AdminRegister.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/ForgetPassword.dart';
 import 'package:fssmarthome/Views/Register.dart';
@@ -51,194 +52,211 @@ class _state extends State<Login>{
                       height: MediaQuery.of(context).size.height*.23,
                       fit: BoxFit.cover,
                     ),
-                    Text(translator.translate("WelcomeBack"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
+                    Text(translator.translate("Welcome Back"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
                     SizedBox(height: MediaQuery.of(context).size.height*.05,),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*.67,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(50),
-                          topLeft: Radius.circular(50)
+                    SingleChildScrollView(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            topLeft: Radius.circular(50)
+                          ),
+                          color: Color(AppTheme.primaryColor)
                         ),
-                        color: Color(AppTheme.primaryColor)
-                      ),
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height*.07
-                      ),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width*.8,
-                              child: TextFormField(
-                                style: TextStyle(color: Colors.white),
-                                controller: name,
-                                onFieldSubmitted: (value){
-                                  FocusScope.of(context).requestFocus(passwordNode);
-                                },
-                                validator: (value){
-                                  if(value!.isEmpty){
-                                    return translator.translate("EnterUsername");
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                    errorStyle: TextStyle(fontSize: 12),
-                                  enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                 ),
-                                  prefixIcon: Icon(Icons.person,color: Colors.white,),
-                                  contentPadding: EdgeInsets.only(
-                                    left: 10,right: 10,top: 10,bottom: 10
-                                  ),
-                                  hintText: translator.translate("UserName"),
-                                  hintStyle: TextStyle(color: Colors.white,fontSize: 14),
-                                  fillColor: Colors.white
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 15,),
-                            Container(
-                              width: MediaQuery.of(context).size.width*.8,
-                              child: TextFormField(
-                                focusNode: passwordNode,
-                                onFieldSubmitted: (value){
-                                  FocusScope.of(context).requestFocus(FocusNode());
-                                },
-                                validator: (value){
-                                  if(value!.isEmpty){
-                                    return translator.translate("EnterPassword");
-                                  }
-                                  return null;
-                                },
-                                style: TextStyle(color: Colors.white),
-                                controller: password,
-                                obscureText: ishidden,
-                                decoration: InputDecoration(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height*.07
+                        ),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width*.8,
+                                child: TextFormField(
+                                  style: TextStyle(color: Colors.white),
+                                  controller: name,
+                                  onFieldSubmitted: (value){
+                                    FocusScope.of(context).requestFocus(passwordNode);
+                                  },
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return translator.translate("EnterUsername");
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      errorStyle: TextStyle(fontSize: 12),
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
-                                    ),
-                                    prefixIcon: GestureDetector(
-                                        onTap: (){
-                                          setState(() {
-                                            ishidden=!ishidden;
-                                          });
-                                        },
-                                        child: Icon(ishidden?Icons.lock:Icons.lock_open,color: Colors.white,)),
+                                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                   ),
+                                    prefixIcon: Icon(Icons.person,color: Colors.white,),
                                     contentPadding: EdgeInsets.only(
-                                        left: 10,right: 10,top: 10,bottom: 10
+                                      left: 10,right: 10,top: 10,bottom: 10
                                     ),
-                                    hintText: translator.translate("Password"),
-                                    errorStyle: TextStyle(fontSize: 12),
+                                    hintText: translator.translate("User Name"),
                                     hintStyle: TextStyle(color: Colors.white,fontSize: 14),
                                     fillColor: Colors.white
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*.8,
-                              child: GestureDetector(
-                                onTap: (){
-                                  Navigator.push(
-                                      context, GlobalFunction.route(ForgetPassword()));
+                              SizedBox(height: 15,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*.8,
+                                child: TextFormField(
+                                  focusNode: passwordNode,
+                                  onFieldSubmitted: (value){
+                                    FocusScope.of(context).requestFocus(FocusNode());
+                                  },
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return translator.translate("EnterPassword");
+                                    }
+                                    return null;
+                                  },
+                                  style: TextStyle(color: Colors.white),
+                                  controller: password,
+                                  obscureText: ishidden,
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                      ),
+                                      prefixIcon: GestureDetector(
+                                          onTap: (){
+                                            setState(() {
+                                              ishidden=!ishidden;
+                                            });
+                                          },
+                                          child: Icon(ishidden?Icons.lock:Icons.lock_open,color: Colors.white,)),
+                                      contentPadding: EdgeInsets.only(
+                                          left: 10,right: 10,top: 10,bottom: 10
+                                      ),
+                                      hintText: translator.translate("Password"),
+                                      errorStyle: TextStyle(fontSize: 12),
+                                      hintStyle: TextStyle(color: Colors.white,fontSize: 14),
+                                      fillColor: Colors.white
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width*.8,
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(
+                                        context, GlobalFunction.route(ForgetPassword()));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height*.01,
+                                      bottom: MediaQuery.of(context).size.height*.01
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(translator.translate("Forget Password"),style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                              message==""?SizedBox():Container(
+                                  width: MediaQuery.of(context).size.width*.8,
+                                  child: Text(message,textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: Colors.red,fontWeight: FontWeight.bold),)),
+                              SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                              GestureDetector
+                                (
+                                onTap: ()async{
+                                  if(formKey.currentState!.validate()){
+                                    setState(() {
+                                      loading=true;
+                                    });
+                                    await authProvider.LoginServices(name.text, password.text);
+                                    if(authProvider.statusCodeConnection==200){
+                                      SharedPreferenceManager.addData("token",authProvider.LoginInfo["access_token"]);
+                                      SharedPreferenceManager.addData("id",authProvider.LoginInfo["data"]["id"].toString());
+                                      SharedPreferenceManager.addData("name",authProvider.LoginInfo["data"]["name"]);
+                                      Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+                                      setState((){
+                                        MyApp.user_id=authProvider.LoginInfo["data"]["id"];
+                                        MyApp.user_name=authProvider.LoginInfo["data"]["name"];
+                                      });
+                                    }
+                                    else{
+                                     setState(() {
+                                       loading=false;
+                                       message=authProvider.LoginInfo["message"][0].toString();
+                                     });
+                                      }
+
+
+                                  }
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height*.01,
-                                    bottom: MediaQuery.of(context).size.height*.01
+                                  height: MediaQuery.of(context).size.height*.065,
+                                  width: MediaQuery.of(context).size.width*.8,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                                      color:loading?Colors.black12:Colors.white),
+                                alignment: Alignment.center,
+                                child: Text(translator.translate("Login"),style: TextStyle(fontWeight: FontWeight.bold),),
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height*.03,),
+                              Text(translator.translate("OR"),style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                              SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: ()=>_handleSignIn(),
+                                    child: Image.asset("assets/images/google.png",width: 28,height: 28,),
                                   ),
+                                  SizedBox(width: 30,),
+                                  GestureDetector(
+                                    onTap: ()=>faceLogin(),
+                                    child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.blue),
+                                        child: Image.asset("assets/images/fb.png",width: 23,height: 23,color: Colors.white,)),
+                                  ),
+
+                                ],
+                              ),
+                                SizedBox(height: 30,),
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, GlobalFunction.route(Register()));
+                                   // _handleSignIn();
+                                  },
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(translator.translate("ForgetPassword2"),style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
-                                    ],
-                                  ),
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                   children: [
+                                    Text(translator.translate("You don\'t have an account?"),style: TextStyle(fontSize: 14,color: Colors.white),),
+                                     SizedBox(width: 10,),
+                                     Text(translator.translate("SignUp"),style: TextStyle(fontSize: 15,color: Color(AppTheme.yellowColor)),)
+                                     ],
+                         ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*.025,),
-                            message==""?SizedBox():Container(
-                                width: MediaQuery.of(context).size.width*.8,
-                                child: Text(message,textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: Colors.red,fontWeight: FontWeight.bold),)),
-                            SizedBox(height: MediaQuery.of(context).size.height*.025,),
-                            GestureDetector
-                              (
-                              onTap: ()async{
-                                if(formKey.currentState!.validate()){
-                                  setState(() {
-                                    loading=true;
-                                  });
-                                  await authProvider.LoginServices(name.text, password.text);
-                                  if(authProvider.statusCodeConnection==200){
-                                    SharedPreferenceManager.addData("token",authProvider.LoginInfo["access_token"]);
-                                    SharedPreferenceManager.addData("id",authProvider.LoginInfo["data"]["id"].toString());
-                                    SharedPreferenceManager.addData("name",authProvider.LoginInfo["data"]["name"]);
-                                    Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
-                                    setState((){
-                                      MyApp.user_id=authProvider.LoginInfo["data"]["id"];
-                                      MyApp.user_name=authProvider.LoginInfo["data"]["name"];
-                                    });
-                                  }
-                                  else{
-                                   setState(() {
-                                     loading=false;
-                                     message=authProvider.LoginInfo["message"][0].toString();
-                                   });
-                                    }
-
-
-                                }
-                              },
-                              child: Container(
-                                height: MediaQuery.of(context).size.height*.065,
-                                width: MediaQuery.of(context).size.width*.8,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
-                                    color:loading?Colors.black12:Colors.white),
-                              alignment: Alignment.center,
-                              child: Text(translator.translate("Login"),style: TextStyle(fontWeight: FontWeight.bold),),
-                              ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*.03,),
-                            Text(translator.translate("OR"),style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold),),
-                            SizedBox(height: MediaQuery.of(context).size.height*.01,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: ()=>_handleSignIn(),
-                                  child: Image.asset("assets/images/google.png",width: 30,height: 30,),
-                                ),
-                                SizedBox(width: 30,),
-                                GestureDetector(
-                                  onTap: ()=>faceLogin(),
-                                  child: Container(
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.blue),
-                                      child: Image.asset("assets/images/fb.png",width: 25,height: 25,color: Colors.white,)),
-                                ),
-
-                              ],
-                            ),
-                            SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                            Expanded(child: SizedBox(),),
+                              SizedBox(height: MediaQuery.of(context).size.height*.02,),
                               GestureDetector(
                                 onTap: (){
-                                  Navigator.push(context, GlobalFunction.route(Register()));
-                                 // _handleSignIn();
+                                  Navigator.push(context, GlobalFunction.route(AdminRegister()));
+                                  // _handleSignIn();
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                 children: [
-                                  Text(translator.translate("Youdonthaveanaccount?"),style: TextStyle(fontSize: 12,color: Colors.white),),
-                                 Text(translator.translate("SignUp"),style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
-                                   ],
-                       ),
+                                  children: [
+                                    Text(translator.translate("Login as an admin"),style: TextStyle(fontSize: 14,color: Colors.white),),
+                                    SizedBox(width: 10,),
+                                    Text(translator.translate("SignUp"),style: TextStyle(fontSize: 15,color: Color(AppTheme.yellowColor)),)
+                                  ],
+                                ),
                               ),
-                            SizedBox(height: MediaQuery.of(context).size.height*.02,),
 
-                          ],
+                              SizedBox(height: 15,),
+
+                            ],
+                          ),
                         ),
                       ),
                     )
