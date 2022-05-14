@@ -1,0 +1,2 @@
+
+String? loginUrl ='/auth/register';

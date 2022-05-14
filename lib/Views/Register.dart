@@ -225,7 +225,7 @@ class _state extends State<Register>{
                                 }
                               },
                               child: Container(
-                                height: MediaQuery.of(context).size.height*.065,
+                                height: MediaQuery.of(context).size.height*.08,
                                 width: MediaQuery.of(context).size.width*.8,
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
                                     color:loading? Colors.black12:Colors.white
@@ -235,20 +235,20 @@ class _state extends State<Register>{
                               ),
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                            Text(translator.translate('OR'),style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold),),
-                            SizedBox(height: MediaQuery.of(context).size.height*.01,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset("assets/images/google.png",width: 28,height: 28,),
-                                SizedBox(width: 30,),
-                                Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.blue),
-                                    child: Image.asset("assets/images/fb.png",width: 25,height: 25,color: Colors.white,)),
-
-                              ],
-                            ),
+                            // Text(translator.translate('OR'),style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold),),
+                            // SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Image.asset("assets/images/google.png",width: 28,height: 28,),
+                            //     SizedBox(width: 30,),
+                            //     Container(
+                            //         padding: EdgeInsets.all(5),
+                            //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.blue),
+                            //         child: Image.asset("assets/images/fb.png",width: 25,height: 25,color: Colors.white,)),
+                            //
+                            //   ],
+                            // ),
                             SizedBox(height: MediaQuery.of(context).size.height*.03,),
                             GestureDetector(
                               onTap: (){

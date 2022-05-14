@@ -39,6 +39,8 @@ dependencies:
   carousel_slider:
   url_launcher:
   dio:
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
   google_sign_in:
   flutter_facebook_auth: ^4.0.1
   intl:

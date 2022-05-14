@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fssmarthome/Dio/dio_helper.dart';
 import 'package:fssmarthome/Local/AppLanguage.dart';
 import 'package:fssmarthome/Provider/DeviceProvider.dart';
 import 'package:fssmarthome/Provider/RoomProvider.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  DioHelper.init();
   /*await translator.init(
     assetsDirectory: 'assets/Langs/', valuesAsMap: {},
     localeType: LocalizationDefaultType.device,

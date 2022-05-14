@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
+import 'package:fssmarthome/Bloc/AppCubit.dart';
 import 'package:fssmarthome/Provider/AuthProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/AdminRegister.dart';
@@ -159,9 +160,9 @@ class _state extends State<Login>{
                                   ),
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                              SizedBox(height: MediaQuery.of(context).size.height*.02,),
                               message==""?SizedBox():Container(
-                                  width: MediaQuery.of(context).size.width*.8,
+                                  width: MediaQuery.of(context).size.width*.5,
                                   child: Text(message,textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: Colors.red,fontWeight: FontWeight.bold),)),
                               SizedBox(height: MediaQuery.of(context).size.height*.025,),
                               GestureDetector
@@ -171,12 +172,11 @@ class _state extends State<Login>{
                                     setState(() {
                                       loading=true;
                                     });
-                                    await authProvider.LoginServices(name.text, password.text);
+                                    await authProvider.LoginServices(name.text, password.text,context);
                                     if(authProvider.statusCodeConnection==200){
                                       SharedPreferenceManager.addData("token",authProvider.LoginInfo["access_token"]);
                                       SharedPreferenceManager.addData("id",authProvider.LoginInfo["data"]["id"].toString());
                                       SharedPreferenceManager.addData("name",authProvider.LoginInfo["data"]["name"]);
-                                      Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
                                       setState((){
                                         MyApp.user_id=authProvider.LoginInfo["data"]["id"];
                                         MyApp.user_name=authProvider.LoginInfo["data"]["name"];
@@ -193,9 +193,9 @@ class _state extends State<Login>{
                                   }
                                 },
                                 child: Container(
-                                  height: MediaQuery.of(context).size.height*.065,
-                                  width: MediaQuery.of(context).size.width*.8,
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                                  height: MediaQuery.of(context).size.height*.08,
+                                  width: MediaQuery.of(context).size.width*.6,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),
                                       color:loading?Colors.black12:Colors.white),
                                 alignment: Alignment.center,
                                 child: Text(translator.translate("Login"),style: TextStyle(fontWeight: FontWeight.bold),),
@@ -237,21 +237,7 @@ class _state extends State<Login>{
                                      ],
                          ),
                                 ),
-                              SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, GlobalFunction.route(AdminRegister()));
-                                  // _handleSignIn();
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(translator.translate("Login as an admin"),style: TextStyle(fontSize: 14,color: Colors.white),),
-                                    SizedBox(width: 10,),
-                                    Text(translator.translate("SignUp"),style: TextStyle(fontSize: 15,color: Color(AppTheme.yellowColor)),)
-                                  ],
-                                ),
-                              ),
+
 
                               SizedBox(height: 15,),
 

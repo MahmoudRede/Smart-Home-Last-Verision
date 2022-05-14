@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Models/UserModel.dart';
 import 'package:fssmarthome/Provider/ServicesConfig.dart';
+import 'package:fssmarthome/Views/Devices/user_screen.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
@@ -12,6 +14,8 @@ import 'package:http/http.dart'as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Constants/constants.dart';
+import '../Dio/dio_helper.dart';
 import '../Views/Custom/GlobalFunction.dart';
 class AuthProvider extends ChangeNotifier{
   bool loadingImage=false;
@@ -23,7 +27,7 @@ class AuthProvider extends ChangeNotifier{
    List<UsersModel>users=[];
   Map<String,dynamic>userInfo={};
   Map<String,dynamic>forgetPassword={};
-  Future<void> LoginServices(String email,String password) async{
+  Future<void> LoginServices(String email,String password,context) async{
     String url=ServicesConfig.base_url+"/auth/login";
     print(url);
     var body={
@@ -42,6 +46,21 @@ class AuthProvider extends ChangeNotifier{
         statusCodeConnection=responce.statusCode;
         LoginInfo=json.decode(responce.body);
         print(LoginInfo);
+        print('/////////////////////////////////////');
+        print(LoginInfo['data']['parent_id']);
+        var isUser=LoginInfo['data']['parent_id'];
+        if(isUser!=null){
+          // Navigator.push(context, MaterialPageRoute(builder: (_){
+          //   return UserScreen();
+          // }));
+          Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+
+
+        }else{
+          Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+
+        }
+
         notifyListeners();
       }
     }
@@ -49,6 +68,31 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+
+  void userLogin({
+    String? email,
+    String? password,
+  }){
+
+    DioHelper.postDate(
+        url: loginUrl!,
+        data: {
+          'username':email,
+          'password':password
+        }
+    ).then((value) {
+      print(value.data);
+      notifyListeners();
+
+    }).catchError((error){
+      print('Error is ${error.toString()}');
+      notifyListeners();
+
+    });
+
+  }
+
+
   Future<void> LoginSocial(String socialId,var name,String email) async{
     String url=ServicesConfig.base_url+"/auth/social_login";
     print(url);
