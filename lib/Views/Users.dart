@@ -76,7 +76,7 @@ class _UsersState extends State<Users> {
                       child: GridView.count(
                         mainAxisSpacing: 7,
                         crossAxisSpacing: 7,
-                        childAspectRatio: 1/1,
+                        childAspectRatio: 1/1.22,
                         crossAxisCount: 2,
                         padding:EdgeInsets.fromLTRB(10,0,10, 0),
                         children: List.generate(10, (index) =>builsUserItem()
@@ -201,15 +201,15 @@ class _UsersState extends State<Users> {
 Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser()));
     },
     child: Material(
-      elevation: 10,
+      elevation: 7,
       color: Colors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7)
 
       ),
       child: Container(
-        margin:EdgeInsets.fromLTRB(10,10,10, 10) ,
-        padding: EdgeInsets.fromLTRB(10,10,10, 10),
+        padding: EdgeInsets.fromLTRB(10,20,10, 10),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(7)
@@ -226,7 +226,17 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser(
             SizedBox(height: 25,),
             Text(translator.translate('User Name'),style: TextStyle(
               fontSize: 18,
-            ),)
+            ),),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(onPressed: (){}, icon: Icon(Icons.edit,color: Colors.green.shade900,)),
+                Spacer(),
+                IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,))
+
+              ],
+            )
           ],
         ),
       ),
