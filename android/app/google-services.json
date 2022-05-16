@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:508795029764:android:6557b1a0d38e40a139e851",
+        "mobilesdk_app_id": "1:508795029764:android:df20d5376349c3b039e851",
         "android_client_info": {
           "package_name": "com.Smart.smarthome"
         }
@@ -30,6 +30,13 @@
             {
               "client_id": "508795029764-q0ujmlcuvie9e6abl8j8mve02to0q1qd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "508795029764-lvev5308911gjfplb41jp84t10336og5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Smart.smarthome"
+              }
             }
           ]
         }

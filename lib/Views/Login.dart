@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -340,8 +341,14 @@ class _state extends State<Login>{
     try {
       setState(() {
         loading=true;
+        FirebaseFirestore.instance.collection('Test').add({
+          'test':'ok'
+        });
+         print('hi');
       });
       await _googleSignIn.signIn();
+      print(_googleSignIn.currentUser );
+      print(_googleSignIn.hashCode);
       if (_googleSignIn.currentUser != null) {
         GoogleSignInAccount? user = await _googleSignIn.signIn();
         GoogleSignInAuthentication googleSignInAuthentication = await user!.authentication;
@@ -349,7 +356,7 @@ class _state extends State<Login>{
         print('''name:${_googleSignIn.currentUser!.email}''');
         print(googleSignInAuthentication.idToken);
         print(googleSignInAuthentication.accessToken);
-       
+
 
          await loginProvider.LoginSocial(_googleSignIn.currentUser!.id, _googleSignIn.currentUser!.displayName, _googleSignIn.currentUser!.email);
         print(loginProvider.statusCodeConnection);
@@ -384,6 +391,7 @@ class _state extends State<Login>{
     }
   }
   faceLogin()async{
+
     final loginProvider= Provider.of<AuthProvider>(context, listen: false);
     setState(() {
       loading=true;

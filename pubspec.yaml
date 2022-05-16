@@ -43,11 +43,14 @@ dependencies:
   flutter_bloc: ^8.0.1
   google_sign_in:
   flutter_facebook_auth: ^4.0.1
+  flutter_login_facebook: ^1.4.1
   intl:
+  firebase_auth:
+  cloud_firestore:
   webview_flutter:
   image_picker:
   flutter_toastr:
-  firebase_core: ^1.9.0
+  firebase_core:
   firebase_database: ^9.0.8
   path:
   http_parser:
