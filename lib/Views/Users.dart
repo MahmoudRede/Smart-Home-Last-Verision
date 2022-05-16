@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../Provider/AuthProvider.dart';
 import '../Theme/AppTheme.dart';
 import 'Custom/GlobalFunction.dart';
+import 'choose_user_rooms.dart';
 
 class Users extends StatefulWidget {
   @override
@@ -39,8 +40,8 @@ class _UsersState extends State<Users> {
           textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
           child:  Container(
               padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width*.05,
-                  right: MediaQuery.of(context).size.width*.05
+                  left: MediaQuery.of(context).size.width*.03,
+                  right: MediaQuery.of(context).size.width*.03
               ),
               child: Column(
                 children: [
@@ -78,37 +79,7 @@ class _UsersState extends State<Users> {
                         childAspectRatio: 1/1,
                         crossAxisCount: 2,
                         padding:EdgeInsets.fromLTRB(10,0,10, 0),
-                        children: List.generate(10, (index) => Material(
-                          elevation: 10,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7)
-
-                          ),
-                          child: Container(
-                            margin:EdgeInsets.fromLTRB(10,10,10, 10) ,
-                            padding: EdgeInsets.fromLTRB(10,10,10, 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(7)
-                            ),
-                            child: Column(
-                              children: [
-                                Image(image: AssetImage(
-                                  'assets/images/man.png',
-
-                                ),
-                                  height: 50,
-                                  width: 50,
-                                ),
-                                SizedBox(height: 25,),
-                                Text(translator.translate('User Name'),style: TextStyle(
-                                  fontSize: 18,
-                                ),)
-                              ],
-                            ),
-                          ),
-                        )
+                        children: List.generate(10, (index) =>builsUserItem()
                         ),
                       )
                   ),
@@ -128,7 +99,7 @@ class _UsersState extends State<Users> {
                                 color:Color(AppTheme.primaryColor)
                             ),
                             alignment: Alignment.center,
-                            child:Text(translator.translate("adduser"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
+                            child:Text(translator.translate("add new user"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
                         ),
                       )
                     ],
@@ -224,4 +195,41 @@ class _UsersState extends State<Users> {
           ),
         ));
   }
+
+  Widget builsUserItem()=>InkWell(
+    onTap: (){
+Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser()));
+    },
+    child: Material(
+      elevation: 10,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7)
+
+      ),
+      child: Container(
+        margin:EdgeInsets.fromLTRB(10,10,10, 10) ,
+        padding: EdgeInsets.fromLTRB(10,10,10, 10),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(7)
+        ),
+        child: Column(
+          children: [
+            Image(image: AssetImage(
+              'assets/images/man.png',
+
+            ),
+              height: 50,
+              width: 50,
+            ),
+            SizedBox(height: 25,),
+            Text(translator.translate('User Name'),style: TextStyle(
+              fontSize: 18,
+            ),)
+          ],
+        ),
+      ),
+    ),
+  );
 }
