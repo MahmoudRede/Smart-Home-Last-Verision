@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Models/UserModel.dart';
 import 'package:fssmarthome/Provider/ServicesConfig.dart';
-import 'package:fssmarthome/Views/Devices/user_screen.dart';
+import 'package:fssmarthome/Views/user_screen.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
@@ -50,10 +50,10 @@ class AuthProvider extends ChangeNotifier{
         print(LoginInfo['data']['parent_id']);
         var isUser=LoginInfo['data']['parent_id'];
         if(isUser!=null){
-          // Navigator.push(context, MaterialPageRoute(builder: (_){
-          //   return UserScreen();
-          // }));
-          Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
+           Navigator.push(context, MaterialPageRoute(builder: (_){
+             return UserScreen();
+           }));
+         // Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
 
 
         }else{

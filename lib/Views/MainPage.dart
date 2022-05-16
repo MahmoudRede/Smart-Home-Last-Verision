@@ -102,7 +102,8 @@ class _state extends State<MainPage>{
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(AppTheme.backGround),
         body: loading?Center(child: CircularProgressIndicator.adaptive(),)
-            : SingleChildScrollView(child: Container(
+            : SingleChildScrollView(
+          child: Container(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height*.02
               ),
