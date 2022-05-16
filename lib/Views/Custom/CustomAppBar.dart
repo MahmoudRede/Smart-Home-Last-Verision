@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatefulWidget{
   String title;
@@ -24,7 +25,7 @@ class _state extends State<CustomAppBar>{
             Navigator.pop(context);
           },
           child: Padding(
-            padding:  EdgeInsets.only(top: 8),
+            padding:  EdgeInsets.fromLTRB(15, 15, 0, 0),
             child: Icon(Icons.arrow_back_ios),
           ),
         ),
@@ -43,7 +44,7 @@ class _state extends State<CustomAppBar>{
             left: MediaQuery.of(context).size.width*.03,
             right: MediaQuery.of(context).size.width*.03,
           ),
-          child: Text(this.title,textAlign: TextAlign.center,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
+          child: Text(this.title,textAlign: TextAlign.center,style: GoogleFonts.aBeeZee(fontSize: 22,fontWeight: FontWeight.bold,color: Color(AppTheme.yellowColor)),),
         ),
         Icon(Icons.arrow_back_ios,color: Color(AppTheme.backGround),)
       ],

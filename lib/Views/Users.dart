@@ -46,33 +46,76 @@ class _UsersState extends State<Users> {
                 children: [
                   CustomAppBar(title: translator.translate("users")),
                   SizedBox(height: MediaQuery.of(context).size.height*.02,),
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //       itemCount: authProvider.users.length,
+                  //       itemBuilder: (context,index){
+                  //     return Container(
+                  //       margin: EdgeInsets.only(bottom: 20),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Text(authProvider.users[index].name),
+                  //           Container(
+                  //             padding: EdgeInsets.all(5),
+                  //             decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(10),
+                  //               color: Color(AppTheme.primaryColor)
+                  //             ),
+                  //             alignment: Alignment.center,
+                  //             child: Text("اضافة جهاز",style: TextStyle(fontSize: 12,color: Colors.white),),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }),
+                  // ),
+                  SizedBox(height: 10,),
                   Expanded(
-                    child: ListView.builder(
-                        itemCount: authProvider.users.length,
-                        itemBuilder: (context,index){
-                      return Container(
-                        margin: EdgeInsets.only(bottom: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(authProvider.users[index].name),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color(AppTheme.primaryColor)
-                              ),
-                              alignment: Alignment.center,
-                              child: Text("اضافة جهاز",style: TextStyle(fontSize: 12,color: Colors.white),),
-                            )
-                          ],
+                      child: GridView.count(
+                        mainAxisSpacing: 7,
+                        crossAxisSpacing: 7,
+                        childAspectRatio: 1/1,
+                        crossAxisCount: 2,
+                        padding:EdgeInsets.fromLTRB(10,0,10, 0),
+                        children: List.generate(10, (index) => Material(
+                          elevation: 10,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7)
+
+                          ),
+                          child: Container(
+                            margin:EdgeInsets.fromLTRB(10,10,10, 10) ,
+                            padding: EdgeInsets.fromLTRB(10,10,10, 10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(7)
+                            ),
+                            child: Column(
+                              children: [
+                                Image(image: AssetImage(
+                                  'assets/images/man.png',
+
+                                ),
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                SizedBox(height: 25,),
+                                Text(translator.translate('User Name'),style: TextStyle(
+                                  fontSize: 18,
+                                ),)
+                              ],
+                            ),
+                          ),
+                        )
                         ),
-                      );
-                    }),
+                      )
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(height: 5,),
                       GestureDetector(
                         onTap: ()async{
                           Navigator.push(context, GlobalFunction.route(AddUser()));

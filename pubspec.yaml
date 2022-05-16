@@ -54,6 +54,7 @@ dependencies:
   firebase_database: ^9.0.8
   path:
   http_parser:
+  google_fonts: ^2.3.2
   flutter_time_picker_spinner:
   flutter_rounded_date_picker:
   flutter_cupertino_localizations:
