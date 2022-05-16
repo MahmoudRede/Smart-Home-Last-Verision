@@ -79,7 +79,7 @@ class _UsersState extends State<Users> {
                         childAspectRatio: 1/1.22,
                         crossAxisCount: 2,
                         padding:EdgeInsets.fromLTRB(10,0,10, 0),
-                        children: List.generate(10, (index) =>builsUserItem()
+                        children: List.generate(authProvider.users.length, (index) =>builsUserItem(index)
                         ),
                       )
                   ),
@@ -196,50 +196,57 @@ class _UsersState extends State<Users> {
         ));
   }
 
-  Widget builsUserItem()=>InkWell(
-    onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser()));
-    },
-    child: Material(
-      elevation: 7,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(7)
 
-      ),
-      child: Container(
-        padding: EdgeInsets.fromLTRB(10,20,10, 10),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(
-            color: Colors.white,
+  Widget builsUserItem(int index){
+    var authProvider= Provider.of<AuthProvider>(context, listen: false);
+
+   return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser()));
+      },
+      child: Material(
+        elevation: 7,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7)
+
         ),
-        child: Column(
-          children: [
-            Image(image: AssetImage(
-              'assets/images/man.png',
+        child: Container(
+          padding: EdgeInsets.fromLTRB(10,20,10, 10),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(7)
+          ),
+          child: Column(
+            children: [
+              Image(image: AssetImage(
+                'assets/images/man.png',
 
-            ),
-              height: 50,
-              width: 50,
-            ),
-            SizedBox(height: 25,),
-            Text(translator.translate('User Name'),style: TextStyle(
-              fontSize: 18,
-            ),),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(onPressed: (){}, icon: Icon(Icons.edit,color: Colors.green.shade900,)),
-                Spacer(),
-                IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,))
+              ),
+                height: 50,
+                width: 50,
+              ),
+              SizedBox(height: 25,),
+              Text(translator.translate('${authProvider.users[index].name}'),style: TextStyle(
+                fontSize: 18,
+              ),),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(onPressed: (){}, icon: Icon(Icons.edit,color: Colors.green.shade900,)),
+                  Spacer(),
+                  IconButton(onPressed: (){
+                    authProvider.removeUsers(authProvider.users[index].id);
+                  }, icon: Icon(Icons.delete,color: Colors.red,))
 
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

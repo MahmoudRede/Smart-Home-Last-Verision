@@ -201,6 +201,10 @@ class _state extends State<More>{
                             GestureDetector(
                               onTap: ()async{
                                 Navigator.push(context, GlobalFunction.route(Users()));
+                                setState(() {
+                                  userProvider.getUsers();
+
+                                });
                               },
                               child: Container(
                                   height: MediaQuery.of(context).size.height*.065,

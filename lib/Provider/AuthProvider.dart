@@ -362,6 +362,7 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+  List<int> userId=[];
   Future<void>getUsers()async{
     var body=GlobalFunction.getBody(300, 0, "id", "ASC", "all", "false", "true", ["parent_id"], ["="], [MyApp.user_id]);
     var url=ServicesConfig.base_url+"/users/$body";
@@ -375,8 +376,14 @@ class AuthProvider extends ChangeNotifier{
         print(json.decode(utf8.decode(response.bodyBytes))["data"]);
 
         List slideritems = json.decode(utf8.decode(response.bodyBytes))["data"]["data"];
-        users = slideritems.map((e) => UsersModel.fromJson(e)).toList();
+        users = slideritems.map((e) {
+        return  UsersModel.fromJson(e);
+        }).toList();
+        users.forEach((element) {
+          userId.add(element.id);
+        });
         print(users.length);
+
         print("devicesdevicesdevicesdevicesdevicesdevicesdevices");
         notifyListeners();
       }
@@ -386,4 +393,22 @@ class AuthProvider extends ChangeNotifier{
       print(e);
     }
   }
+
+  Future<void>removeUsers(var id)async{
+
+    var url=ServicesConfig.base_url+"/users/bulkDelete?ids[]=$id";
+    var header=await ServicesConfig.getHeaderWithToken();
+    try{
+      final responce=await http.delete(Uri.parse(url),headers: header);
+      if(responce.body.isNotEmpty)
+      {
+        getUsers();
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+
 }
