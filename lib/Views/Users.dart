@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fssmarthome/Views/AddUser.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+import 'package:fssmarthome/Views/user_authorizedRoom.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../Assign/modules/user_Assigned_Rooms.dart';
 import '../Provider/AuthProvider.dart';
 import '../Theme/AppTheme.dart';
 import 'Custom/GlobalFunction.dart';
@@ -202,7 +204,7 @@ class _UsersState extends State<Users> {
 
    return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseRoomForUser()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAuthRooms()));
       },
       child: Material(
         elevation: 7,

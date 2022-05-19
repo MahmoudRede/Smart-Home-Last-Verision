@@ -27,6 +27,44 @@ class AuthProvider extends ChangeNotifier{
    List<UsersModel>users=[];
   Map<String,dynamic>userInfo={};
   Map<String,dynamic>forgetPassword={};
+/////////////////////////////////////////////////////////////
+  late Map<String,dynamic>assignRooms;
+  int userRoom = 194;
+  int userAssignId = 52;
+  int userRoomDevice_id = 265;
+  Future<void> assidnedUserRooms() async{
+    String url=ServicesConfig.base_url+"/api/assigned";
+    print(url);
+    var body={
+      "userRoom_id":'$userRoom',
+      "user_id":'$userAssignId',
+      "userRoomDevice_id" : '$userRoomDevice_id',
+    };
+
+    print(body);
+    Map<String , String> header={
+    'Connection':'keep-alive',
+    'Accept-Encoding':'gzip, deflate, br',
+      //'Content-Type': 'application/json',
+      'Authorization':"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZnNzbWFydGhvbWUuY29tXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjUyODg5ODkxLCJleHAiOjE2NTQwOTk0OTEsIm5iZiI6MTY1Mjg4OTg5MSwianRpIjoiUWdkcUxiY3M0N1R1ek54biIsInN1YiI6NTIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.5RIq-sELybYI1oN-3flpn7cefPYPdTE2YYWbosy-3T4",
+    };
+    try{
+      final responce=await http.post(Uri.parse(url),body:body,headers:header);
+      print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        statusCodeConnection=responce.statusCode;
+        assignRooms=json.decode(responce.body);
+        print(assignRooms);
+        notifyListeners();
+      }
+      print(statusCodeConnection);
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+  //////////////////////////////////////////////
   Future<void> LoginServices(String email,String password,context) async{
     String url=ServicesConfig.base_url+"/auth/login";
     print(url);
@@ -355,6 +393,7 @@ class AuthProvider extends ChangeNotifier{
         statusCodeConnection=responce.statusCode;
         RegisterInfo=json.decode(responce.body);
         print(RegisterInfo);
+        getUsers();
         notifyListeners();
       }
     }

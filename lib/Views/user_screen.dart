@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:fssmarthome/Views/user_authorizedRooms.dart';
+import 'package:fssmarthome/Assign/modules/user_Assigned_Rooms.dart';
 import 'package:intl/intl.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:location/location.dart';

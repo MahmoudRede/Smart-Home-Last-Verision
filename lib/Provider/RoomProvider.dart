@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
@@ -33,6 +34,8 @@ class RoomProvider extends ChangeNotifier{
         List slideritems = json.decode(utf8.decode(response.bodyBytes))["data"]["data"];
         rooms = slideritems.map((e) => UserRoomModel.fromJson(e)).toList();
         print(rooms.length);
+        print('siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+        print(rooms[0].room.logo);
         print("roomssssssssssssssssssssssssss");
         notifyListeners();
       }
@@ -91,6 +94,11 @@ class RoomProvider extends ChangeNotifier{
     catch(e) {
       print(e.toString());
     }
+  }
+  
+  void assignRoom(){
+    
+   // FirebaseFirestore.instance.collection('UserRooms').add()
   }
   Future<void>AddRoom(File fileImage,BuildContext context,String name_en,String name_ar)async
   {

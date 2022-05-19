@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_toastr/flutter_toastr.dart';
+import 'package:fssmarthome/Provider/AuthProvider.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
-import '../Provider/RoomProvider.dart';
-import '../Theme/AppTheme.dart';
-import '../main.dart';
+import '../../Provider/RoomProvider.dart';
+import '../../Theme/AppTheme.dart';
+import '../../Views/Custom/GlobalFunction.dart';
+import '../../Views/RoomDevices.dart';
+import '../../main.dart';
 class UserAuthRooms extends StatefulWidget {
   const UserAuthRooms({Key? key}) : super(key: key);
 
@@ -17,6 +21,8 @@ class _UserAuthRoomsState extends State<UserAuthRooms> {
   @override
   Widget build(BuildContext context) {
     var roomProvider= Provider.of<RoomProvider>(context, listen: false);
+    var authProvider= Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(AppTheme.backGround),
@@ -50,7 +56,12 @@ class _UserAuthRoomsState extends State<UserAuthRooms> {
                   return GestureDetector(
                     onTap: () {
                       setState((){
+                        // authProvider.assidnedUserRooms();
+                        print( roomProvider.allRooms.length);
                         select=roomProvider.allRooms[index].id;
+                        print(roomProvider.allRooms[index].id);
+                        Navigator.push(context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name,route: 1,)));
+
                       });
                     },
                     child: Column(
@@ -82,23 +93,6 @@ class _UserAuthRoomsState extends State<UserAuthRooms> {
                             ],
                           ),
                         ),
-                        index==roomProvider.allRooms.length-1?GestureDetector(
-                          onTap: (){
-                           // AddOther();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).size.height*.02
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.add,size: 30,),
-                                SizedBox(width: 10,),
-                                Text(translator.translate('AddAnother'),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
-                              ],
-                            ),
-                          ),
-                        ):SizedBox()
                       ],
                     ),
                   );
@@ -109,6 +103,7 @@ class _UserAuthRoomsState extends State<UserAuthRooms> {
             children: [
               GestureDetector(
                 onTap: ()async{
+
                   // if(select==-1){
                   //   //FlutterToastr.show(translator.translate('pleaseSelectRoom'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
                   // }
