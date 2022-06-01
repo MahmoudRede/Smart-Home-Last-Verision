@@ -53,7 +53,7 @@ class _state extends State<Alarm>{
              Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 Text(translator.translate('AlermClock'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                 Text(translator.translate('Alarm Clock'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                  Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
                      onChanged: (value) {
                        if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){
@@ -207,7 +207,7 @@ class _state extends State<Alarm>{
                   Container(alignment: Alignment.center,child: Column(
                     children: [
                       SizedBox(height: 3,),
-                      Text(translator.translate("ConfirmDeleteThisItem"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                      Text(translator.translate("Confirm Delete This Item"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                       // Text("${title}",textAlign: TextAlign.center,)
                     ],
                   )),

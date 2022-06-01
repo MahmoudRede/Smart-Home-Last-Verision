@@ -47,7 +47,7 @@ class _state extends State<Motion>{
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                Text(translator.translate('Event Action'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
                 FlutterSwitch(
                   height: 15.0,
@@ -174,7 +174,7 @@ class _state extends State<Motion>{
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(translator.translate('DeviceAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                Text(translator.translate('Device Action'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
 
                 FlutterSwitch(

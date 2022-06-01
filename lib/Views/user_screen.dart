@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fssmarthome/Assign/modules/user_Assigned_Rooms.dart';
@@ -8,11 +7,13 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart'as http;
+import '../Base/shared_preference_manger.dart';
 import '../Provider/DeviceProvider.dart';
 import '../Provider/RoomProvider.dart';
 import '../Theme/AppTheme.dart';
 import '../main.dart';
 import 'Custom/GlobalFunction.dart';
+import 'Devices/User_Device/user_device.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -60,46 +61,209 @@ class _UserScreenState extends State<UserScreen> {
     var roomProvider= Provider.of<RoomProvider>(context, listen: true);
     var deviceProvider= Provider.of<DeviceProvider>(context, listen: true);
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            SharedPreferenceManager.logout();
+            Navigator.pushNamedAndRemoveUntil(context,"/login", (route) => false);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,color: Color(AppTheme.primaryColor),
+          ),
+        ),
+        titleSpacing: 0.0,
+        title:Text(translator.translate("WelcomeHome"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.black87),),
+        toolbarHeight: 35,
+          iconTheme: IconThemeData(
+            color: Colors.black
+          ),
+        backgroundColor: Color(AppTheme.backGround),
+        elevation: 0,
+      ),
+      // drawer: Drawer(
+      //   backgroundColor:  Color(AppTheme.primaryColor),
+      //   child: Container(
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.end,
+      //       children: [
+      //         SizedBox(height: 110,),
+      //         Container(
+      //         margin:const EdgeInsets.all(5.0),
+      //         child: Material(
+      //         color:  Color(AppTheme.primaryColor),
+      //         shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.circular(10)
+      //         ),
+      //         child: Container(
+      //         padding: const EdgeInsets.all(18.0),
+      //         child:
+      //         Row(
+      //           children: [
+      //             SizedBox(width: 10,),
+      //             ImageIcon(AssetImage("assets/images/barIcons/user (1).png"),color: Colors.white,size: 22),
+      //
+      //             SizedBox(width: 20,),
+      //             InkWell(
+      //
+      //               child: Text('Profile',style: TextStyle(
+      //                 color: Colors.white,
+      //                 fontSize: 18,
+      //               )),
+      //               onTap: (){
+      //
+      //               },
+      //             ),
+      //
+      //
+      //
+      //           ],
+      //         ),),),),
+      //
+      //         Container(
+      //         margin:const EdgeInsets.all(5.0),
+      //         child: Material(
+      //         color:  Color(AppTheme.primaryColor),
+      //         shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.circular(10)
+      //         ),
+      //         child: Container(
+      //         padding: const EdgeInsets.all(18.0),
+      //         child:Row(
+      //           children: [
+      //             SizedBox(width: 10,),
+      //             Icon(
+      //               Icons.roofing,
+      //               color: Colors.white,
+      //             ),
+      //             SizedBox(width: 20,),
+      //             InkWell(
+      //
+      //               child: Text('Rooms',style: TextStyle(
+      //                 color: Colors.white,
+      //                 fontSize: 18,
+      //               )),
+      //               onTap: (){
+      //
+      //               },
+      //             ),
+      //
+      //           ],
+      //         ),
+      //         ),),),
+      //
+      //         Container(
+      //           margin:const EdgeInsets.all(10.0),
+      //           child: Material(
+      //             color:  Color(AppTheme.primaryColor),
+      //             shape: RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(10)
+      //             ),
+      //             child: Container(
+      //               padding: const EdgeInsets.all(18.0),
+      //               child: Row(
+      //                 children: [
+      //                   SizedBox(width: 10,),
+      //                   Icon(
+      //                     Icons.important_devices_sharp,
+      //                     color: Colors.white,
+      //                   ),
+      //                   SizedBox(width: 20,),
+      //                   InkWell(
+      //                     child: Text('Devices',style: TextStyle(
+      //                       color: Colors.white,
+      //                       fontSize: 18,
+      //                     )),
+      //                     onTap: (){
+      //
+      //                     },
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //         Spacer(),
+      //         Container(
+      //           margin: EdgeInsets.all(70),
+      //           child: MaterialButton(
+      //             padding: EdgeInsets.all(10),
+      //             color: Colors.amber,
+      //             shape: RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(25),
+      //             ),
+      //             onPressed: (){
+      //
+      //             },
+      //             child:  Row(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: [
+      //                 SizedBox(width: 10,),
+      //                 Icon(
+      //                   Icons.login,
+      //                   color: Colors.white,
+      //                 ),
+      //                 SizedBox(width: 10,),
+      //                 InkWell(
+      //                   child: Text('Log out',style: TextStyle(
+      //                     color: Colors.white,
+      //                     fontSize: 18,
+      //                   )),
+      //                   onTap: (){
+      //
+      //                   },
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //
+      //         SizedBox(height: 20,),
+      //
+      //
+      //       ],
+      //     ),
+      //   ),
+      // ),
+
+      resizeToAvoidBottomInset: false,
         backgroundColor: Color(AppTheme.backGround),
     body: Padding(
-      padding: const EdgeInsets.only(top:15),
+      padding: const EdgeInsets.only(top:0),
       child: Container(
       child: loading?Center(child: CircularProgressIndicator.adaptive(),)
           :SingleChildScrollView(
       physics: BouncingScrollPhysics(),
-      child: Container(
-      padding: EdgeInsets.only(
-      bottom: MediaQuery.of(context).size.height*.02
-      ),
-      child: Column(
-      children: [
-      Container(
-      padding: EdgeInsets.only(
-      left: MediaQuery.of(context).size.width*.05,
-      right: MediaQuery.of(context).size.width*.05
-      ),
-      child:Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-      Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      SizedBox(height: MediaQuery.of(context).size.height*.025,),
-      Text(translator.translate("WelcomeHome"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.black87),),
-      Text(MyApp.user_name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-      SizedBox(height: MediaQuery.of(context).size.height*.01,),
-      ],
-      ),
-      GestureDetector(
-      onTap: () => Scaffold.of(context).openDrawer(),
-      child: Icon(Icons.menu,size: 30,)),
-      ],
-      ),
+              child: Container(
+              padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height*.02
+              ),
+              child: Column(
+              children: [
+              Container(
+                padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width*.05,
+                right: MediaQuery.of(context).size.width*.05
+              ),
+                child:Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height*.025,),
+                      Text(MyApp.user_name,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                    ],
+              ),
+              // GestureDetector(
+              //   onTap: () => Scaffold.of(context).openDrawer(),
+              //   child: Icon(Icons.menu,size: 30,)),
+                ],
+            ),
         Container(
           height: MediaQuery.of(context).size.height*.14,
           width: MediaQuery.of(context).size.width,
@@ -167,18 +331,18 @@ class _UserScreenState extends State<UserScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(translator.translate("Rooms"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              GestureDetector(
-                onTap: (){
-
-                },
-                child: Row(
-                  children: [
-                    Text(translator.translate("Edit"),style: TextStyle(fontSize: 10),),
-                    SizedBox(width: 5,),
-                    Icon(Icons.edit,size: 15,)
-                  ],
-                ),
-              )
+              // GestureDetector(
+              //   onTap: (){
+              //
+              //   },
+              //   child: Row(
+              //     children: [
+              //       Text(translator.translate("Edit"),style: TextStyle(fontSize: 10),),
+              //       SizedBox(width: 5,),
+              //       Icon(Icons.edit,size: 15,)
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),
@@ -187,45 +351,11 @@ class _UserScreenState extends State<UserScreen> {
       ],
       ),
       ),
-        roomProvider.rooms.length==0?
-        Row(
-          children: [
-            SizedBox(width: MediaQuery.of(context).size.width*.05,),
-            GestureDetector(
-              onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAuthRooms()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width*.25,
-                height: MediaQuery.of(context).size.height*.15,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.white
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                    Icon(Icons.add,size: 50,),
-                    SizedBox(height: MediaQuery.of(context).size.height*.01,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(translator.translate("AddRoom"),style: TextStyle(height: 1.4,fontSize: 12),),
-
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-
-          ],
-        )
-            :Container(
+        Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height*.15,
           child: ListView.builder(
-              itemCount: roomProvider.rooms.length,
+              itemCount: roomProvider.userRooms.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context,index){
                 return Row(
@@ -233,7 +363,14 @@ class _UserScreenState extends State<UserScreen> {
                     SizedBox(width: MediaQuery.of(context).size.width*.05,),
                     GestureDetector(
                       onTap: (){
-                       // Navigator.push(context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name,route: 1,)));
+                        roomProvider.getUserDevice(roomProvider.userRooms[index].roomId);
+                        Navigator.push(context, GlobalFunction.route(UserRoomDivices(room_id:(roomProvider.userRooms[index].roomId)!,name:(roomProvider.userRooms[index].roomName)!,route: 1,)));
+
+                        // Navigator.push(context, MaterialPageRoute(builder: (_){
+                        //   return UserDevices();
+                        // }));
+                        print('555');
+                       // Navigator.push(context, GlobalFunction.route(UserDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name,route: 1,)));
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width*.25,
@@ -245,22 +382,22 @@ class _UserScreenState extends State<UserScreen> {
                         child: Column(
                           children: [
                             SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                            Image.network(roomProvider.rooms[index].room.logo,
+                            Image.network((roomProvider.userRooms[index].roomLogo)!,
                               height: MediaQuery.of(context).size.height*.055,
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height*.01,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(roomProvider.rooms[index].room.name,maxLines: 1,style: TextStyle(height: 1.4,fontSize: 12),),
-                                Text("  ${translator.translate("devices")} ${roomProvider.rooms[index].devices.toString()} ",style: TextStyle(fontSize: 9),),
+                                Text((roomProvider.userRooms[index].roomName)!,maxLines: 1,style: TextStyle(height: 1.4,fontSize: 12),),
+                                // Text("  ${translator.translate("devices")} ${roomProvider.rooms[index].devices.toString()} ",style: TextStyle(fontSize: 9),),
                               ],
                             )
                           ],
                         ),
                       ),
                     ),
-                    index==roomProvider.rooms.length-1?
+                    index==roomProvider.allRooms.length-1?
                     Row(
                       children: [
                         SizedBox(width: MediaQuery.of(context).size.width*.05,),
@@ -414,7 +551,7 @@ class _UserScreenState extends State<UserScreen> {
       )
       ,
       ),
-    )
+    ),
     );
   }
   Future<void> getCurrentLocation() async {

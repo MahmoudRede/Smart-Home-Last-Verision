@@ -32,7 +32,7 @@ class _state extends State<About>{
                   fit: BoxFit.cover,
                 ),
                 Text("Future Scrollation",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),),
-                SizedBox(height: MediaQuery.of(context).size.height*.05,),
+                SizedBox(height: MediaQuery.of(context).size.height*.03,),
                 Container(
                   width: MediaQuery.of(context).size.width*.9,
                   padding: EdgeInsets.only(
@@ -47,9 +47,9 @@ class _state extends State<About>{
                   ),
                   child: Column(
                     children: [
-                     Text("Grammarly now organizes your writing feedback by theme, so you can see how each change will help your readers better understand your message. Grammarly now organizes your writing feedback by theme, so you can see how each change will help your readers better understand your message.",
+                     Text("We always strive to advance in the field of technology and keep pace with the times and strive for luxury and prosperity and make life easier for users and make their lives better by controlling their homes or places with ease by just pressing a button. Our system can be applied in homes, institutions and every place that contains electrical devices to facilitate the process Control and provide security and safety for them and help the elderly and people with diseases to control easily in their home while they are in their places and protect people and institutions from accidents and disasters, not only providing them with well-being, but also providing safety for users, so our motto is comfort.",
                          textAlign: TextAlign.center,),
-                      SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                      SizedBox(height: MediaQuery.of(context).size.height*.04,),
                       Icon(Icons.phone,size: 30,color: Color(AppTheme.yellowColor)),
                       Text("01000458785",style: TextStyle(color: Color(AppTheme.yellowColor)),)
                     ],

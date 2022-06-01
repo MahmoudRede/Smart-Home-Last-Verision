@@ -4,6 +4,9 @@ import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/Devices/ResetPassword.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
+
+import '../../Provider/AuthProvider.dart';
 
 class OTP extends StatefulWidget{
   @override
@@ -17,12 +20,19 @@ class _state extends State<OTP>{
   TextEditingController n2=new TextEditingController();
   TextEditingController n3=new TextEditingController();
   TextEditingController n4=new TextEditingController();
+  // TextEditingController n5=new TextEditingController();
+  // TextEditingController n6=new TextEditingController();
+
   final nod0 = FocusNode();
   final nod1 = FocusNode();
   final nod2 = FocusNode();
   final nod3 = FocusNode();
+  final nod4 = FocusNode();
+  final nod5 = FocusNode();
+
   @override
   Widget build(BuildContext context) {
+    final authProvider= Provider.of<AuthProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -200,12 +210,80 @@ class _state extends State<OTP>{
                                   controller: n4,
                                 ),
                               ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width * .125,
+                              //   child: TextFormField(
+                              //     maxLength: 1,
+                              //     validator: (value) {
+                              //       if (value!.isEmpty) return '';
+                              //       return null;
+                              //     },
+                              //     focusNode: nod4,
+                              //     onChanged: (val) {
+                              //       if(val.isEmpty){
+                              //         FocusScope.of(context).requestFocus(nod2);
+                              //       }else
+                              //         FocusScope.of(context).requestFocus(FocusNode());
+                              //     },
+                              //     textAlign: TextAlign.center,
+                              //     style: TextStyle(
+                              //         fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                              //     keyboardType: TextInputType.number,
+                              //     decoration: InputDecoration(
+                              //       errorStyle: TextStyle(fontSize: 0),
+                              //       counterStyle: TextStyle(fontSize: 0),
+                              //       contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                              //       enabledBorder: UnderlineInputBorder(
+                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              //       ),
+                              //       focusedBorder: UnderlineInputBorder(
+                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              //       ),
+                              //     ),
+                              //     controller: n5,
+                              //   ),
+                              // ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width * .125,
+                              //   child: TextFormField(
+                              //     maxLength: 1,
+                              //     validator: (value) {
+                              //       if (value!.isEmpty) return '';
+                              //       return null;
+                              //     },
+                              //     focusNode: nod5,
+                              //     onChanged: (val) {
+                              //       if(val.isEmpty){
+                              //         FocusScope.of(context).requestFocus(nod2);
+                              //       }else
+                              //         FocusScope.of(context).requestFocus(FocusNode());
+                              //     },
+                              //     textAlign: TextAlign.center,
+                              //     style: TextStyle(
+                              //         fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                              //     keyboardType: TextInputType.number,
+                              //     decoration: InputDecoration(
+                              //       errorStyle: TextStyle(fontSize: 0),
+                              //       counterStyle: TextStyle(fontSize: 0),
+                              //       contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                              //       enabledBorder: UnderlineInputBorder(
+                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              //       ),
+                              //       focusedBorder: UnderlineInputBorder(
+                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              //       ),
+                              //     ),
+                              //     controller: n6,
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height*.08,),
                           GestureDetector(
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
+                                // authProvider.checkCode(email, code);
+                                // authProvider.verifyOtp(n1.text+n2.text+n3.text+n4.text+n5.text+n6.text);
                                 Navigator.push(
                                     context, GlobalFunction.route(ResetPassword()));
 

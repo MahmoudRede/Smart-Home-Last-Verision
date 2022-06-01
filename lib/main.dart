@@ -16,6 +16,7 @@ import 'package:fssmarthome/Views/TimePicker.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Base/Cash_Helper/cash_helper.dart';
 import 'Local/AppLocalization.dart';
 import 'Provider/AuthProvider.dart';
 import 'Views/Splash.dart';
@@ -27,6 +28,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   //Bloc.observer= MyBlocObserver();
   DioHelper.init();
+  CashHelper.init();
+
 
   /*await translator.init(
     assetsDirectory: 'assets/Langs/', valuesAsMap: {},
@@ -84,19 +87,24 @@ class _MyAppState extends State<MyApp>{
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AuthProvider(),),
-        ChangeNotifierProvider.value(value: RoomProvider(),),
+        ChangeNotifierProvider.value(value: RoomProvider()..getUserRoom(MyApp.user_id),),
         ChangeNotifierProvider.value(value: DeviceProvider(),),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            backwardsCompatibility: false,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.light
+            )
+          )
+        ),
+
           /* localizationsDelegates: translator.delegates,
           locale: local,
           supportedLocales: translator.locals(),*/
         navigatorKey: navKey,
         debugShowCheckedModeBanner: false,
-        theme:ThemeData(
-            fontFamily: 'Poppins',
-            accentColor: Color(0xff64B904)
-        ),
         routes:  <String,WidgetBuilder>{
           '/mainPage':(BuildContext context)=>new Home(index: 0),
           '/profile':(BuildContext context)=>new Home(index: 4),

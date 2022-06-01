@@ -104,9 +104,35 @@ class _state extends State<AllRooms>{
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*.03,),
-                Expanded(child: ListView.builder(itemCount: roomProvider.rooms.length,itemBuilder: (context,index){
+                roomProvider.rooms.length==0?
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        ChooseRoom();
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*.66,
+                        height: MediaQuery.of(context).size.height*.12,
+
+                        child: Row(
+                          children: [
+
+                            SizedBox(width: MediaQuery.of(context).size.height*.04,),
+
+                                Text(translator.translate("AddNewRoom"),style: TextStyle(height: 1.4,color: Colors.amber,fontSize: 16),),
+
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  ],
+                )
+                :Expanded(child: ListView.builder(itemCount: roomProvider.rooms.length,itemBuilder: (context,index){
                   return Container(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GestureDetector(
                           onTap: (){
@@ -211,19 +237,30 @@ class _state extends State<AllRooms>{
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
-                        index==roomProvider.rooms.length-1?GestureDetector(
-                          onTap: ()=>ChooseRoom(),
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            child: Row(
-                              children: [
-                                Icon(Icons.add,color: Color(AppTheme.yellowColor),size: 27,),
-                                Text(translator.translate('AddNewRoom'),style: TextStyle(color: Color(AppTheme.yellowColor),fontSize: 15),)
-                              ],
+                        SizedBox(height: 20,),
+                        index==roomProvider.rooms.length-1?
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                ChooseRoom();
+                              },
+                              child: Container(
+                                child:  Row(
+                                  children: [
+
+                                    SizedBox(width: MediaQuery.of(context).size.height*.04,),
+
+                                    Text(translator.translate("AddNewRoom"),style: TextStyle(height: 1.4,color: Colors.amber,fontSize: 16),),
+
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ):SizedBox(),
+                        SizedBox(height: 10,),
+
 
                       ],
                     ),
@@ -341,6 +378,7 @@ class _state extends State<AllRooms>{
                             await roomProvider.addRoomToUser(MyApp.user_id, select);
                             if(roomProvider.connection==200){
                               FlutterToastr.show(translator.translate('RoomAddedSuccessfully'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
+                              loadData();
                               Navigator.pop(context);
                             }
                             else{

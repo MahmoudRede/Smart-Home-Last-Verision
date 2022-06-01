@@ -38,7 +38,7 @@ class _state extends State<Temperature>{
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   Text(translator.translate('Temperature&Humiditydegrees'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                   Text(translator.translate('Temperature & Humidity Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                    Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
                         onChanged: (value) {
                           if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){
@@ -209,7 +209,7 @@ class _state extends State<Temperature>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(translator.translate('Temperature&HumidityEvent'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                    Text(translator.translate('Temperature & Humidity Event'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                     Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
                       onChanged: (value)
                       {
@@ -276,7 +276,7 @@ class _state extends State<Temperature>{
                                       padding: 4.0,
                                       toggleSize: 9.0,
                                       borderRadius: 10.0,
-                                      activeColor: Color(AppTheme.yellowColor),
+                                      activeColor: Color(AppTheme.primaryColor),
                                       value: deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"?true:false,
                                       onToggle: (value) {
                                         if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay2=="1"){

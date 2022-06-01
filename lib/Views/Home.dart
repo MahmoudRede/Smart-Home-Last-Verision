@@ -64,7 +64,7 @@ class _State extends State<Home> {
               ),
               BottomNavigationBarItem(
                   icon: ImageIcon(AssetImage("assets/images/barIcons/voice-control 1.png"),size: 20,),
-                  label: translator.translate("Voive"),
+                  label: translator.translate("Voice"),
                 //  title: Text(translator.translate("Voive"),style: TextStyle(height: 1.8,fontSize: 11),)
               ),
               BottomNavigationBarItem(

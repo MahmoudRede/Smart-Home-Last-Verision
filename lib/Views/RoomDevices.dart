@@ -336,6 +336,7 @@ class _state extends State<RoomDivices>{
                                             deviceProvider.setRoomDevice(deviceProvider.roomDevices[index]);
                                           });
                                         }
+
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width*.2,

@@ -49,6 +49,7 @@ class _state extends State<Register>{
                   SingleChildScrollView(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
+                      height:MediaQuery.of(context).size.height*.7,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50),

@@ -41,24 +41,25 @@ dependencies:
   dio:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
-  google_sign_in:
+  google_sign_in: ^5.3.1
   flutter_facebook_auth: ^4.0.1
   flutter_login_facebook: ^1.4.1
   intl:
   firebase_auth:
-  cloud_firestore:
+  cloud_firestore: ^3.1.15
   webview_flutter:
   image_picker:
   flutter_toastr:
-  firebase_core:
-  firebase_database: ^9.0.8
+  firebase_core: ^1.17.0
+  firebase_database: ^9.0.14
   path:
   http_parser:
   google_fonts: ^2.3.2
   flutter_time_picker_spinner:
   flutter_rounded_date_picker:
   flutter_cupertino_localizations:
-  location:
+  location: ^4.4.0
+  email_auth: ^1.0.0
   percent_indicator: ^3.0.1
   shared_preferences:
 dev_dependencies:

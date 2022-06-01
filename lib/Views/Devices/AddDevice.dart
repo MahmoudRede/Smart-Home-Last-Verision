@@ -11,6 +11,7 @@ import 'package:fssmarthome/Views/Devices/ConfigDevice.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../../Base/Cash_Helper/cash_helper.dart';
 import '../../main.dart';
 import '../RoomDevices.dart';
 
@@ -26,13 +27,16 @@ class _state extends State<AddDevice>{
   int select =-1;
   int select2=-1;
   bool loading =false;
+  int indexValue=0;
   List <String>SwitchDeviceTypes=["1","2","4"];
   String SelectDevice="1";
   int door=0;
   @override
   Widget build(BuildContext context) {
     var deviceProvider= Provider.of<DeviceProvider>(context, listen: true);
-   return Directionality(
+    var roomProvider= Provider.of<RoomProvider>(context, listen: true);
+
+    return Directionality(
      textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
      child: Container(
        padding: EdgeInsets.only(
@@ -52,7 +56,10 @@ class _state extends State<AddDevice>{
                  itemBuilder: (context,index){
                    return GestureDetector(
                      onTap: () {
-                     print(      deviceProvider.devices[0].id);
+                       indexValue=index;
+                       print(indexValue);
+                       print('Dahk');
+                       print(      deviceProvider.devices[0].id);
                        print("---------------------------------");
                        if(index==0){
                          setState(() {
@@ -255,6 +262,7 @@ class _state extends State<AddDevice>{
                            ),
                            child: Row(
                              children: [
+
                                select==deviceProvider.devices[index].id? Icon(Icons.check_circle_outline,size: 20,color: Color(AppTheme.yellowColor),):Icon(Icons.circle_outlined,size: 20,color: Color(AppTheme.primaryColor),)
                                , SizedBox(width: 15,),
                                Container(
@@ -288,6 +296,15 @@ class _state extends State<AddDevice>{
                   children: [
                    GestureDetector(
                    onTap: ()async{
+                     print('Done Ya Rayak Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+                     print(select);
+                     roomProvider.uploadDevices(
+                         roomId: CashHelper.getData(key: 'parentRoomId'),
+                         deviceName: deviceProvider.devices[indexValue].name,
+                         deviceId: select,
+                         deviceLogo:  deviceProvider.devices[indexValue].logo);
+                     print('Done Ya Rayak Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');                     // roomProvider.assignRoom(
+
                      print(select);
                      print("+++++++++++++++++++++++++++++++++++++++++++++++++");
                      setState(() {

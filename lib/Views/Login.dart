@@ -17,6 +17,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
+import '../Provider/DeviceProvider.dart';
+import '../Provider/RoomProvider.dart';
 class Login extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -34,6 +37,8 @@ class _state extends State<Login>{
   @override
   Widget build(BuildContext context) {
   final authProvider= Provider.of<AuthProvider>(context, listen: false);
+  var roomProvider= Provider.of<RoomProvider>(context, listen: true);
+  var deviceProvider= Provider.of<DeviceProvider>(context, listen: true);
     return WillPopScope(
       onWillPop: ()async{
         confirmCloseApp(context);
@@ -59,6 +64,7 @@ class _state extends State<Login>{
                     SingleChildScrollView(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
+                        height:MediaQuery.of(context).size.height*.7,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50),
@@ -180,6 +186,10 @@ class _state extends State<Login>{
                                       SharedPreferenceManager.addData("name",authProvider.LoginInfo["data"]["name"]);
                                       setState((){
                                         MyApp.user_id=authProvider.LoginInfo["data"]["id"];
+                                        print('*******************///////////////////***********');
+                                        print(authProvider.LoginInfo["data"]["id"]);
+                                        print('*******************///////////////////***********');
+                                        roomProvider.getUserRoom(authProvider.LoginInfo["data"]["id"]);
                                         MyApp.user_name=authProvider.LoginInfo["data"]["name"];
                                       });
                                     }
@@ -338,6 +348,8 @@ class _state extends State<Login>{
   );
   Future<void> _handleSignIn() async {
     final loginProvider= Provider.of<AuthProvider>(context, listen: false);
+    // GoogleSignInAccount? googleSignInAccount  = await _googleSignIn.signIn();
+    // print(googleSignInAccount?.email);
     try {
       setState(() {
         loading=true;
@@ -418,6 +430,7 @@ class _state extends State<Login>{
         Navigator.pushNamedAndRemoveUntil(context,"/mainPage", (route) => false);
         setState(() {
           MyApp.user_id=loginProvider.LoginInfo["data"]["id"];
+
           MyApp.user_name=loginProvider.LoginInfo["data"]["name"];
         });
       }

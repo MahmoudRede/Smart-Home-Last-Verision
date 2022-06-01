@@ -5,11 +5,13 @@ import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
 import 'package:fssmarthome/Views/user_authorizedRoom.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
-
 import '../Assign/modules/user_Assigned_Rooms.dart';
+import '../Base/Cash_Helper/cash_helper.dart';
 import '../Provider/AuthProvider.dart';
+import '../Provider/RoomProvider.dart';
 import '../Theme/AppTheme.dart';
 import 'Custom/GlobalFunction.dart';
+import 'Edit_User/edit_user.dart';
 import 'choose_user_rooms.dart';
 
 class Users extends StatefulWidget {
@@ -78,7 +80,7 @@ class _UsersState extends State<Users> {
                       child: GridView.count(
                         mainAxisSpacing: 7,
                         crossAxisSpacing: 7,
-                        childAspectRatio: 1/1.22,
+                        childAspectRatio: 1/1.25,
                         crossAxisCount: 2,
                         padding:EdgeInsets.fromLTRB(10,0,10, 0),
                         children: List.generate(authProvider.users.length, (index) =>builsUserItem(index)
@@ -201,54 +203,108 @@ class _UsersState extends State<Users> {
 
   Widget builsUserItem(int index){
     var authProvider= Provider.of<AuthProvider>(context, listen: false);
+    var roomProvider= Provider.of<RoomProvider>(context, listen: false);
 
    return InkWell(
       onTap: (){
+        CashHelper.saveData(key: 'userId',value: authProvider.users[index].id);
+        CashHelper.saveData(key: 'userName',value: authProvider.users[index].name);
+        print('////////////////////////////////////////////');
+        print(authProvider.users[index].id);
+        print('${ CashHelper.getData(key: 'userId')}');
+        print('////////////////////////////////////////////');
+        roomProvider.getUserRoom( authProvider.users[index].id);
         Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAuthRooms()));
       },
-      child: Material(
-        elevation: 7,
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7)
-
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(10,20,10, 10),
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          decoration: BoxDecoration(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Material(
+              elevation: 7,
               color: Colors.white,
-              borderRadius: BorderRadius.circular(7)
-          ),
-          child: Column(
-            children: [
-              Image(image: AssetImage(
-                'assets/images/man.png',
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7)
 
               ),
-                height: 50,
-                width: 50,
-              ),
-              SizedBox(height: 25,),
-              Text(translator.translate('${authProvider.users[index].name}'),style: TextStyle(
-                fontSize: 18,
-              ),),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(onPressed: (){}, icon: Icon(Icons.edit,color: Colors.green.shade900,)),
-                  Spacer(),
-                  IconButton(onPressed: (){
-                    authProvider.removeUsers(authProvider.users[index].id);
-                  }, icon: Icon(Icons.delete,color: Colors.red,))
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10,20,10, 10),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(7)
+                ),
+                child: Column(
+                  children: [
+                    Image(image: AssetImage(
+                      'assets/images/man.png',
 
-                ],
-              )
-            ],
+                    ),
+                      height: 50,
+                      width: 50,
+                    ),
+                    SizedBox(height: 15,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(onPressed: (){
+                          print('${authProvider.users[index].id}');
+                          // authProvider.isClick=true;
+                          // CashHelper.saveData(key: 'isClick',value: authProvider.isClick);
+                          authProvider.getUser(authProvider.users[index].id);
+                          //  await SharedPreferenceManager.addData('userName','${authProvider.users[index].name}' );
+                          // await  SharedPreferenceManager.addData('userEmail','${authProvider.users[index].email}' );
+                          // await  SharedPreferenceManager.addData('userPhone','${authProvider.users[index].phone}');
+                          // await SharedPreferenceManager.addData('userId','${authProvider.users[index].id}' );
+                          //  print('${authProvider.users[index].name} \n ${authProvider.users[index].email} \n ${authProvider.users[index].phone}');
+                          //  // authProvider.getUser(SharedPreferenceManager.getData('userId'));
+                          //  // loadData()async{
+                          //  //   var authProvider=Provider.of<AuthProvider>(context, listen: false);
+                          //  //   setState(() {
+                          //  //     authProvider.name.text=authProvider.user!.name;
+                          //  //     authProvider.phone.text=authProvider.user!.phone;
+                          //  //     authProvider.email.text=authProvider.user!.email;
+                          //  //   });
+                          //  // }
+                          //
+                          Navigator.push(context, MaterialPageRoute(builder: (_){
+                            return EditUser();
+                          }));
+                        }, icon: Icon(Icons.edit,color: Color(AppTheme.primaryColor),)),
+                        Spacer(),
+                        IconButton(onPressed: (){
+                          authProvider.removeUsers(authProvider.users[index].id);
+                        }, icon: Icon(Icons.delete,color: Colors.red,))
+
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+          SizedBox(height: 10,),
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            child: Material(
+              elevation: 7,
+              color: Color(AppTheme.primaryColor),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                child: Text(translator.translate('${authProvider.users[index].name}'),style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white
+                ),),
+              ),
+            ),
+          ),
+
+        ],
+      )
     );
   }
 }

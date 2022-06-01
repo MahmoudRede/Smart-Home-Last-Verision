@@ -62,7 +62,7 @@ class _state extends State<WaterLeak>{
                         children: [
                           Container(
                               width: MediaQuery.of(context).size.width*.43-30,
-                              child: Text(translator.translate('WaterLeakvalue'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
+                              child: Text(translator.translate('Water Leak Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
                           FlutterSwitch(
                             height: 15.0,
                             width: 30.0,
@@ -101,7 +101,7 @@ class _state extends State<WaterLeak>{
                         children: [
                           Container(
                               width: MediaQuery.of(context).size.width*.43-30,
-                              child: Text(translator.translate('WaterLeakEvent'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
+                              child: Text(translator.translate('Water Leak Event'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
                           FlutterSwitch(
                             height: 15.0,
                             width: 30.0,

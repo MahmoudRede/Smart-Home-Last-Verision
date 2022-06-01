@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter/cupertino.dart';
@@ -263,6 +264,7 @@ class _state extends State<MainPage>{
                           SizedBox(width: MediaQuery.of(context).size.width*.05,),
                           GestureDetector(
                             onTap: (){
+                              CashHelper.saveData(key: 'parentRoomId',value: roomProvider.rooms[index].id);
                               Navigator.push(context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name,route: 1,)));
                             },
                             child: Container(

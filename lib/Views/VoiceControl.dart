@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/AddVoice.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
@@ -75,25 +76,31 @@ class _state extends State<VoiceControl>{
                       ],
                     ),),
                 SizedBox(height: MediaQuery.of(context).size.height*.25,),
-                Row(
-                  children: [
-                  Image.asset("assets/images/voice speak.png",
-                  width: MediaQuery.of(context).size.width*.4,
-                  ),
-                    Container(
-                      width: MediaQuery.of(context).size.width*.2,
-                      height:  MediaQuery.of(context).size.width*.2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Color(AppTheme.primaryColor)
+                InkWell(
+                  onTap: (){
+                    FlutterToastr.show(translator.translate('Comming soon , you can register the data of the devices only now'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
+
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset("assets/images/voice speak.png",
+                        width: MediaQuery.of(context).size.width*.4,
                       ),
-                      padding: EdgeInsets.all(MediaQuery.of(context).size.width*.05),
-                      child: Image.asset("assets/images/microphone 1.png"),
-                    ),
-                    Image.asset("assets/images/voice speak2.png",
-                      width: MediaQuery.of(context).size.width*.4,
-                    )
-                  ],
+                      Container(
+                        width: MediaQuery.of(context).size.width*.2,
+                        height:  MediaQuery.of(context).size.width*.2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Color(AppTheme.primaryColor)
+                        ),
+                        padding: EdgeInsets.all(MediaQuery.of(context).size.width*.05),
+                        child: Image.asset("assets/images/microphone 1.png"),
+                      ),
+                      Image.asset("assets/images/voice speak2.png",
+                        width: MediaQuery.of(context).size.width*.4,
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*.07,),
                 Text(translator.translate('YouSay')+" :"),

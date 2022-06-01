@@ -6,7 +6,10 @@ import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/Devices/OTP.dart';
 import 'package:fssmarthome/Views/Register.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Provider/AuthProvider.dart';
 
 class ForgetPassword extends StatefulWidget{
   @override
@@ -16,9 +19,12 @@ class ForgetPassword extends StatefulWidget{
 }
 class _state extends State<ForgetPassword>{
   TextEditingController email =new TextEditingController();
+
   final formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final authProvider= Provider.of<AuthProvider>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -86,9 +92,11 @@ class _state extends State<ForgetPassword>{
                           GestureDetector(
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
-                                Navigator.push(
-                                    context, GlobalFunction.route(OTP()));
-
+                                // authProvider.sendOtp(email.text);
+                                authProvider.forgetpassword(email.text);
+                                  Navigator.push(
+                                      context, GlobalFunction.route(OTP())
+                                  );
                               }
                             },
                             child: Container(

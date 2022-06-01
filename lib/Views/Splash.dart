@@ -2,11 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/Views/Login.dart';
+import 'package:fssmarthome/Views/user_screen.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Provider/AuthProvider.dart';
 
 class Splash extends StatefulWidget{
   @override
@@ -32,6 +39,7 @@ class _state extends State<Splash>{
     changeLang("en");
     loadData();
   }
+
    void changeLang(String lang) async {
      SharedPreferences pref =await SharedPreferences.getInstance();
      setState(() {
@@ -47,15 +55,47 @@ class _state extends State<Splash>{
      MyApp.setLocale(context, Locale('${lang}'));
 
    }
+
   @override
   Widget build(BuildContext context) {
+    final authProvider= Provider.of<AuthProvider>(context, listen: false);
+
     Timer(Duration(seconds: 3), (){
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(user_id!=null?"/mainPage":"/login",
-              (Route<dynamic> route) => false);
+      if(CashHelper.getData(key: 'isUser')==null){
+        Navigator.of(context)
+
+            .pushNamedAndRemoveUntil(user_id!=null?"/mainPage":"/login",
+                (Route<dynamic> route) => false);
+      }
+      else{
+        if(user_id!=null){
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return UserScreen();
+
+          }));
+        }
+        else{
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return Login();
+
+          }));
+        }
+      }
+
+
       // Phoenix.rebirth(context);
     });
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0,
+        backwardsCompatibility: false,
+         systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.light,
+           statusBarColor: Color(AppTheme.primaryColor)
+         ),
+
+      ),
       backgroundColor: Color(AppTheme.primaryColor),
       body: Container(
         padding: EdgeInsets.only(

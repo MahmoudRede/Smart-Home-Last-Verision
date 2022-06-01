@@ -38,7 +38,7 @@ class _state extends State<ConfigDevice>{
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.black12,
+        backgroundColor:  Color(AppTheme.primaryColor),
         body: Container(
           child: Directionality(
             textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
@@ -71,8 +71,9 @@ class _state extends State<ConfigDevice>{
                       children: [
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(
-                                context, GlobalFunction.route(RoomDivices(room_id:widget.room_id,name:widget.room_name,route: widget.route,)));
+                            Navigator.pop(context);
+                          //   Navigator.push(
+                          //       context, GlobalFunction.route(RoomDivices(room_id:widget.room_id,name:widget.room_name,route: widget.route,)));
                           },
                           child: Container(
                             width: 40,height: 40,

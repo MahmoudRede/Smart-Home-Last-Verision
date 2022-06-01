@@ -11,9 +11,11 @@ import 'package:fssmarthome/main.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart'as http;
-
+import 'package:email_auth/email_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import '../Base/Cash_Helper/cash_helper.dart';
 import '../Constants/constants.dart';
 import '../Dio/dio_helper.dart';
 import '../Views/Custom/GlobalFunction.dart';
@@ -24,9 +26,13 @@ class AuthProvider extends ChangeNotifier{
   late Map<String,dynamic>RegisterInfo;
   late Map<String,dynamic>updateInfo;
    Map<String,dynamic>updateInfoTechnical={};
-   List<UsersModel>users=[];
+  List<UsersModel>users=[];
+  Map<String,dynamic> user={};
   Map<String,dynamic>userInfo={};
   Map<String,dynamic>forgetPassword={};
+  TextEditingController name =new TextEditingController();
+  TextEditingController email =new TextEditingController();
+  TextEditingController phone =new TextEditingController();
 /////////////////////////////////////////////////////////////
   late Map<String,dynamic>assignRooms;
   int userRoom = 194;
@@ -64,6 +70,7 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+  var isUser;
   //////////////////////////////////////////////
   Future<void> LoginServices(String email,String password,context) async{
     String url=ServicesConfig.base_url+"/auth/login";
@@ -86,7 +93,8 @@ class AuthProvider extends ChangeNotifier{
         print(LoginInfo);
         print('/////////////////////////////////////');
         print(LoginInfo['data']['parent_id']);
-        var isUser=LoginInfo['data']['parent_id'];
+          isUser=LoginInfo['data']['parent_id'];
+          CashHelper.saveData(key: 'isUser',value: isUser);
         if(isUser!=null){
            Navigator.push(context, MaterialPageRoute(builder: (_){
              return UserScreen();
@@ -450,4 +458,95 @@ class AuthProvider extends ChangeNotifier{
     }
   }
 
+  Future<void> getUser(var id) async{
+    String url=ServicesConfig.base_url+"/users/$id";
+    print(url);
+    var header=await ServicesConfig.getHeaderWithToken();
+    try{
+      final responce=await http.get(Uri.parse(url),headers: header);
+      print(responce.body);
+      if(responce.body.isNotEmpty)
+      {
+        statusCodeConnection=responce.statusCode;
+        user=json.decode(responce.body)["data"];
+        // print('////////////// user ////////');
+        // print(user);
+        // print('////////////// data ////////');
+        // print(user['data']);
+        // print('////////////// email ////////');
+        // print(user['email']);
+        // print('////////////// data email ////////');
+
+        print(user['data']['email']);
+
+        print(email.text);
+        print('اعااااااااااااااااااااااااااا');
+
+
+        email.text=user['data']['email'];
+        phone.text=user['data']['phone'];
+        name.text=user['data']['name'];
+        // email.text=user['data']['email'];
+        // phone.text=user['data']['phone'];
+        // name.text=user['data']['name'];
+        // print(responce.body[0][0][0]);
+        // email.text=user['email'];
+
+        // print('//////////////////');
+        // print(name.text);
+        notifyListeners();
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
+  }
+
+  EmailAuth emailAuth =  EmailAuth(sessionName: "Complete Register");
+
+  void sendOtp(String email) async{
+     EmailAuth(
+      sessionName: "Sample session",
+    );
+     bool result = await emailAuth.sendOtp(
+         recipientMail: email, otpLength: 5
+     );
+     if(result){
+       print('OTP Send Success');
+     }
+     else{
+       print('Error in send OTP');
+
+     }
+  }
+
+  void verifyOtp(String otp){
+     
+    var res=emailAuth.validateOtp(
+        recipientMail: 'mahmoudreda123456789101112@gmail.com',
+        userOtp: otp
+    );
+    if(res){
+      print('Validate True');
+    }
+    else{
+      print('Validate False');
+    }
+
+  }
+  
+  void googleSignIn()async{
+    GoogleSignIn googleSignIn = GoogleSignIn();
+      try {
+       var res = await googleSignIn.signIn();
+       print(res);
+
+
+      } catch (error) {
+
+        print(error);
+      }
+
+
+  }
 }

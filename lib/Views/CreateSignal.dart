@@ -393,24 +393,7 @@ class _state extends State<CreateSignal>{
                         child: Text(translator.translate('Save'),style: TextStyle(color: Colors.white),),
                       ),
                     ),
-                    SizedBox(height:MediaQuery.of(context).size.height*.02),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                            context, GlobalFunction.route(ListOfSignals()));
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width*.35,
-                        height: MediaQuery.of(context).size.height*.06,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color:  Color(AppTheme.primaryColor),width: 1),
-                            color: Colors.white
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(translator.translate('ViewList'),style: TextStyle(color: Color(AppTheme.primaryColor)),),
-                      ),
-                    ),
+
                     SizedBox(height:MediaQuery.of(context).size.height*.02),
                   ],
                 )

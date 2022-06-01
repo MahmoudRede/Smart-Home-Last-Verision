@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
+import 'package:fssmarthome/Models/Assign_Model/assign_model.dart';
 import 'package:fssmarthome/Models/RoomModel.dart';
 import 'package:fssmarthome/Models/UserRoomModel.dart';
+import 'package:fssmarthome/Models/upload_device.dart';
 import 'package:fssmarthome/Provider/ServicesConfig.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
@@ -96,10 +98,7 @@ class RoomProvider extends ChangeNotifier{
     }
   }
   
-  void assignRoom(){
-    
-   // FirebaseFirestore.instance.collection('UserRooms').add()
-  }
+
   Future<void>AddRoom(File fileImage,BuildContext context,String name_en,String name_ar)async
   {
     if (fileImage != null) {
@@ -371,4 +370,109 @@ class RoomProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+
+  void assignRoom({
+   required int userId,
+   required String roomName,
+   required int roomId,
+   required String roomLogo,
+
+  }){
+      AssignModel assignModel=AssignModel(
+        userId: userId,
+        roomId: roomId,
+        roomName: roomName,
+        roomLogo: roomLogo
+      );
+    FirebaseFirestore.instance.
+    collection('UserRooms').
+    doc('$roomId').
+    set(assignModel.toMap()).then((value) {
+      print('/////////////////////////////////////////////////');
+      print('Upload Success');
+      print('/////////////////////////////////////////////////');
+      notifyListeners();
+    });
+  }
+
+  void UserRoomdelete({
+
+    required int roomId,
+
+  }){
+
+    FirebaseFirestore.instance.
+    collection('UserRooms').
+    doc('$roomId').delete().then((value) {
+      print('Room Delete');
+      notifyListeners();
+    }).catchError((error){
+      print('Error is ${error.toString()}');
+      notifyListeners();
+    });
+  }
+
+  List <AssignModel> userRooms=[];
+  void getUserRoom(var userId){
+
+    FirebaseFirestore.instance.
+    collection('UserRooms').
+    get().then((value){
+      userRooms=[];
+      value.docs.forEach((element) {
+        if(element['userId']==userId){
+          userRooms.add(AssignModel.formJson(element.data()!));
+        }
+      });
+
+       print('From FireBase;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
+       print(userRooms[0].roomName);
+       print('From FireBase;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
+       notifyListeners();
+    });
+  }
+
+  void uploadDevices({
+    required int roomId,
+    required String deviceName,
+    required int deviceId,
+    required String deviceLogo,
+
+  }){
+    UploadDevice uploadDevice=UploadDevice(
+        roomId: roomId,
+        deviceId: deviceId,
+        deviceName: deviceName,
+        deviceLogo: deviceLogo
+    );
+    FirebaseFirestore.instance.
+    collection('roomDevices').
+    add(uploadDevice.toMap()).then((value) {
+      print('/////////////////////////////////////////////////');
+      print('Upload Success');
+      print('/////////////////////////////////////////////////');
+      notifyListeners();
+    });
+  }
+
+  List <UploadDevice> userDevices=[];
+
+  void getUserDevice(var roomId){
+
+    FirebaseFirestore.instance.
+    collection('roomDevices').
+    get().then((value){
+      userDevices=[];
+      value.docs.forEach((element) {
+        if(element['roomId']==roomId){
+          userDevices.add(UploadDevice.formJson(element.data()!));
+        }
+      });
+      print('From FireBase;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
+      print(userDevices[0].deviceName);
+      print('From FireBase;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
+      notifyListeners();
+    });
+  }
+
 }

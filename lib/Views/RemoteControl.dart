@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/CreateSignal.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
+import 'package:fssmarthome/Views/ListOfSignals.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
@@ -278,24 +279,47 @@ class _state extends State<RemoteControl>{
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height*.02,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                        context, GlobalFunction.route(CreateSignal()));
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*.25,
-                    height: MediaQuery.of(context).size.height*.05,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color(AppTheme.primaryColor)
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(translator.translate('Edit'),style: TextStyle(fontSize: 15,color: Colors.white),),
+                SizedBox(height: MediaQuery.of(context).size.height*.09,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context, GlobalFunction.route(CreateSignal()));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*.25,
+                        height: MediaQuery.of(context).size.height*.05,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(AppTheme.primaryColor)
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(translator.translate('Add'),style: TextStyle(fontSize: 15,color: Colors.white),),
 
-                  ),
+                      ),
+                    ),
+                    SizedBox(width:MediaQuery.of(context).size.width*.12),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context, GlobalFunction.route(ListOfSignals()));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*.25,
+                        height: MediaQuery.of(context).size.height*.05,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(AppTheme.primaryColor)
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(translator.translate('ViewList'),style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                  ],
                 )
+
               ],
             ),
           ),
