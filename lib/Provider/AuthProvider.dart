@@ -283,8 +283,8 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
-  Future<void> editProfile(String name,String email,String phone) async{
-    String url=ServicesConfig.base_url+"/profile/${MyApp.user_id}";
+  Future<void> editProfile(String name,String email,String phone,int id) async{
+    String url=ServicesConfig.base_url+"/profile/$id";
     print(url);
     var body={
       "name":name,

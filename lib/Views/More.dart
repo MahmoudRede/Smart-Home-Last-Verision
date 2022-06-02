@@ -174,7 +174,7 @@ class _state extends State<More>{
                                 setState(() {
                                   loadingBtn=true;
                                 });
-                                await  userProvider.editProfile(name.text, email.text, phone.text);
+                                await  userProvider.editProfile(name.text, email.text, phone.text,MyApp.user_id);
                                 FlutterToastr.show(translator.translate("DataHasBeenUpdated"), context, duration: FlutterToastr.lengthShort, position:  FlutterToastr.center);
                                 setState(() {
                                   MyApp.user_name=name.text;

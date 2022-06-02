@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/Devices/ResetPassword.dart';
@@ -282,7 +283,8 @@ class _state extends State<OTP>{
                           GestureDetector(
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
-                                // authProvider.checkCode(email, code);
+                                CashHelper.saveData(key: 'code',value: n1.text+n2.text+n3.text+n4.text);
+                                authProvider.checkCode(CashHelper.getData(key: 'emailCheck'), n1.text+n2.text+n3.text+n4.text);
                                 // authProvider.verifyOtp(n1.text+n2.text+n3.text+n4.text+n5.text+n6.text);
                                 Navigator.push(
                                     context, GlobalFunction.route(ResetPassword()));

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
+
+import '../../Provider/AuthProvider.dart';
 
 class ResetPassword extends StatefulWidget{
   @override
@@ -18,6 +22,8 @@ class _state extends State<ResetPassword>{
   FocusNode passwordNode =new FocusNode();
   @override
   Widget build(BuildContext context) {
+    final authProvider= Provider.of<AuthProvider>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -130,6 +136,8 @@ class _state extends State<ResetPassword>{
                           GestureDetector(
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
+
+                                authProvider.resetPassword(CashHelper.getData(key: 'code'), password.text, password2.text);
                                 Navigator.pushNamedAndRemoveUntil(context,"/login", (route) => false);
 
                               }

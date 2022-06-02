@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
@@ -93,6 +94,7 @@ class _state extends State<ForgetPassword>{
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
                                 // authProvider.sendOtp(email.text);
+                                CashHelper.saveData(key: 'emailCheck',value: email.text);
                                 authProvider.forgetpassword(email.text);
                                   Navigator.push(
                                       context, GlobalFunction.route(OTP())

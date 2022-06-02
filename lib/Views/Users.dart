@@ -250,7 +250,7 @@ class _UsersState extends State<Users> {
                         IconButton(onPressed: (){
                           print('${authProvider.users[index].id}');
                           // authProvider.isClick=true;
-                          // CashHelper.saveData(key: 'isClick',value: authProvider.isClick);
+                          CashHelper.saveData(key: 'userF',value: authProvider.users[index].id);
                           authProvider.getUser(authProvider.users[index].id);
                           //  await SharedPreferenceManager.addData('userName','${authProvider.users[index].name}' );
                           // await  SharedPreferenceManager.addData('userEmail','${authProvider.users[index].email}' );

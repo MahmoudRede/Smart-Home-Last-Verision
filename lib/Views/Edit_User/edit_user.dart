@@ -32,6 +32,7 @@ class _EditUserState extends State<EditUser> {
   Widget build(BuildContext context) {
 
     var authProvider= Provider.of<AuthProvider>(context, listen: false);
+    var userProvider=Provider.of<AuthProvider>(context, listen: false);
     // authProvider.name.text='${SharedPreferenceManager.getData('userName')}';
     // authProvider.phone.text='${SharedPreferenceManager.getData('userPhone')}';
     // authProvider.email.text='${SharedPreferenceManager.getData('userEmail')}';
@@ -143,6 +144,12 @@ class _EditUserState extends State<EditUser> {
                               CashHelper.saveData(key: 'nameKey',value:   authProvider.name.text);
                               CashHelper.saveData(key: 'emailKey',value:  authProvider.email.text);
                               CashHelper.saveData(key: 'phoneKey',value:  authProvider.phone.text);
+                              
+                              authProvider.editProfile(authProvider.name.text,  authProvider.email.text, authProvider.phone.text, CashHelper.getData(key:'userF'));
+                              authProvider.getUser( CashHelper.getData(key:'userF'));
+                              userProvider.getUsers();
+
+
 
                             },
                             child: Text('Edit',style: GoogleFonts.aBeeZee(
