@@ -30,12 +30,12 @@ Future<void> main() async {
   DioHelper.init();
   CashHelper.init();
 
-
-  /*await translator.init(
+  await translator.init(
     assetsDirectory: 'assets/Langs/', valuesAsMap: {},
     localeType: LocalizationDefaultType.device,
     languagesList: <String>['ar', 'en'],
-  );*/
+  );
+
   runApp(MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }

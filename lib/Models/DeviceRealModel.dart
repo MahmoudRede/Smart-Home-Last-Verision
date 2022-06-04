@@ -28,7 +28,7 @@ class DeviceRealModel {
     required this.switch_4,
   });
   dynamic device_id;
-  String updated_at;
+  dynamic updated_at;
   dynamic userRoom_id;
   dynamic relay;
   dynamic active;
