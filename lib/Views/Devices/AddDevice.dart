@@ -302,6 +302,7 @@ class _state extends State<AddDevice>{
                          roomId: CashHelper.getData(key: 'parentRoomId'),
                          deviceName: deviceProvider.devices[indexValue].name,
                          deviceId: select,
+                         deviceNameAr: deviceProvider.devices[indexValue].nameAr,
                          deviceLogo:  deviceProvider.devices[indexValue].logo);
                      print('Done Ya Rayak Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');                     // roomProvider.assignRoom(
 

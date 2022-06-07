@@ -102,7 +102,7 @@ class _state extends State<Login>{
                                     contentPadding: EdgeInsets.only(
                                       left: 10,right: 10,top: 10,bottom: 10
                                     ),
-                                    hintText: translator.translate("User Name"),
+                                    hintText: translator.translate("UserName"),
                                     hintStyle: TextStyle(color: Colors.white,fontSize: 14),
                                     fillColor: Colors.white
                                   ),
@@ -161,7 +161,7 @@ class _state extends State<Login>{
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text(translator.translate("Forget Password"),style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
+                                        Text(translator.translate("ForgetPassword"),style: TextStyle(fontSize: 12,color: Color(AppTheme.yellowColor)),)
                                       ],
                                     ),
                                   ),
@@ -242,7 +242,7 @@ class _state extends State<Login>{
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                    children: [
-                                    Text(translator.translate("You don\'t have an account?"),style: TextStyle(fontSize: 14,color: Colors.white),),
+                                    Text(translator.translate("Youdonthaveanaccount?"),style: TextStyle(fontSize: 14,color: Colors.white),),
                                      SizedBox(width: 10,),
                                      Text(translator.translate("SignUp"),style: TextStyle(fontSize: 15,color: Color(AppTheme.yellowColor)),)
                                      ],

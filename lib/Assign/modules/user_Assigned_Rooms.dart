@@ -119,7 +119,7 @@ class _state extends State<UserAuthRooms>{
                         color: Colors.amber,
                       ) ,
                       SizedBox(width: 10,),
-                      Text('User Romms',style: TextStyle(
+                      Text(translator.translate("usersRooms"),style: TextStyle(
                           color: Colors.amber,
                           fontSize: 16
                       ),),
@@ -139,19 +139,17 @@ class _state extends State<UserAuthRooms>{
                             print(roomProvider.rooms[index].room.logo);
                             print('dddddddddddddddddddddddddddddddddddddddddddddd');
                             print(roomProvider.rooms[index].room.name);
-
                             roomProvider.assignRoom(
                                 userId:CashHelper.getData(key: 'userId'),
                                 roomId:roomProvider.rooms[index].id,
-                                roomName: roomProvider.rooms[index].room.name,
-                                roomLogo:roomProvider.rooms[index].room.logo
+                                roomName: roomProvider.rooms[index].room.nameEn,
+                                roomLogo:roomProvider.rooms[index].room.logo,
+                                roomNameAr:roomProvider.rooms[index].room.nameAr
                             );
                             FlutterToastr.show(translator.translate('Room Add to ${CashHelper.getData(key: 'userName')}'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
-
                             CashHelper.saveData(key: 'roomId',value: roomProvider.rooms[index].id);
                             CashHelper.saveData(key: 'roomName',value:  roomProvider.rooms[index].room.name);
                             CashHelper.saveData(key: 'roomLogo',value: roomProvider.rooms[index].room.logo);
-
                             // Navigator.push(
                             //     context, GlobalFunction.route(RoomDivices(room_id:roomProvider.rooms[index].id,name:roomProvider.rooms[index].room.name ,route: 2,))
                             // );

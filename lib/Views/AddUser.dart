@@ -80,6 +80,7 @@ class _State extends State<AddUser> {
                         Container(
                           width: MediaQuery.of(context).size.width*.8,
                           child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             focusNode: emailNode,
                             style: TextStyle(color: Colors.black),
                             controller: email,
@@ -111,6 +112,7 @@ class _State extends State<AddUser> {
                         Container(
                           width: MediaQuery.of(context).size.width*.8,
                           child: TextFormField(
+                            keyboardType: TextInputType.phone,
                             focusNode: phoneNode,
                             style: TextStyle(color: Colors.black),
                             controller: phone,
@@ -142,6 +144,7 @@ class _State extends State<AddUser> {
                         Container(
                           width: MediaQuery.of(context).size.width*.8,
                           child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
                             focusNode: passwordNode,
                             onFieldSubmitted: (value){
                               FocusScope.of(context).requestFocus(FocusNode());

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Smart Home</string>
-    <string name="facebook_app_id">5420612144637382</string>
-    <string name="fb_login_protocol_scheme">5420612144637382</string>
-    <string name="facebook_client_token">e8798273e620754a33dd7468335e2a4d</string>
+    <string name="app_name">Smart Home Last</string>
+    <string name="facebook_app_id">981447072545821</string>
+    <string name="fb_login_protocol_scheme">fb981447072545821</string>
+    <string name="facebook_client_token">f72788125e21340e738e6cb0f7715247</string>
 
 </resources>

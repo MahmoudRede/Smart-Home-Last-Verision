@@ -54,7 +54,7 @@ class _state extends State<MainPage>{
 
   }
   loadData2(BuildContext context)async{
-    var deviceProvider= Provider.of<DeviceProvider>(context, listen: false);
+    var deviceProvider= Provider.of<DeviceProvider>(context, listen: true);
     for(int i=0;i<deviceProvider.roomDevices.length;i++){
       RoomDevicesModel _roomdevice=  deviceProvider.roomDevices[i];
       print(data[i].id);

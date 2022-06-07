@@ -79,7 +79,7 @@ class _state extends State<Door>{
                          Row(
                            mainAxisAlignment: MainAxisAlignment.start,
                            children: [
-                             Text(translator.translate('Event Action'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                             Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
                              SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
                              FlutterSwitch(
                                  height: 15.0,
@@ -160,7 +160,7 @@ class _state extends State<Door>{
                    child:  Row(
                      mainAxisAlignment: MainAxisAlignment.end,
                      children: [
-                       Text(translator.translate('Safe mode is active'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                       Text(translator.translate('Safemodeisactive'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                        SizedBox(width: 10,),
                        FlutterSwitch(
                          height: 15.0,
@@ -312,7 +312,7 @@ class _state extends State<Door>{
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(translator.translate('Safe mode is active'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                        Text(translator.translate('Safemodeisactive'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                        SizedBox(width: 10,),
                         FlutterSwitch(
                           height: 15.0,

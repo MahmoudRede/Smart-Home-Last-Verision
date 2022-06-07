@@ -435,14 +435,20 @@ class DeviceProvider extends ChangeNotifier{
     }
   }
   Future<void> deleteDevice(var id) async{
-    String url=ServicesConfig.base_url+"/userroomdevices/bulkDelete?ids[]=$id";
+    String url=ServicesConfig.base_url+"/userroomdevices/bulkDelete?ids[]$id";
+    print('Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
     print(url);
-    var header=await ServicesConfig.getHeader();
+    print(id);
+    var header=await ServicesConfig.getHeaderToken();
     try{
       final responce=await http.delete(Uri.parse(url),headers: header);
+      print('Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
       print(responce.body);
+      print('Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+      notifyListeners();
       if(responce.body.isNotEmpty)
       {
+        print('////////////////////////');
         connection=responce.statusCode;
         notifyListeners();
       }

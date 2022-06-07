@@ -5,6 +5,7 @@ class AssignModel{
   int ? roomId;
   String ? roomLogo;
   String ? roomName;
+  String ? roomNameAr;
 
 
 
@@ -13,6 +14,7 @@ class AssignModel{
     this.roomId,
     this.roomName,
     this.roomLogo,
+    this.roomNameAr,
 
   });
 
@@ -22,6 +24,7 @@ class AssignModel{
     roomId=json['roomId'];
     roomName=json['roomName'];
     roomLogo=json['roomLogo'];
+    roomNameAr=json['roomNameAr'];
 
   }
 
@@ -31,7 +34,7 @@ class AssignModel{
       'roomId':roomId,
       'roomName':roomName,
       'roomLogo':roomLogo,
-
+      'roomNameAr':roomNameAr
 
     };
   }

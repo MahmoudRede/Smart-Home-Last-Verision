@@ -62,7 +62,7 @@ class _state extends State<Soil>{
                        children: [
                          Container(
                              width: MediaQuery.of(context).size.width*.43-30,
-                             child: Text(translator.translate('Soil Moisture Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
+                             child: Text(translator.translate('SoilMoisturevalue'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
                          FlutterSwitch(
                            height: 15.0,
                            width: 30.0,
@@ -101,7 +101,7 @@ class _state extends State<Soil>{
                        children: [
                          Container(
                              width: MediaQuery.of(context).size.width*.43-30,
-                             child: Text(translator.translate('Soil Moisture Event'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
+                             child: Text(translator.translate('SoilMoistureEvent'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)),
                          FlutterSwitch(
                            height: 15.0,
                            width: 30.0,

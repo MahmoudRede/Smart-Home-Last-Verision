@@ -80,7 +80,7 @@ class _UsersState extends State<Users> {
                       child: GridView.count(
                         mainAxisSpacing: 7,
                         crossAxisSpacing: 7,
-                        childAspectRatio: 1/1.25,
+                        childAspectRatio: 1/1.3,
                         crossAxisCount: 2,
                         padding:EdgeInsets.fromLTRB(10,0,10, 0),
                         children: List.generate(authProvider.users.length, (index) =>builsUserItem(index)
@@ -103,7 +103,7 @@ class _UsersState extends State<Users> {
                                 color:Color(AppTheme.primaryColor)
                             ),
                             alignment: Alignment.center,
-                            child:Text(translator.translate("add new user"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
+                            child:Text(translator.translate("addnewuser"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.white),)
                         ),
                       )
                     ],

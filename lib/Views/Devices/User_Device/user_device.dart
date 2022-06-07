@@ -592,7 +592,7 @@ class _state extends State<UserRoomDivices>{
 
                                             ),
                                             SizedBox(height: 5,),
-                                            Text(deviceProvider.roomDevices[index].device==null?"Device":deviceProvider.roomDevices[index].device.name,textAlign: TextAlign.center,style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,height: 1.5),)
+                                            Text(deviceProvider.roomDevices[index].device==null?"Device":translator.currentLanguage == 'ar' ?(deviceProvider.roomDevices[index].device.nameAr)!:(deviceProvider.roomDevices[index].device.name)!,textAlign: TextAlign.center,style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,height: 1.5),)
                                           ],
                                         ),
                                       ),

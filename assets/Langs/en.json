@@ -97,7 +97,7 @@
   "CreateTiming": "Create Timing",
   "EventAction": "Event Action",
   "Repeat": "Repeat",
-  "DiviceAction": "Divice Action",
+  "Divice Action": "Divice Action",
   "dataAdded": "Data Has Been Added Succeffully",
   "ViewList": "View List",
   "NoRoomAddedForYou": "No Room Added For You",
@@ -113,13 +113,13 @@
   "DeviceHasBeenAdded": "Device Has Been Added",
   "PleaseSelectDevice": "Please Select Device",
   "device": "device",
-  "AlermClock": "Alerm Clock Switch",
+  "AlarmClock": "Alerm Clock Switch",
   "Open": "Open",
   "Close": "Close",
   "Safemodeisactive": "Device Switch",
   "Firedetectorvalue": "Fire detector Switch",
   "FiredetectorEvent": "Fire detector Event",
-  "Moverment": "Moverment",
+  "Movement": "Movement",
   "DeviceAction": "Device Switch",
   "ResetPassword": "Reset Password",
   "EnterConfirmPassword": "Enter Confirm Password",
@@ -147,8 +147,13 @@
   "adduser": "Add User",
   "selectimage": "Please Select Image",
   "copy": "Copy Done",
-  "open_setting": "Open Setting"
-
+  "open_setting": "Open Setting",
+  "Profile": "profile",
+  "messageVoice": "Comming soon , you can register the data of the devices only now",
+  "Yes" : "Yes",
+  "No" : "No",
+  "addnewuser": "Add New User",
+  "usersRooms": "User Rooms"
 
 
 }

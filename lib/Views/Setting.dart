@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Provider/RoomProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/ChangePassword.dart';
 import 'package:fssmarthome/Views/Custom/CustomAppBar.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Provider/AuthProvider.dart';
+import '../Provider/DeviceProvider.dart';
 import '../main.dart';
 
 class Setting extends StatefulWidget{
@@ -18,9 +25,29 @@ class Setting extends StatefulWidget{
 class _state extends State<Setting>{
   List<String>languages=["العربية","English"];
   String SelectedLanguage="en";
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+  bool loading=true;
+  bool loadingBtn=false;
+  loadData()async{
+    var userProvider=Provider.of<AuthProvider>(context, listen: false);
+    await  userProvider.getUserInfo();
+    setState(() {
+      // name.text=userProvider.userInfo["name"]??"";
+      // phone.text=userProvider.userInfo["phone"]??"";
+      // email.text=userProvider.userInfo["email"]??"";
+      loading=false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-   return SafeArea(child: Scaffold(
+
+
+    return SafeArea(child: Scaffold(
      backgroundColor: Color(AppTheme.backGround),
      body: Directionality(
        textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
@@ -182,4 +209,24 @@ class _state extends State<Setting>{
     MyApp.setLocale(context, Locale('${lang}'));
 
   }
+  bool loadingImage=false;
+  late File selectedImage;
+  pickImage(BuildContext context ) async {
+    setState(() {
+      loadingImage=true;
+    });
+    final userProvider= Provider.of<AuthProvider>(context, listen: false);
+    var imagePicker = new  ImagePicker();
+    var profileImage=await imagePicker.pickImage(source:  ImageSource.gallery);
+
+    setState(() {
+      selectedImage = File(profileImage!.path);
+    });
+    await  userProvider.sendImagePick(selectedImage,context);
+    setState(() {
+      loadingImage=false;
+    });
+
+  }
 }
+

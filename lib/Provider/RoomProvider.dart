@@ -376,13 +376,15 @@ class RoomProvider extends ChangeNotifier{
    required String roomName,
    required int roomId,
    required String roomLogo,
+   required String roomNameAr,
 
   }){
       AssignModel assignModel=AssignModel(
         userId: userId,
         roomId: roomId,
         roomName: roomName,
-        roomLogo: roomLogo
+        roomLogo: roomLogo,
+        roomNameAr: roomNameAr
       );
     FirebaseFirestore.instance.
     collection('UserRooms').
@@ -437,13 +439,15 @@ class RoomProvider extends ChangeNotifier{
     required String deviceName,
     required int deviceId,
     required String deviceLogo,
+    required String deviceNameAr
 
   }){
     UploadDevice uploadDevice=UploadDevice(
         roomId: roomId,
         deviceId: deviceId,
         deviceName: deviceName,
-        deviceLogo: deviceLogo
+        deviceLogo: deviceLogo,
+        deviceNameAr: deviceNameAr
     );
     FirebaseFirestore.instance.
     collection('roomDevices').

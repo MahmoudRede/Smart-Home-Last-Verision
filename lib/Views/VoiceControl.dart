@@ -78,7 +78,7 @@ class _state extends State<VoiceControl>{
                 SizedBox(height: MediaQuery.of(context).size.height*.25,),
                 InkWell(
                   onTap: (){
-                    FlutterToastr.show(translator.translate('Comming soon , you can register the data of the devices only now'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
+                    FlutterToastr.show(translator.translate('messageVoice'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
 
                   },
                   child: Row(

@@ -265,7 +265,10 @@ class _EditRoomState extends State<EditRoom> {
                                   ),
                                   GestureDetector(
                                       onTap: (){
-                                        confirmDelete(context, deviceProvider.roomDevices[index].id);
+                                        setState((){
+                                          confirmDelete(context, deviceProvider.roomDevices[index].id);
+
+                                        });
                                       },
                                       child: Icon(Icons.delete,color: Colors.red,size: 25,))
                                 ],
@@ -358,9 +361,12 @@ class _EditRoomState extends State<EditRoom> {
                             child:   Text(translator.translate("Confirm"),style: TextStyle(color:Colors.white,fontSize: 13),),
                           ),
                           onTap: () async {
-                            await deviceProvider.deleteDevice(id);
-                            loadData();
-                            Navigator.pop(context);
+                            await deviceProvider.deleteDevice(id).then((value) {
+                              Navigator.pop(context);
+
+                            });
+
+
                           },
                         ),
 

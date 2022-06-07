@@ -38,7 +38,7 @@ class _state extends State<Temperature>{
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   Text(translator.translate('Temperature & Humidity Switch'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                   Text(translator.translate('Temperature&Humiditydegrees'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                    Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"?true:false,
                         onChanged: (value) {
                           if(deviceProvider.roomDevices[deviceProvider.SelectedIndex].relay=="1"){
@@ -209,7 +209,7 @@ class _state extends State<Temperature>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(translator.translate('Temperature & Humidity Event'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                    Text(translator.translate('Temperature&HumidityEvent'),style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                     Switch(value:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction==null?false:deviceProvider.roomDevices[deviceProvider.SelectedIndex].eventAction=="1"?true:false,
                       onChanged: (value)
                       {
@@ -260,7 +260,7 @@ class _state extends State<Temperature>{
                         children: [
                           Container(
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*.00,top: MediaQuery.of(context).size.height*.02 ),
-                              child: Text(translator.translate('Temperatur'),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
+                              child: Text(translator.translate('Temperature'),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
                           Container(
                             height: MediaQuery.of(context).size.height*.06,
                             child: Row(

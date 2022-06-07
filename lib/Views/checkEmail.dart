@@ -2,28 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
+import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
 import 'package:fssmarthome/Views/Custom/GlobalFunction.dart';
 import 'package:fssmarthome/Views/Devices/ResetPassword.dart';
+import 'package:fssmarthome/main.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../Provider/AuthProvider.dart';
 
-class OTP extends StatefulWidget{
+class CheckEmail extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     return _state();
   }
 }
-class _state extends State<OTP>{
+class _state extends State<CheckEmail>{
   final formKey=GlobalKey<FormState>();
   TextEditingController n1=new TextEditingController();
   TextEditingController n2=new TextEditingController();
   TextEditingController n3=new TextEditingController();
   TextEditingController n4=new TextEditingController();
-  // TextEditingController n5=new TextEditingController();
-  // TextEditingController n6=new TextEditingController();
+  TextEditingController n5=new TextEditingController();
+  TextEditingController n6=new TextEditingController();
 
   final nod0 = FocusNode();
   final nod1 = FocusNode();
@@ -63,7 +65,7 @@ class _state extends State<OTP>{
                         color: Color(AppTheme.primaryColor)
                     ),
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height*.1,
+                      top: MediaQuery.of(context).size.height*.1,
                       left: MediaQuery.of(context).size.width*.05,
                       right: MediaQuery.of(context).size.width*.05,
                     ),
@@ -212,95 +214,95 @@ class _state extends State<OTP>{
                                   controller: n4,
                                 ),
                               ),
-                              // Container(
-                              //   width: MediaQuery.of(context).size.width * .125,
-                              //   child: TextFormField(
-                              //     maxLength: 1,
-                              //     validator: (value) {
-                              //       if (value!.isEmpty) return '';
-                              //       return null;
-                              //     },
-                              //     focusNode: nod4,
-                              //     onChanged: (val) {
-                              //       if(val.isEmpty){
-                              //         FocusScope.of(context).requestFocus(nod2);
-                              //       }else
-                              //         FocusScope.of(context).requestFocus(FocusNode());
-                              //     },
-                              //     textAlign: TextAlign.center,
-                              //     style: TextStyle(
-                              //         fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                              //     keyboardType: TextInputType.number,
-                              //     decoration: InputDecoration(
-                              //       errorStyle: TextStyle(fontSize: 0),
-                              //       counterStyle: TextStyle(fontSize: 0),
-                              //       contentPadding: EdgeInsets.only(top: 0, bottom: 0),
-                              //       enabledBorder: UnderlineInputBorder(
-                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
-                              //       ),
-                              //       focusedBorder: UnderlineInputBorder(
-                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
-                              //       ),
-                              //     ),
-                              //     controller: n5,
-                              //   ),
-                              // ),
-                              // Container(
-                              //   width: MediaQuery.of(context).size.width * .125,
-                              //   child: TextFormField(
-                              //     maxLength: 1,
-                              //     validator: (value) {
-                              //       if (value!.isEmpty) return '';
-                              //       return null;
-                              //     },
-                              //     focusNode: nod5,
-                              //     onChanged: (val) {
-                              //       if(val.isEmpty){
-                              //         FocusScope.of(context).requestFocus(nod2);
-                              //       }else
-                              //         FocusScope.of(context).requestFocus(FocusNode());
-                              //     },
-                              //     textAlign: TextAlign.center,
-                              //     style: TextStyle(
-                              //         fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                              //     keyboardType: TextInputType.number,
-                              //     decoration: InputDecoration(
-                              //       errorStyle: TextStyle(fontSize: 0),
-                              //       counterStyle: TextStyle(fontSize: 0),
-                              //       contentPadding: EdgeInsets.only(top: 0, bottom: 0),
-                              //       enabledBorder: UnderlineInputBorder(
-                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
-                              //       ),
-                              //       focusedBorder: UnderlineInputBorder(
-                              //         borderSide: BorderSide(color: Colors.white, width: 1.0),
-                              //       ),
-                              //     ),
-                              //     controller: n6,
-                              //   ),
-                              // ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .125,
+                                child: TextFormField(
+                                  maxLength: 1,
+                                  validator: (value) {
+                                    if (value!.isEmpty) return '';
+                                    return null;
+                                  },
+                                  focusNode: nod4,
+                                  onChanged: (val) {
+                                    if(val.isEmpty){
+                                      FocusScope.of(context).requestFocus(nod3);
+                                    }else
+                                      FocusScope.of(context).requestFocus(FocusNode());
+                                  },
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    errorStyle: TextStyle(fontSize: 0),
+                                    counterStyle: TextStyle(fontSize: 0),
+                                    contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                    ),
+                                  ),
+                                  controller: n5,
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .125,
+                                child: TextFormField(
+                                  maxLength: 1,
+                                  validator: (value) {
+                                    if (value!.isEmpty) return '';
+                                    return null;
+                                  },
+                                  focusNode: nod5,
+                                  onChanged: (val) {
+                                    if(val.isEmpty){
+                                      FocusScope.of(context).requestFocus(nod4);
+                                    }else
+                                      FocusScope.of(context).requestFocus(FocusNode());
+                                  },
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    errorStyle: TextStyle(fontSize: 0),
+                                    counterStyle: TextStyle(fontSize: 0),
+                                    contentPadding: EdgeInsets.only(top: 0, bottom: 0),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                    ),
+                                  ),
+                                  controller: n6,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height*.08,),
                           GestureDetector(
                             onTap: ()async{
                               if(formKey.currentState!.validate()){
-                                CashHelper.saveData(key: 'code',value: n1.text+n2.text+n3.text+n4.text);
-                                authProvider.checkCode(CashHelper.getData(key: 'emailCheck'), n1.text+n2.text+n3.text+n4.text).then((value) {
-                                  print('----------------------------------------------------');
-                                  print(authProvider.messageCheck);
-                                  print(CashHelper.getData(key: 'messageCheck'));
-                                  if(authProvider.messageCheck=='Validation Error'){
-                                    FlutterToastr.show(translator.translate('Invalid Code'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center);
-                                  }
-                                  else{
-                                    Navigator.push(
-                                        context, GlobalFunction.route(ResetPassword()));
-                                  }
+                                authProvider.verifyOtp(n1.text+n2.text+n3.text+n4.text+n5.text+n6.text,context);
+                                await authProvider.RegisterServices(CashHelper.getData(key: 'nameRegister'), CashHelper.getData(key: 'phoneRegister'), CashHelper.getData(key: 'emailRegister'), CashHelper.getData(key: 'passRegister'),CashHelper.getData(key: 'passRegister'));
+                                if(authProvider.statusCodeConnection==200){
+                                //   SharedPreferenceManager.addData("token",authProvider.RegisterInfo["access_token"]);
+                                SharedPreferenceManager.addData("id",authProvider.RegisterInfo["data"]["id"].toString());
+                                SharedPreferenceManager.addData("name",authProvider.RegisterInfo["data"]["name"]);
+                                setState(() {
+                                MyApp.user_id=authProvider.RegisterInfo["data"]["id"];
+                                MyApp.user_name=authProvider.RegisterInfo["data"]["name"];
                                 });
-                                // authProvider.verifyOtp(n1.text+n2.text+n3.text+n4.text+n5.text+n6.text);
-
-
-
+                                // authProvider.checkCode(CashHelper.getData(key: 'emailCheck'), n1.text+n2.text+n3.text+n4.text).then((value) {
+                                //
+                                //
+                                //
+                                //
+                                //   });
+                              }
                               }
                             },
                             child: Container(

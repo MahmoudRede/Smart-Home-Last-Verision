@@ -4,12 +4,15 @@ class UploadDevice{
   int ? deviceId;
   String ? deviceLogo;
   String ? deviceName;
+  String ? deviceNameAr;
 
   UploadDevice({
     this.roomId,
     this.deviceId,
     this.deviceName,
     this.deviceLogo,
+    this.deviceNameAr,
+
   });
 
   UploadDevice.formJson( Map <String , dynamic> json ){
@@ -18,6 +21,7 @@ class UploadDevice{
     deviceId=json['deviceId'];
     deviceName=json['deviceName'];
     deviceLogo=json['deviceLogo'];
+    deviceNameAr=json['deviceNameAr'];
 
   }
 
@@ -27,6 +31,7 @@ class UploadDevice{
       'deviceId':deviceId,
       'deviceName':deviceName,
       'deviceLogo':deviceLogo,
+      'deviceNameAr':deviceNameAr
     };
   }
 

@@ -8,6 +8,8 @@ import 'package:fssmarthome/Views/Home.dart';
 import 'package:fssmarthome/Views/Setting.dart';
 import 'package:fssmarthome/Views/Timing.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
+import '../Provider/AuthProvider.dart';
 
 import 'Custom/GlobalFunction.dart';
 import 'RemoteControl.dart';
@@ -21,6 +23,8 @@ class MyDrawer extends StatefulWidget{
 class _state extends State<MyDrawer>{
   @override
   Widget build(BuildContext context) {
+    final authProvider= Provider.of<AuthProvider>(context, listen: true);
+
     return Directionality(
       textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
       child: Container(
@@ -118,6 +122,7 @@ class _state extends State<MyDrawer>{
             SizedBox(height: MediaQuery.of(context).size.height*.05,),
             GestureDetector(
               onTap: (){
+                authProvider.getAbout();
                 Navigator.push(context, GlobalFunction.route(About()));
               },
               child: Container(

@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:fssmarthome/Models/UserModel.dart';
 import 'package:fssmarthome/Provider/ServicesConfig.dart';
+import 'package:fssmarthome/Views/Login.dart';
 import 'package:fssmarthome/Views/user_screen.dart';
 import 'package:fssmarthome/main.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart'as http;
 import 'package:email_auth/email_auth.dart';
@@ -19,6 +21,7 @@ import '../Base/Cash_Helper/cash_helper.dart';
 import '../Constants/constants.dart';
 import '../Dio/dio_helper.dart';
 import '../Views/Custom/GlobalFunction.dart';
+import '../Views/User_Screens/user_screen_container.dart';
 class AuthProvider extends ChangeNotifier{
   bool loadingImage=false;
   late int statusCodeConnection;
@@ -30,6 +33,10 @@ class AuthProvider extends ChangeNotifier{
   Map<String,dynamic> user={};
   Map<String,dynamic>userInfo={};
   Map<String,dynamic>forgetPassword={};
+  var aboutEn;
+  var aboutAr;
+  var aboutPhone;
+  var aboutWebSite;
   TextEditingController name =new TextEditingController();
   TextEditingController email =new TextEditingController();
   TextEditingController phone =new TextEditingController();
@@ -189,6 +196,7 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+  var messageCheck='';
   Future<void> checkCode(String email,String code) async{
     String url=ServicesConfig.base_url+"/auth/checkcode";
     print(url);
@@ -201,10 +209,14 @@ class AuthProvider extends ChangeNotifier{
     try{
       final responce=await http.post(Uri.parse(url),body:body,headers: header);
       print(responce.body);
+      messageCheck=json.decode(responce.body)['message'];
+      CashHelper.saveData(key: 'messageCheck',value: messageCheck);
+      notifyListeners();
       if(responce.body.isNotEmpty)
       {
         statusCodeConnection=responce.statusCode;
         forgetPassword=json.decode(responce.body);
+
         print(forgetPassword);
         notifyListeners();
       }
@@ -265,6 +277,7 @@ class AuthProvider extends ChangeNotifier{
       print(e.toString());
     }
   }
+
   Future<void> getUserInfo() async{
     String url=ServicesConfig.base_url+"/user";
     print(url);
@@ -520,16 +533,21 @@ class AuthProvider extends ChangeNotifier{
      }
   }
 
-  void verifyOtp(String otp){
+  void verifyOtp(String otp,context){
      
     var res=emailAuth.validateOtp(
         recipientMail: 'mahmoudreda123456789101112@gmail.com',
         userOtp: otp
     );
     if(res){
+      Navigator.push(context, MaterialPageRoute(builder: (_){
+        return Login();
+      }));
       print('Validate True');
     }
     else{
+      FlutterToastr.show(translator.translate('Invalid Code'), context, duration: FlutterToastr.lengthLong, position:  FlutterToastr.center,backgroundColor: Colors.red);
+
       print('Validate False');
     }
 
@@ -548,5 +566,33 @@ class AuthProvider extends ChangeNotifier{
       }
 
 
+  }
+  Future<void> getAbout() async{
+    String url=ServicesConfig.base_url+"/infos";
+    print(url);
+    var header=await ServicesConfig.getHeaderWithToken();
+    try{
+      final responce=await http.get(Uri.parse(url),headers: header);
+      print('siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+      aboutEn=json.decode(responce.body)["data"]["data"][0]["bio_en"];
+      aboutAr=json.decode(responce.body)["data"]["data"][0]["bio_ar"];
+      aboutPhone=json.decode(responce.body)["data"]["data"][0]["phone"];
+      aboutWebSite=json.decode(responce.body)["data"]["data"][0]["website_link"];
+
+      print(aboutEn);
+      print(responce.body);
+      notifyListeners();
+
+      print('siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+      if(responce.body.isNotEmpty)
+      {
+        statusCodeConnection=responce.statusCode;
+
+
+      }
+    }
+    catch(e) {
+      print(e.toString());
+    }
   }
 }

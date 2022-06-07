@@ -47,7 +47,7 @@ class _state extends State<Motion>{
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(translator.translate('Event Action'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                Text(translator.translate('EventAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
                 FlutterSwitch(
                   height: 15.0,
@@ -136,8 +136,8 @@ class _state extends State<Motion>{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(translator.translate('Moverment')+": ",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),),
-                          Text(deviceProvider.roomDevices[deviceProvider.SelectedIndex].reading=="1"?"Yes":"No",style: TextStyle(color: Color(AppTheme.yellowColor),fontSize: 12,fontWeight: FontWeight.bold))
+                          Text(translator.translate('Movement')+": ",style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.bold),),
+                          Text(deviceProvider.roomDevices[deviceProvider.SelectedIndex].reading=="1"?translator.translate("Yes"):translator.translate("No"),style: TextStyle(color: Color(AppTheme.yellowColor),fontSize: 12,fontWeight: FontWeight.bold))
                         ],
                       )
                     ],
@@ -174,7 +174,7 @@ class _state extends State<Motion>{
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(translator.translate('Device Action'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                Text(translator.translate('DeviceAction'),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                 SizedBox(width:MediaQuery.of(context).size.width*.05 ,),
 
                 FlutterSwitch(

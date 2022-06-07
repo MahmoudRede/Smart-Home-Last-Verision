@@ -112,7 +112,7 @@
    "DeviceHasBeenAdded": "تم إضافة الجهاز بنجاح",
    "PleaseSelectDevice": "من فضلك اختر الجهاز",
    "device": "جهاز",
-   "AlermClock": "مشترك المنبه",
+   "AlarmClock": "مشترك المنبه",
    "Open": "مفتوح",
    "Close": "مغلق",
    "Safemodeisactive": "مشترك الجهاز",
@@ -145,5 +145,13 @@
    "adduser": "إضافة مستخدم",
    "selectimage": "من فضلك اختر الصورة أولاً",
    "copy": "تم النسخ",
-    "open_setting": "فتح الاعدادات"
+    "open_setting": "فتح الاعدادات",
+   "Profile": "الملف الشخصي",
+   "messageVoice": "قريباً ، يمكنك الآن تسجيل بيانات الأجهزة فقط",
+   "Yes" : "نعم",
+   "No" : "لا",
+   "addnewuser": "اضافه مستخدم جديد",
+   "usersRooms": "غرف المستخدم"
+
+
  }

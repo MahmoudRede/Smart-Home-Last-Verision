@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fssmarthome/Base/Cash_Helper/cash_helper.dart';
 import 'package:fssmarthome/Base/shared_preference_manger.dart';
 import 'package:fssmarthome/Provider/AuthProvider.dart';
 import 'package:fssmarthome/Theme/AppTheme.dart';
+import 'package:fssmarthome/Views/checkEmail.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +34,7 @@ class _state extends State<Register>{
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body:Directionality(
+        body: Directionality(
           textDirection:translator.currentLanguage == 'ar' ?  TextDirection.rtl : TextDirection.ltr,
           child: SingleChildScrollView(
             child: Container(
@@ -87,7 +89,7 @@ class _state extends State<Register>{
                                     contentPadding: EdgeInsets.only(
                                         left: 10,right: 10,top: 10,bottom: 10
                                     ),
-                                    hintText: translator.translate('User Name'),
+                                    hintText: translator.translate('UserName'),
                                     hintStyle: TextStyle(color: Colors.white,fontSize: 14),
                                     fillColor: Colors.white
                                 ),
@@ -105,7 +107,9 @@ class _state extends State<Register>{
                                   FocusScope.of(context).requestFocus(phoneNode);
                                 },
                                 validator: (value){
-                                  if(value!.isEmpty){
+                                  if(value!.isNotEmpty && value.contains('@')){
+                                  }
+                                  else{
                                     return translator.translate('EnterEmail');
                                   }
                                   return null;
@@ -206,16 +210,15 @@ class _state extends State<Register>{
                                   setState(() {
                                     loading=true;
                                   });
-                                  await authProvider.RegisterServices(name.text, phone.text, email.text, password.text,password.text);
-                                  if(authProvider.statusCodeConnection==200){
-                                 //   SharedPreferenceManager.addData("token",authProvider.RegisterInfo["access_token"]);
-                                    SharedPreferenceManager.addData("id",authProvider.RegisterInfo["data"]["id"].toString());
-                                    SharedPreferenceManager.addData("name",authProvider.RegisterInfo["data"]["name"]);
-                                    setState(() {
-                                      MyApp.user_id=authProvider.RegisterInfo["data"]["id"];
-                                      MyApp.user_name=authProvider.RegisterInfo["data"]["name"];
-                                    });
-                                    Navigator.pushNamedAndRemoveUntil(context,"/login", (route) => false);
+                                    CashHelper.saveData(key: 'emailRegister',value: email.text);
+                                    CashHelper.saveData(key: 'nameRegister',value: name.text);
+                                    CashHelper.saveData(key: 'phoneRegister',value: phone.text);
+                                    CashHelper.saveData(key: 'passRegister',value: password.text);
+
+                                  authProvider.sendOtp(email.text);
+                                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                                      return CheckEmail();
+                                    }));
                                   }
                                   else{
                                     setState(() {
@@ -223,7 +226,7 @@ class _state extends State<Register>{
                                       message=authProvider.RegisterInfo["message"];
                                     });
                                   }
-                                }
+
                               },
                               child: Container(
                                 height: MediaQuery.of(context).size.height*.08,
@@ -258,13 +261,12 @@ class _state extends State<Register>{
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(translator.translate('You have an account?'),style: TextStyle(fontSize: 14,color: Colors.white),),
+                                  Text(translator.translate('Youhaveanaccount?'),style: TextStyle(fontSize: 14,color: Colors.white),),
                                   SizedBox(width: 10,),
-                                  Text(translator.translate('SignIn?'),style: TextStyle(fontSize: 16,color: Color(AppTheme.yellowColor)),)
+                                  Text(translator.translate('SignIn'),style: TextStyle(fontSize: 16,color: Color(AppTheme.yellowColor)),)
                                 ],
                               ),
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.height*.1,),
 
                           ],
                         ),
